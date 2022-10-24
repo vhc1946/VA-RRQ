@@ -225,6 +225,7 @@ var SETaddblock=(block,sys=undefined)=>{
         modcont.removeChild(modcont.children[x]);
       }
     }
+    document.getElementById(moddom.cont).dispatchEvent(new Event('change')); //to refersh the quote
   });
 
   //Show & Hide Modifications table
