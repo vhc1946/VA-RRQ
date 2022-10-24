@@ -1,0 +1,322 @@
+/* File to work with system selection module
+
+    File is required in the rrq-quote.js file and uses some of the variables
+    declared in said file.catch
+    - vcontrol (view-controller.js)
+    - ObjList (vg-list.js)
+    - qsettings //quote settings from appset
+    - tquote //the quote
+    - qkey
+    - qbuild
+    - qprice
+
+*/
+
+var ADJUSTdependents=(view)=>{
+  console.log('ADJUSTDING> ',view.title);
+  try{
+    vcontrol.REMOVEview(vcontrol.FINDbutton(view.title,document.getElementById(modbuild.moddom.cont)),document.getElementById(modbuild.moddom.cont));
+    vcontrol.REMOVEview(vcontrol.FINDbutton(view.title,document.getElementById(sumbuild.bsdom.cont)),document.getElementById(sumbuild.bsdom.cont));
+  }catch{}
+}
+
+var sbdom = {
+  cont:'build-systems-cont',
+  add:{
+    name:'build-system-add-name',
+    button:'build-system-add-button'
+  },
+  system:{
+    list:'build-systems',
+    cont:'build-system',
+    info:{
+      cont:'build-system-info',
+      btucooling:'build-system-coolbtus',
+      btuheating:'build-system-heatbtus',
+      areaserve:'build-system-areaserve',
+      outlocation:'build-system-outlocation',
+      inlocation:'build-system-inlocation',
+      group:'build-system-group'
+    },
+    tier:{
+      list:'build-system-tiers',
+      cont:'build-system-tier',
+      info:{
+        name:'build-system-tier-name',
+        system:'build-system-tier-system'
+      },
+      size:{
+        list:'build-system-tier-sizes',
+        cont:'build-system-tier-size',
+        row:'build-system-tier-size-row',
+        info:{
+
+        }
+      }
+    }
+  }
+}
+
+var currtier = null; //holds the tier selected when choosing sizes (holds element)
+
+var syscont = document.getElementById(sbdom.cont);
+
+vcontrol.SETUPviews(syscont,'mtl');
+
+var CreateSystemCard=(sysname,sys=null)=>{
+  let newsys = document.getElementById(sbdom.system.cont).cloneNode(true); //system tab
+  newsys.id='';
+  newsys.classList.add(sbdom.system.cont);
+
+  vcontrol.ADDview(sysname,newsys,syscont,true,ADJUSTdependents);
+  SetupSystemCard(newsys,sys); //setup as new system
+  $(newsys).show();
+}
+
+/* Set up a System Selection Card
+    PASS:
+    - card - html template
+    - qsys - system(s) object from quote
+      quote.systems:[
+        {
+          tiers:{
+
+          }
+          accessories:[]
+      ]
+*/
+var SetupSystemCard=(card,qsys=null)=>{
+  let tierlist = card.getElementsByClassName(sbdom.system.tier.cont);
+  for(let x=1;x<tierlist.length;x++){card.getElementsByClassName(sbdom.system.tier.list)[0].removeChild(tierlist[x]);} //clean tier list to include only one child
+  for(let x=1;x<qsettings.tiers.length;x++){//add tiers to card
+    let tele = card.getElementsByClassName(sbdom.system.tier.cont)[0].cloneNode(true);
+    tele.getElementsByClassName(sbdom.system.tier.info.name)[0].innerText=qsettings.tiers[x].name;
+    tele.addEventListener('click',(ele)=>{ //open size selector
+      currtier = tele;
+      let view = document.getElementsByClassName('min-page-cont')[0];
+      $(view).show();
+      view.getElementsByClassName(sbdom.system.tier.size.list)[0].innerHTML=currtier.getElementsByClassName(sbdom.system.tier.size.list)[0].innerHTML;
+    });
+
+    new MutationObserver(()=>{ //watch for a change in tier size
+    }).observe(tele.getElementsByClassName(sbdom.system.tier.size.cont)[0],{subtree: true, childList: true});
+    card.getElementsByClassName(sbdom.system.tier.list)[0].appendChild(tele);
+
+  }
+
+  card.getElementsByClassName(sbdom.system.tier.list)[0].setAttribute('style',`grid-template-columns:repeat(${qsettings.tiers.length-1},1fr)`); //adjust grid-template-columns
+
+  if(qsys&&qsys.group!=''){card.getElementsByClassName('build-system-tiers-headers')[0].innerHTML = gentable.SETrowFROMobject(tquote.info.key.groups[qsys.group].optheads).innerHTML;};
+
+  card.getElementsByClassName(sbdom.system.tier.list)[0].removeChild(card.getElementsByClassName(sbdom.system.tier.cont)[0]);//clean tier list
+
+
+  card.getElementsByClassName(sbdom.system.info.cont)[0].addEventListener('change',(ele)=>{ //update the system info filters
+    let fltrs = {
+      group:card.getElementsByClassName(sbdom.system.info.group)[0].value,
+      btucooling:Number(card.getElementsByClassName(sbdom.system.info.btucooling)[0].value)||null,
+    }
+    if(qkey.groups[fltrs.group]){ //check for valid group
+      tierlist = card.getElementsByClassName(sbdom.system.tier.cont);
+      for(let x=0;x<tierlist.length;x++){ //loop through tiers
+        let syslist = [];
+        let sizelist = [];
+        for(let y=0;y<qkey.groups[fltrs.group].systems.length;y++){ //find the systems tied to the tier
+          if(qsettings.tiers[x+1].code == qkey.groups[fltrs.group].systems[y].info.tierid || qkey.groups[fltrs.group].systems[y].info.tierid =='T0'){
+            syslist.push(qkey.groups[fltrs.group].systems[y]); //push systems that match the tier code
+          }
+        }
+        card.getElementsByClassName(sbdom.system.tier.list)[0].children[x].getElementsByClassName(sbdom.system.tier.size.list)[0].innerHTML = ''; //clear size list
+
+        let topts = [];
+        for(let y=0;y<syslist.length;y++){
+          if(y==0){
+            card.getElementsByClassName(sbdom.system.tier.info.system)[x].innerHTML=gentable.SETrowFROMobject(syslist[y].info).innerHTML;
+          }
+          topts = topts.concat(syslist[y].opts);
+        }
+        topts.unshift(qkey.groups[fltrs.group].optheads);
+        gentable.BUILDdistable(topts,card.getElementsByClassName(sbdom.system.tier.list)[0].children[x].getElementsByClassName(sbdom.system.tier.size.list)[0],true,sbdom.system.tier.size.row);
+      }
+    }else{DropNote('tr','Group Not found in Key','red',false)}
+  });
+
+  if(qsys&&qsys!=undefined){//is there a system to load into the template
+    SETsystem(card,qsys);
+  }
+}
+
+//temporary size finder
+var CHECKsystemsize=(fltrs,sys)=>{
+  for(let f in fltrs){
+    switch(f){
+      case 'btucooling':{
+        if(fltrs[f] && fltrs[f]!=''){
+          if(sys.btucooling>=fltrs[f] &&  fltrs[f]<=(sys.btucooling * .3 + sys.btucooling)){
+            return true;
+          }
+        }else{return true}
+      }
+    }
+  }
+  return false;
+}
+
+// READING systems //////////////////////////////////////////////////////////////
+var SETsystem=(card,sys)=>{
+  card.getElementsByClassName(sbdom.system.info.group)[0].value = sys.group || '';
+  card.getElementsByClassName(sbdom.system.info.btucooling)[0].value = sys.btucooling || '';
+  card.getElementsByClassName(sbdom.system.info.btuheating)[0].value = sys.btuheating || '';
+  card.getElementsByClassName(sbdom.system.info.outlocation)[0].value = sys.outlocation ||'';
+  card.getElementsByClassName(sbdom.system.info.inlocation)[0].value = sys.inlocation || '';
+  for(let x=0;x<sys.tiers.length;x++){
+      try{
+      card.getElementsByClassName(sbdom.system.tier.info.system)[x].innerHTML = gentable.SETrowFROMobject(sys.tiers[x].info).innerHTML;
+      card.getElementsByClassName(sbdom.system.tier.list)[0].children[x].getElementsByClassName(sbdom.system.tier.size.cont)[0].innerHTML = gentable.SETrowFROMobject(sys.tiers[x].size).innerHTML;
+      card.getElementsByClassName(sbdom.system.tier.list)[0].children[x].getElementsByClassName(sbdom.system.tier.size.list)[0].innerHTML = sys.tiers[x].sizes;
+    }catch{}
+  }
+}
+
+var GETsystems=()=>{
+  var sysmodule = document.getElementById(sbdom.cont);
+  syslist = sysmodule.getElementsByClassName(sbdom.system.cont);
+  sysnames = (()=>{ //get the list of system names
+    let sysmenu = sysmodule.children[0].children[0];
+    let snames = [];
+    for(let x=0;x<sysmenu.children.length;x++){
+      snames.push(sysmenu.children[x].title);
+    }
+    return snames;
+  })();
+  systems = []; //holds all system data
+  for(let x=0;x<sysnames.length;x++){
+    systems.push({ //declaration of system object
+      name:sysnames[x],
+      group:syslist[x].getElementsByClassName(sbdom.system.info.group)[0].value,
+      btucooling:syslist[x].getElementsByClassName(sbdom.system.info.btucooling)[0].value,
+      btuheating:syslist[x].getElementsByClassName(sbdom.system.info.btuheating)[0].value,
+      outlocation:syslist[x].getElementsByClassName(sbdom.system.info.outlocation)[0].value,
+      inlocation:syslist[x].getElementsByClassName(sbdom.system.info.inlocation)[0].value,
+      tiers:[]
+    });
+    let tlist = syslist[x].getElementsByClassName(sbdom.system.tier.cont);
+
+    for(let y=0;y<tlist.length;y++){ //loop through the systems tiers
+      systems[x].tiers.push({ //declaration of system tier object
+        name:tlist[y].getElementsByClassName(sbdom.system.tier.info.name)[0].innerText,
+        info:gentable.GETrowTOobject(tlist[y].getElementsByClassName(sbdom.system.tier.info.system)[0]), //generic info for the system in the tier
+        size: gentable.GETrowTOobject(tlist[y].getElementsByClassName(sbdom.system.tier.size.cont)[0]),
+        sizes:tlist[y].getElementsByClassName(sbdom.system.tier.size.list)[0].innerHTML
+      });
+    }
+  }
+  return systems;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+
+// SETUP MODULE /////////////////////////////////////////////////////////////////
+
+var InitSysBuild=()=>{
+  for(let x=0;x<qbuild.systems.length;x++){
+    CreateSystemCard(qbuild.systems[x].name,qbuild.systems[x]);
+  }
+}
+
+// modules
+
+var CHECKforsystemname=(name)=>{
+  console.log(qbuild.systems)
+  if(qbuild.systems!=undefined){
+    for(let x=0;x<qbuild.systems.length;x++){
+      if(qbuild.systems[x].name==name){return true}
+    }
+  }
+  return false;
+}
+
+document.getElementById(sbdom.add.name).addEventListener('keypress',(eve)=>{
+  if(eve.key == 'Enter'){document.getElementById(sbdom.add.button).click();};
+});
+document.getElementById(sbdom.add.button).addEventListener('click',(eve)=>{//add system to system list through build-system-add-button
+  var sysname = document.getElementById(sbdom.add.name);
+  if(sysname.value!=''&&!CHECKforsystemname(sysname.value)){ //OR make a current system name
+    CreateSystemCard(sysname.value);
+    qbuild.systems = GETsystems();
+    qprice.systems = pricer.GETsystemprices(qsettings,qbuild);
+
+    console.log('ADDED >',qbuild.systems);
+    console.log('ADDED >',qprice.systems);
+
+    vcontrol.ADDview(sysname.value,modbuild.ADDmodsystem(sysname),document.getElementById(modbuild.moddom.cont),false);
+    vcontrol.ADDview(sysname.value,sumbuild.ADDsumsystem(qbuild.systems.length-1,qbuild.systems[qbuild.systems.length-1]),document.getElementById(sumbuild.bsdom.cont),false);
+  }else{DropNote('tr','Bad System Name','red')}
+  sysname.value = '';
+});
+
+// SETUP SYSTEM SIZE SELECTOR ////////////////////////
+document.getElementsByClassName('min-page-hide-button')[0].addEventListener('click',(ele)=>{
+  $(document.getElementsByClassName('min-page-cont')[0]).hide();
+});
+
+document.getElementsByClassName('min-page-view')[0].getElementsByClassName(sbdom.system.tier.size.list)[0].addEventListener('click',(ele)=>{
+  if(ele.target.parentNode.classList.contains(sbdom.system.tier.size.row)){
+    currtier.getElementsByClassName(sbdom.system.tier.size.cont)[0].innerHTML = ele.target.parentNode.innerHTML;
+
+    let syscard = currtier.parentNode.parentNode.parentNode;
+    let grpname =  syscard.getElementsByClassName(sbdom.system.info.group)[0].value;
+    let sysid = gentable.GETrowTOobject(ele.target.parentNode).sysid;
+    let sysname = currtier.parentNode.parentNode.title;
+    let sysinfo = FINDsystem(grpname,sysid);
+
+    if(sysinfo){
+      currtier.getElementsByClassName(sbdom.system.tier.info.system)[0].innerHTML = gentable.SETrowFROMobject(sysinfo).innerHTML;
+      for(let y=0;y<syscard.parentNode.children.length;y++){
+        if(syscard.parentNode.children[y] == syscard){//find the index of the system
+          for(let x=0;x<currtier.parentNode.children.length;x++){
+            if(currtier.parentNode.children[x]==currtier){ //find the index of the tier
+              modbuild.UPDATEenhlist(sysinfo,y,x);
+              modbuild.UPDATEdscntlist(sysinfo,y,x);
+              qbuild.systems = GETsystems();
+              qprice.systems = pricer.GETsystemprices(qsettings,qbuild);
+              modbuild.GETbuildmod();
+              sumbuild.REFRESHsumsystem(qbuild.systems[y],y);  //y=sysid x=optid
+            }
+          }
+        }
+      }
+
+      syscard.getElementsByClassName('build-system-tiers-headers')[0].innerHTML = gentable.SETrowFROMobject(tquote.info.key.groups[grpname].optheads).innerHTML;
+      //put headers
+    }
+  }
+});
+
+//  Private KEY functions ////////////////////////////
+
+/* FINDs a System in the key
+    PASS:
+    - grp - group name
+    - sysid - system id
+*/
+var FINDsystem=(grp,sysid)=>{
+  if(qkey.groups[grp]!=undefined){
+    for(let x=0;x<qkey.groups[grp].systems.length;x++){
+      if(qkey.groups[grp].systems[x].info.sysid == sysid){
+        return qkey.groups[grp].systems[x].info;
+      }
+    }
+  }
+  return null;
+}
+
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+module.exports={
+  InitSysBuild,
+  GETsystems,
+  modbuild,
+  sumbuild,
+  sbdom
+}

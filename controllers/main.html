@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <!--VG HEADER PARTIAL-->
+      <script>
+        require('../bin/repo/gui/js/tools/vg-partials.js').writePart(__dirname + '/parts/vg-heads.txt',
+                                                            document.head);
+      </script>
+    </head>
+    <body>
+        <style>
+          #emobile{
+            height:100vh;
+            width:100%;
+          }
+        </style>
+          <iframe id="emobile"src="https://vogelheating.jonasportal.com/emobile/">
+          </iframe>
+    </body>
+    <script src = '../bin/gui/main.js'></script>
+    <script>
+
+      var iframe = document.getElementById('emobile');
+      var innerDoc = (iframe.contentDocument)
+                     ? iframe.contentDocument
+                     : iframe.contentWindow.document;
+      console.log(innerDoc)
+    </script>
+</html>

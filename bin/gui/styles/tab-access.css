@@ -1,0 +1,126 @@
+/* Top Nav */
+.multi-tier-nav{
+    display:flex;
+    border-bottom: 2px solid var(--background-dark);
+    margin: 15px 0px;
+}
+.multi-tier-nav>div{
+    flex-grow:1;
+    text-align:center;
+    font-size: 1.2em;
+}
+.multi-tier-nav>div:hover{
+    opacity: .7;
+    cursor: pointer;
+}
+.vg-subtab-selected{
+    background-color: var(--background-dark);
+    color: var(--text-light);
+    border-radius: 5px 5px 0 0;
+}
+
+/* Selected Item Table */
+.build-mod-add-line{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 2px solid var(--background-dark);
+}
+.build-mod-cont>.build-mod-add-line:nth-child(n+2)>div:nth-child(1){
+    background-color: var(--background-dark);
+}
+
+.build-mod-add-tiers, #build-mod-add-title-tiers{
+    display: flex;
+}
+.build-mod-add-tiers>input, .build-mod-add-title-tiers>div{
+    width: 75px;
+    text-align: center;
+    border: none;
+    background-color: var(--background-light);
+}
+.build-mod-add-tiers>input:nth-child(1), .build-mod-add-title-tiers>div:nth-child(1){
+    background-color: var(--tier1);
+}
+.build-mod-add-tiers>input:nth-child(2), .build-mod-add-title-tiers>div:nth-child(2){
+    background-color: var(--tier2);
+}
+.build-mod-add-tiers>input:nth-child(3), .build-mod-add-title-tiers>div:nth-child(3){
+    background-color: var(--tier3);
+}
+.build-mod-add-tiers>input:nth-child(4), .build-mod-add-title-tiers>div:nth-child(4){
+    background-color: var(--tier4);
+}
+
+.build-mod-add-prices, .build-mod-add-title-prices{
+    display: flex;
+    text-align: center;
+}
+.build-mod-add-title-prices>div{
+    width: 100px;
+}
+.build-mod-add-title-prices>div:nth-child(1){
+    background-color: rgb(152 240 163);
+}
+.build-mod-add-title-prices>div:nth-child(2){
+background-color:  rgb(244 162 162);
+}
+.build-mod-add-prices>div, .build-mod-add-prices>input{
+    width: 100px;
+    text-align: center;
+    border: 1px solid black;
+    border: none;
+    background-color: #f4a2a2;
+}
+.build-mod-add-prices>div:nth-child(1), .build-mod-add-prices>input:nth-child(1){
+    background-color: rgb(152 240 163);
+}
+.build-mod-add-prices>div:nth-child(2), .build-mod-add-prices>input:nth-child(2){
+    background-color:  rgb(244 162 162);
+}
+.build-mod-add-prices>.build-mod-price-select{
+    background-color: var(--included-background);
+    border: 1px solid var(--included-border);
+}
+.build-mod-add-prices>div:hover,
+.build-mod-add-prices>input:hover,
+.build-mod-add-tiers>div:hover,
+.build-mod-add-tiers>input:hover{
+    cursor: pointer;
+    background-color: var(--hover-highlight);
+}
+.mod-to-delete{
+    background-image: linear-gradient(to right, rgba(0,0,0,0),rgba(0,0,0,0),var(--warning-highlight));
+}
+
+.build-mod-add-controls-cont{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+.build-mod-add-filter-cont{
+    display: flex;
+}
+
+/* Accessory Items Table */
+.build-mod-add-list{
+    max-height: 400px;
+    overflow-y: auto;
+}
+.build-mod-add-list>:nth-child(1){
+    background-color: var(--background-dark);
+    color: var(--text-light);
+    position: sticky;
+    top:0;
+}
+
+.build-mod-add-in{
+    width:250px;
+}
+
+
+/*ADDED BY Christian...*/
+.build-mod-select-title{
+  background-color:var(--background-dark);
+  color:var(--text-light);
+  font-size: 1.15em;
+}

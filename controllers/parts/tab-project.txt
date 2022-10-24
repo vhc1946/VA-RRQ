@@ -1,0 +1,111 @@
+
+
+<div class="viewcontrol-menu">
+  <div>
+    <div class="viewcontrol-menu-item" title="JOB">Job</div>
+    <div class="viewcontrol-menu-item" title="CUSTOMER">Customer</div>
+    <div class="viewcontrol-menu-item" title="TRACKING">Tracking</div>
+  </div>
+</div>
+<div class="viewcontrol-port">
+  <div class="viewcontrol-port-item" title="JOB">
+    <div class="customer-edit-jinfo">
+        <div class="customer-header"><div>Job Info</div><div></div></div>
+        <div style="display:none;">Quote Number</div><input id="q-info-id" style="display:none";/><!--Create searchable/drop list for optional autofill-->
+        <div>Quote Name</div><input id="q-info-name"/>
+    </div>
+    <div class="customer-edit-jaddress">
+        <div class="customer-header"><div>Job Address</div><div></div></div>
+        <div>Street</div><input id="q-info-street"/>
+        <div>Unit</div><input id="q-info-unit"/>
+        <div>City</div><input id="q-info-city"/>
+        <div>State</div><input id="q-info-state"/>
+        <div>Zip</div><input id="q-info-zip"/>
+    </div>
+  </div>
+  <div class="viewcontrol-port-item" title="CUSTOMER">
+    <div class="customer-edit-cinfo">
+        <div class="customer-header"><div></div><div>Client Info</div></div>
+        <div>Cust Code</div><input id="q-customer-id"/><!--Create searchable/drop list for optional autofill-->
+        <div>First Name</div><input id="q-customer-cfname"/>
+        <div>Last Name</div><input id="q-customer-clname"/>
+        <div>Phone</div><input id="q-customer-cphone"/>
+        <div>Email</div><input id="q-customer-cemail" type="email"/>
+    </div>
+  </div>
+  <div class="viewcontrol-port-item" title="TRACKING">
+    <div>Time of Day<input  type="search" list="track-timeofday-droplist"/></div>
+    <div>Source<input  type="search" list="track-source-droplist"/></div>
+    <div>Lead<input type="search" list="track-source-droplist"/></div>
+    <div>Quote Present Date<input type="date"/></div>
+    <div>Quote Present Via<input type="search" list="track-prsntvia-droplist"/></div>
+    <div>Book Price<input type="checkbox"/></div>
+    <div>Financed<input type="checkbox"/></div>
+  </div>
+</div>
+
+<datalist id="track-source-droplist">
+  <option>AQ</option>
+  <option>DR</option>
+  <option>RE</option>
+  <option>EC</option>
+  <option>SC</option>
+  <option>COMP</option>
+  <option>NS</option>
+  <option>ST</option>
+  <option>TR</option>
+  <option>DM</option>
+  <option>DH</option>
+  <option>BC</option>
+  <option>FO</option>
+  <option>GO</option>
+  <option>IG</option>
+  <option>YO</option>
+  <option>PA</option>
+  <option>SP</option>
+  <option>STV</option>
+  <option>TV</option>
+  <option>NP</option>
+  <option>BL</option>
+  <option>YP</option>
+  <option>YC</option>
+  <option>AP</option>
+  <option>AL</option>
+  <option>BB</option>
+  <option>CDL</option>
+  <option>L3</option>
+  <option>BI</option>
+  <option>WE</option>
+  <option>IN</option>
+  <option>FB</option>
+  <option>AU</option>
+  <option>SPI</option>
+  <option>OT</option>
+  <option>IR</option>
+  <option>DIA</option>
+
+</datalist>
+<datalist id="track-prsntvia-droplist">
+  <option>IV</option>
+  <option>FV</option>
+  <option>EM</option>
+  <option>UM</option>
+  <option>3P</option>
+</datalist>
+<datalist id="track-timeofday-droplist">
+  <option>D</option>
+  <option>E</option>
+  <option>W</option>
+  <option>O</option>
+</datalist>
+
+    <div class="customer-edit-home" style="display:none">
+        <div class="customer-header">Home Details</div>
+        <div>Home s.f.</div><input id="q-home-sf"/>
+        <div>Attic s.f.</div><input id="q-home-attic-sf"/>
+        <div>Roof Make</div><input id="q-home-roof-make"/>
+        <div># Occupants</div><input id="q-home-occupants"/>
+        <div>Front Facing</div><input id="q-home-direction"/>
+        <div>Heat Load</div><input id="q-home-heatload"/>
+        <div>Cooling Load</div><input id="q-home-coolload"/>
+    </div>

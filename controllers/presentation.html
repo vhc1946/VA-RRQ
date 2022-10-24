@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+          require('../bin/repo/gui/js/tools/vg-partials.js').writePart(__dirname + '/parts/vg-heads.txt',
+                                                              document.head);
+        </script>
+        <link rel="stylesheet" type="text/css" href="../bin/gui/styles/presentation.css"/>
+    </head>
+    <body>
+      <div id="rrq-presi-header">   <!-- PRINT HEADER -->
+        <div id="logo-area">
+          <img id='vogel-logo'/>
+          <div id="vogel-text">HEATING & COOLING</div>
+          <div id="vogel-addy">1642 Manufacturers Dr, Fenton, MO 63026</div>
+          <div id="phone-numbers">O: 314-351-2533 &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp; C: <span id='cons-phone'>314-351-2533</span></div>
+          <div id="consult-name">Prepared for you by: <span id='cons-name'>Vogel Heating and Cooling</span></div>
+        </div>
+        <div id="client-area">
+          <div id="header-client-name">Client Name</div>
+          <div id="header-client-street">Client Address</div>
+          <div id="header-client-longcity">Client City</div>
+          <div id="header-client-system">System Name</div>
+        </div>
+      </div>
+      <div id="rrq-multi-presentation">
+        <div class="rrq-multi-cont-header"><!--ROW for Headers-->
+          <div class="rrq-pres-group-icon"></div>
+          <div class="rrq-multi-tiers-head">
+            <div class="rrq-multi-tier">Complete</div>
+            <div class="rrq-multi-tier">Clever</div>
+            <div class="rrq-multi-tier">Constant</div>
+            <div class="rrq-multi-tier">Classic</div>
+          </div>
+        </div>
+        <div class="rrq-multi-cont-exp"><!--ROW for Experience-->
+          <div class="rrq-pres-group-icon">
+              <img id='experience-main-icon'/>
+              <div>User Experience</div>
+          </div>
+          <div class="rrq-multi-tiers-exp"><!--TIERS FOR EXPERIENCE-->
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">Ingenious</div>
+              <div>
+                <div class="rrq-pres-std-icon">
+                  <img class="rrq-user-experience"/>
+                </div>
+                <div class="rrq-multi-exp-tier-list">
+                  <ul>
+                    <li>Comfort Conceierge Monitors System</li>
+                    <li>Automatically Monitors and Adjusts System for Optimal Air</li>
+                    <li>Remote Access from anywhere in the world</li>
+                    <li>Expandable to Home Automation</li>
+                    <li>Precise - Accurate - Reliable</li>
+                    <li>Touch Screen Interface</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">Adaptable</div>
+              <div>
+                <div class="rrq-pres-std-icon">
+                  <img class="rrq-user-experience"/>
+                </div>
+                <div class="rrq-multi-exp-tier-list">
+                  <ul>
+                    <li>Automatically Monitors and Adjusts System for Optimal Air</li>
+                    <li>Remote Access from anywhere in the world</li>
+                    <li>Expandable to Home Automation</li>
+                    <li>Precise - Accurate - Reliable</li>
+                    <li>Touch Screen Interface</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">Intelligent</div>
+              <div>
+                <div class="rrq-pres-std-icon">
+                  <img class="rrq-user-experience"/>
+                </div>
+                <div class="rrq-multi-exp-tier-list">
+                  <ul>
+                    <li>Automatically Monitors and Adjusts System for Optimal Air</li>
+                    <li>Remote Access from anywhere in the world</li>
+                    <li>Expandable to Home Automation</li>
+                    <li>Precise - Accurate - Reliable</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">Reliable</div>
+              <div>
+                <div class="rrq-pres-std-icon">
+                  <img class="rrq-user-experience"/>
+                </div>
+                <div class="rrq-multi-exp-tier-list">
+                  <ul>
+                    <li>Remote Access from anywhere in the world</li>
+                    <li>Accurate - Reliable</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rrq-multi-cont-comfort"><!--ROW for Comfort-->
+          <div class="rrq-pres-group-icon">
+              <img id='comfort-main-icon'/>
+              <div>Home Comfort</div>
+          </div>
+          <div class="rrq-multi-tiers-comfort"><!--TIERS FOR Comfort-->
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">Pristine</div>
+              <div class="rrq-multi-tier-comfort">
+                <div>
+                  <div>Cooling</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfort-cooling"/>
+                </div>
+                <div>
+                  <div>Feels Like</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfortfeels-cooling"/>
+                </div>
+                <div>
+                  <div>Heating</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfort-heating"/>
+                </div>
+                <div>
+                  <div>Feels Like</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfortfeel-heating"/>
+                </div>
+                <div>
+                  <div>Sounds Like</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfort-soundslike"/>
+                </div>
+                <div>
+                  <div>Breathe Like</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfort-filters"/>
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">Improved</div>
+              <div class="rrq-multi-tier-comfort">
+                <div>
+                  <div>Cooling</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfort-cooling"/>
+                </div>
+                <div>
+                  <div>Feels Like</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfortfeels-cooling"/>
+                </div>
+                <div>
+                  <div>Heating</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfort-heating"/>
+                </div>
+                <div>
+                  <div>Feels Like</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfortfeel-heating"/>
+                </div>
+                <div>
+                  <div>Sounds Like</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfort-soundslike"/>
+                </div>
+                <div>
+                  <div>Breathe Like</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfort-filters"/>
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">Advanced</div>
+              <div class="rrq-multi-tier-comfort">
+                <div>
+                  <div>Cooling</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfort-cooling"/>
+                </div>
+                <div>
+                  <div>Feels Like</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfortfeels-cooling"/>
+                </div>
+                <div>
+                  <div>Heating</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfort-heating"/>
+                </div>
+                <div>
+                  <div>Feels Like</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfortfeel-heating"/>
+                </div>
+                <div>
+                  <div>Sounds Like</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfort-soundslike"/>
+                </div>
+                <div>
+                  <div>Breathe Like</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfort-filters"/>
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">Modern</div>
+              <div class="rrq-multi-tier-comfort">
+                <div>
+                  <div>Cooling</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfort-cooling"/>
+                </div>
+                <div>
+                  <div>Feels Like</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfortfeels-cooling"/>
+                </div>
+                <div>
+                  <div>Heating</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfort-heating"/>
+                </div>
+                <div>
+                  <div>Feels Like</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfortfeel-heating"/>
+                </div>
+                <div>
+                  <div>Sounds Like</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfort-soundslike"/>
+                </div>
+                <div>
+                  <div>Breathe Like</div>
+                  <img class="rrq-pres-compare-icon rrq-pres-comfort-filters"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rrq-multi-cont-value"><!--ROW for Value-->
+          <div class="rrq-pres-group-icon">
+              <img id='value-main-icon'/>
+              <div>Value</div>
+          </div>
+          <div class="rrq-multi-tiers-value"><!--TIERS FOR Value-->
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-value">
+                <div><span class='rrq-energy'>10</span>% Energy Savings</div>
+                <div><span class='rrq-warranty'>10</span> Year Total System Warranty</div>
+                <div>Max Surge Protection & Safety</div>
+                <div>Performance Verification</div>
+                <div class='value-icon-box'><img class='value-icon'/></div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-value">
+                <div><span class='rrq-energy'>10</span>% Energy Savings</div>
+                <div><span class='rrq-warranty'>10</span> Year Total System Warranty</div>
+                <div>Max Surge Protection & Safety</div>
+                <div>Performance Verification</div>
+                <div class='value-icon-box'><img class='value-icon'/></div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-value">
+                <div><span class='rrq-energy'>10</span>% Energy Savings</div>
+                <div><span class='rrq-warranty'>10</span> Year Total System Warranty</div>
+                <div>Max Surge Protection & Safety</div>
+                <div>Performance Verification</div>
+                <div class='value-icon-box'><img class='value-icon'/></div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-value">
+                <div><span class='rrq-energy'>10</span>% Energy Savings</div>
+                <div><span class='rrq-warranty'>10</span> Year Total System Warranty</div>
+                <div>Max Surge Protection & Safety</div>
+                <div>Performance Verification</div>
+                <div class='value-icon-box'><img class='value-icon'/></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rrq-multi-cont-impact"><!--ROW for Impact-->
+          <div class="rrq-pres-group-icon">
+            <img id="impact-main-icon"/>
+            <div>Impact</div>
+          </div>
+          <div class="rrq-multi-tiers-impact"><!--TIERS FOR Impact-->
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">Global</div>
+              <div>
+                <div>
+                  <img class="rrq-impact-pic"/>
+                </div>
+                <div class="rrq-multi-impact">
+                  <ul>
+                    <li><span class="highlight-text rrq-impact-carbonreduct">40% Reduction</span> in your homes carbon footprint</li>
+                    <li><span class="highlight-text rrq-impact-emissions">2 Metric Tons</span> less emmissions from your home annually</li>
+                    <li>Equal to planting <span class="highlight-text rrq-impact-trees">580 trees</span> in your neighborhood</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">Green+</div>
+              <div>
+                <div>
+                  <img class="rrq-impact-pic"/>
+                </div>
+                <div class="rrq-multi-impact">
+                  <ul>
+                    <li><span class="highlight-text rrq-impact-carbonreduct">40% Reduction</span> in your homes carbon footprint</li>
+                    <li><span class="highlight-text rrq-impact-emissions">2 Metric Tons</span> less emmissions from your home annually</li>
+                    <li>Equal to planting <span class="highlight-text rrq-impact-trees">580 trees</span> in your neighborhood</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">Green</div>
+              <div>
+                <div>
+                  <img class="rrq-impact-pic"/>
+                </div>
+                <div class="rrq-multi-impact">
+                  <ul>
+                    <li><span class="highlight-text rrq-impact-carbonreduct">40% Reduction</span> in your homes carbon footprint</li>
+                    <li><span class="highlight-text rrq-impact-emissions">2 Metric Tons</span> less emmissions from your home annually</li>
+                    <li>Equal to planting <span class="highlight-text rrq-impact-trees">580 trees</span> in your neighborhood</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">Updated</div>
+              <div>
+                <div>
+                  <img class="rrq-impact-pic"/>
+                </div>
+                <div class="rrq-multi-impact">
+                  <ul>
+                    <li><span class="highlight-text rrq-impact-carbonreduct">40% Reduction</span> in your homes carbon footprint</li>
+                    <li><span class="highlight-text rrq-impact-emissions">2 Metric Tons</span> less emmissions from your home annually</li>
+                    <li>Equal to planting <span class="highlight-text rrq-impact-trees">580 trees</span> in your neighborhood</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rrq-multi-cont-enhance"><!--ROW for Enhancements-->
+          <div class="rrq-pres-group-icon">
+              <img id='enhance-main-icon'/>
+              <div>Enhancements</div>
+          </div>
+          <div class="rrq-multi-tiers-enhance"><!--TIERS FOR Enhancements-->
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-enhance">
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-enhance">
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-enhance">
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-enhance">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rrq-multi-cont-adds"><!--ROW for Additions-->
+          <div class="rrq-pres-group-icon">
+              <img id='adds-main-icon'/>
+              <div>Modifications</div>
+          </div>
+          <div class="rrq-multi-tiers-adds"><!--TIERS FOR Additions-->
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-adds">
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-adds">
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-adds">
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-adds">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rrq-multi-cont-finance"><!--ROW for Financials-->
+          <div class="rrq-pres-group-icon">
+            <img id='finance-main-icon'/>
+            <div>Investment</div>
+          </div>
+          <div class="rrq-multi-tiers-finance"><!--TIERS FOR Financials-->
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-finance">
+                <div>
+                  <div class="fin-header">
+                    <div class="fin-label-uf">Upfront</div>
+                    <div class="fin-term-uf">9 mos SAC</div>
+                  </div>
+                  <div class="fin-header">
+                    <div class="fin-label-low">Lowest Payment</div>
+                    <div class="fin-term-low">84 mos</div>
+                  </div>
+                  <div class="fin-uf-price">18590</div>
+                  <div class="fin-low-mo">292</div>
+                </div>
+                <div>
+                  <div class="fin-header" id="fin-promo">Promo - 36 @ 0%</div>
+                  <div class="fin-promo-price">20656</div>
+                  <div class="fin-promo-mo">574</div>
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-finance">
+                <div>
+                  <div class="fin-header">
+                    <div class="fin-label-uf">Upfront</div>
+                    <div class="fin-term-uf">9 mos SAC</div>
+                  </div>
+                  <div class="fin-header">
+                    <div class="fin-label-low">Lowest Payment</div>
+                    <div class="fin-term-low">84 mos</div>
+                  </div>
+                  <div class="fin-uf-price">18590</div>
+                  <div class="fin-low-mo">292</div>
+                </div>
+                <div>
+                  <div class="fin-header" id="fin-promo">Promo - 36 @ 0%</div>
+                  <div class="fin-promo-price">20656</div>
+                  <div class="fin-promo-mo">574</div>
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-finance">
+                <div>
+                  <div class="fin-header">
+                    <div class="fin-label-uf">Upfront</div>
+                    <div class="fin-term-uf">9 mos SAC</div>
+                  </div>
+                  <div class="fin-header">
+                    <div class="fin-label-low">Lowest Payment</div>
+                    <div class="fin-term-low">84 mos</div>
+                  </div>
+                  <div class="fin-uf-price">18590</div>
+                  <div class="fin-low-mo">292</div>
+                </div>
+                <div>
+                  <div class="fin-header" id="fin-promo">Promo - 36 @ 0%</div>
+                  <div class="fin-promo-price">20656</div>
+                  <div class="fin-promo-mo">574</div>
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-finance">
+                <div>
+                  <div class="fin-header">
+                    <div class="fin-label-uf">Upfront</div>
+                    <div class="fin-term-uf">9 mos SAC</div>
+                  </div>
+                  <div class="fin-header">
+                    <div class="fin-label-low">Lowest Payment</div>
+                    <div class="fin-term-low">84 mos</div>
+                  </div>
+                  <div class="fin-uf-price">18590</div>
+                  <div class="fin-low-mo">292</div>
+                </div>
+                <div>
+                  <div class="fin-header" id="fin-promo">Promo - 36 @ 0%</div>
+                  <div class="fin-promo-price">20656</div>
+                  <div class="fin-promo-mo">574</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="rrq-multi-cont-discount"><!--ROW for Discounts-->
+          <div class="rrq-pres-group-icon">
+              <img id="discount-main-icon"/>
+              <div>Rebates & Discounts</div>
+          </div>
+          <div class="rrq-multi-tiers-discount"><!--TIERS FOR Discounts-->
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-discount">
+                <div class="rrq-disc-applied">
+
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-discount">
+                <div class="rrq-disc-applied">
+
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-discount">
+                <div class="rrq-disc-applied">
+
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-discount">
+                <div class="rrq-disc-applied">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rrq-multi-cont-partials" style="display:none;"><!--ROW for Partials-->
+          <div class="rrq-pres-group-icon">
+              <img id='partial-main-icon'/>
+              <div>Partials</div>
+          </div>
+          <div class="rrq-multi-tiers-partials"><!--TIERS FOR Partials-->
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-partials">
+                <div class="rrq-part-header">
+                  <div></div><div>Cooling</div><div>Heating</div>
+                </div>
+                <div class="rrq-part-upfront">
+                  <div>Upfront - 9 mos SAC: </div><div>9202</div><div>10224</div>
+                </div>
+                <div class="rrq-part-lowest">
+                  <div>Lowest Payment: </div><div>144</div><div>160</div>
+                </div>
+                <div class="rrq-part-promo">
+                  <div>Promo - 36 @ 0%: </div><div>10224</div><div>10188</div>
+                </div>
+                <div class="rrq-part-promomo">
+                  <div>Promo - monthly: </div><div>283</div><div>253</div>
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-partials">
+                <div class="rrq-part-header">
+                  <div></div><div>Cooling</div><div>Heating</div>
+                </div>
+                <div class="rrq-part-upfront">
+                  <div>Upfront - 9 mos SAC: </div><div>8366</div><div>9295</div>
+                </div>
+                <div class="rrq-part-lowest">
+                  <div>Lowest Payment: </div><div>131</div><div>146</div>
+                </div>
+                <div class="rrq-part-promo">
+                  <div>Promo - 36 @ 0%: </div><div>9295</div><div>9262</div>
+                </div>
+                <div class="rrq-part-promomo">
+                  <div>Promo - monthly: </div><div>258</div><div>230</div>
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-partials">
+                <div class="rrq-part-header">
+                  <div></div><div>Cooling</div><div>Heating</div>
+                </div>
+                <div class="rrq-part-upfront">
+                  <div>Upfront - 9 mos SAC: </div><div>8366</div><div>9295</div>
+                </div>
+                <div class="rrq-part-lowest">
+                  <div>Lowest Payment: </div><div>131</div><div>146</div>
+                </div>
+                <div class="rrq-part-promo">
+                  <div>Promo - 36 @ 0%: </div><div>9295</div><div>9262</div>
+                </div>
+                <div class="rrq-part-promomo">
+                  <div>Promo - monthly: </div><div>258</div><div>230</div>
+                </div>
+              </div>
+            </div>
+            <div class="rrq-multi-tier">
+              <div class="rrq-pres-group-title">&nbsp;</div>
+              <div class="rrq-multi-tier-partials">
+                <div class="rrq-part-header">
+                  <div></div><div>Cooling</div><div>Heating</div>
+                </div>
+                <div class="rrq-part-upfront">
+                  <div>Upfront - 9 mos SAC: </div><div>8366</div><div>9295</div>
+                </div>
+                <div class="rrq-part-lowest">
+                  <div>Lowest Payment: </div><div>131</div><div>146</div>
+                </div>
+                <div class="rrq-part-promo">
+                  <div>Promo - 36 @ 0%: </div><div>9295</div><div>9262</div>
+                </div>
+                <div class="rrq-part-promomo">
+                  <div>Promo - monthly: </div><div>258</div><div>230</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+    <script src="../bin/gui/rrq-presenter.js"></script>
+</html>

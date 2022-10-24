@@ -1,0 +1,26 @@
+#chart-area{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+}
+
+[id*="-chart-space"]{
+    width: 90%;
+    margin: 10px;
+}
+#metrics-area{
+    margin: 20px;
+}
+.metric-row{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+.metric-row:nth-child(even){
+    background-color: var(--highlight-color);
+}
+.metric-header-row{
+    font-weight: bold;
+}
+[id*="Close%-"]:after{
+    content:"%";
+}

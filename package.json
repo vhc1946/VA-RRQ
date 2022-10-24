@@ -1,0 +1,28 @@
+{
+  "name": "RRQ",
+  "version": "1.0.0",
+  "description": "Residential Quoter",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "app": "electron app.js",
+    "package-app": "electron-packager ./ Res-Quoter --overwrite --asar=true --platform=win32 --arch=ia32 --icon=./bin/assets/icons/V-Mark-red.ico --prune=true --out=../../../../documentation/rrq/releases/ --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Res Quoter\""
+  },
+  "author": "cmv",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "electron": "^18.2.3",
+    "electron-packager": "^15.5.1",
+    "excel4node": "^1.8.0",
+    "extra-fs": "^3.2.10",
+    "fs-extra": "^10.1.0",
+    "html-pdf": "^3.0.1",
+    "jquery": "^3.6.0",
+    "nedb": "^1.8.0",
+    "pdf-lib": "^1.17.1",
+    "request": "^2.88.2",
+    "xlsx": "^0.18.5",
+    "xlsx-populate": "^1.21.0"
+  }
+}
