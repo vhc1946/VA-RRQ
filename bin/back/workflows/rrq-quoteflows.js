@@ -19,8 +19,11 @@ var paths = {
   },
   jobsubfolders:{
     contracts:'contracts',
+    roadmap:'Roadmap',
+    servicetickets:'Service Tickets',
     apics:'After Pictures',
     bpics:'Before Pictures',
+    comforttemplates:'Comfort Templates',
     manuals:'Manual J',
     bidForms:'Bid Forms',
     boards:'Board Documents'
