@@ -102,7 +102,6 @@ var modcont = document.getElementById(moddom.cont);
 
 vcontrol.SETUPviews(modcont,'mtl');
 
-
 var INITbuildmod=()=>{
   modlist = new ObjList(new Array(qkey.accessories));
 
