@@ -103,14 +103,33 @@ background-color:  rgb(244 162 162);
 
 /* Accessory Items Table */
 .build-mod-add-list{
-    max-height: 400px;
+    max-height: 500px;
     overflow-y: auto;
 }
-.build-mod-add-list>:nth-child(1){
-    background-color: var(--background-dark);
+.build-mod-add-list>:nth-child(1):hover{
+    background-color: unset;
+    cursor: unset;
+}
+.build-mod-add-list>:nth-child(2){
+    background-color: var(--background-dark) !important;
     color: var(--text-light);
     position: sticky;
     top:0;
+}
+.list-row>:nth-child(1){
+    width: 250px;
+}
+.list-row>:nth-child(8),
+.list-row>:nth-child(9),
+.list-row>:nth-child(10){
+    width: 100px;
+    text-align: center;
+}
+.list-row>:nth-child(2),
+.list-row>:nth-child(5),
+.list-row>:nth-child(6),
+.list-row>:nth-child(7){
+    display: none;
 }
 
 .build-mod-add-in{
@@ -118,7 +137,6 @@ background-color:  rgb(244 162 162);
 }
 
 
-/*ADDED BY Christian...*/
 .build-mod-select-title{
   background-color:var(--background-dark);
   color:var(--text-light);
