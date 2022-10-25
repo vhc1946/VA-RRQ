@@ -110,7 +110,7 @@ background-color:  rgb(244 162 162);
     background-color: unset;
     cursor: unset;
 }
-.build-mod-add-list>:nth-child(2){
+.build-mod-add-list>:nth-child(1){
     background-color: var(--background-dark) !important;
     color: var(--text-light);
     position: sticky;
@@ -135,7 +135,13 @@ background-color:  rgb(244 162 162);
 .build-mod-add-in{
     width:250px;
 }
-
+.min-page-menu>.list-row{
+    padding-top:20px;
+    padding-left:20px;
+}
+.min-page-cont-mods>.min-page-view{
+    padding-top: 0px;
+}
 
 .build-mod-select-title{
   background-color:var(--background-dark);

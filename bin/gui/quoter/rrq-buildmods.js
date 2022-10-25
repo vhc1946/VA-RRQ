@@ -360,6 +360,8 @@ var SETaccfilters=(cont)=>{
   accfilterrow.classList.add(moddom.views.mods.listrow);
   accfilterrow.children[2].setAttribute('type','search');
   accfilterrow.children[2].setAttribute('list','mod-add-cat-list');
+  accfilterrow.children[2].setAttribute('placeholder','Select Category');
+  accfilterrow.children[0].setAttribute('placeholder','Search Item');
   accfilterrow.addEventListener('change',(ele)=>{
     let flts = gentable.GETrowTOobject(cont.getElementsByClassName('min-page-menu')[0].lastChild,true);
     SETacclist(cont,modlist.TRIMlist(flts,true));
@@ -371,7 +373,8 @@ var SETaccfilters=(cont)=>{
 var SETacclist=(cont,alist)=>{
   let list = cont.getElementsByClassName(moddom.views.mods.list)[0];
   list.innerHTML="";
-  //
+  list.appendChild(gentable.SETrowFROMobject(modlisthead));
+  list.lastChild.classList.add(moddom.views.mods.listrow);
   for(let x=0;x<alist.length;x++){
     list.appendChild(gentable.SETrowFROMobject(alist[x]));
     list.lastChild.classList.add(moddom.views.mods.listrow);
