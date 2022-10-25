@@ -104,7 +104,8 @@ vcontrol.SETUPviews(modcont,'mtl');
 
 
 var INITbuildmod=()=>{
-  modlist = new ObjList(qkey.accessories);
+  modlist = new ObjList(new Array(qkey.accessories));
+
   modlisthead = modlist.list.shift();
 
   for(let x=0;x<qbuild.systems.length;x++){
