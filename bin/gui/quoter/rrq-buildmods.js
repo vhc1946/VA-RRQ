@@ -350,7 +350,9 @@ var UPDATEenhlist=(sysinfo,sysnum,tiernum)=>{
 var SETacclist=(cont,alist)=>{
   let list = cont.getElementsByClassName(moddom.views.mods.list)[0];
 
-  //gentable.BUILDdistable(alist,list)
+  list.appendChild(gentable.SETrowFROMobject(alist[0],true));
+  list.lastChild.classList.add(moddom.views.mods.listrow);
+  //
   for(let x=0;x<alist.length;x++){
     list.appendChild(gentable.SETrowFROMobject(alist[x]));
     list.lastChild.classList.add(moddom.views.mods.listrow);
