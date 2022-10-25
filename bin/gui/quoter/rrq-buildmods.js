@@ -9,7 +9,7 @@
     - qkey
 
 */
-
+var {SETdatalistSPC}=require('../../repo/gui/js/tools/vg-displaytools.js');
 var moddom = {
   cont:'build-mod-cont',
   selected:'vg-subtab-selected',
@@ -189,7 +189,10 @@ var SETaddblock=(block,sys=undefined)=>{
 
   SETenhlist(block,modlist.TRIMlist({}),sys);
   SETaddlist(block,sys);
-  SETacclist(block,modlist.TRIMlist({enhance:''}));
+
+
+  SETdatalistSPC(modlist.list,{cat:'mod-add-cat-list'})
+  SETacclist(block,modlist.list); //exclude enhancements
 
   block.getElementsByClassName(moddom.views.mods.list)[0].addEventListener('click',(ele)=>{ // Add to selects from list
     let lrow = ele.target.parentNode;
