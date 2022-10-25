@@ -10,6 +10,8 @@
 
 */
 var {SETdatalistSPC}=require('../../repo/gui/js/tools/vg-displaytools.js');
+
+
 var moddom = {
   cont:'build-mod-cont',
   selected:'vg-subtab-selected',
@@ -94,6 +96,7 @@ SETUPmodviewer();
 
 // ADD-ONs /////////////////////////////////////////////////////////////////////
 var modlist; //modifications list
+var modlisthead; //modifications header
 
 var modcont = document.getElementById(moddom.cont);
 
@@ -102,6 +105,8 @@ vcontrol.SETUPviews(modcont,'mtl');
 
 var INITbuildmod=()=>{
   modlist = new ObjList(qkey.accessories);
+  modlisthead = modlist.list.shift();
+
   for(let x=0;x<qbuild.systems.length;x++){
     vcontrol.ADDview(qbuild.systems[x].name,ADDmodsystem(qbuild.systems[x].name,qbuild.systems[x]),modcont);
   }
@@ -191,7 +196,9 @@ var SETaddblock=(block,sys=undefined)=>{
   SETaddlist(block,sys);
 
 
-  SETdatalistSPC(modlist.list,{cat:'mod-add-cat-list'})
+  SETdatalistSPC(modlist.list,{cat:'mod-add-cat-list'});
+  SETaccfilters(block);
+
   SETacclist(block,modlist.list); //exclude enhancements
 
   block.getElementsByClassName(moddom.views.mods.list)[0].addEventListener('click',(ele)=>{ // Add to selects from list
@@ -344,14 +351,26 @@ var UPDATEenhlist=(sysinfo,sysnum,tiernum)=>{
 }
 
 // Accessory Selection List ////////////////////////////////////////////////////
+
+var accfilterrow = null;
+var SETaccfilters=(cont)=>{
+
+  cont.getElementsByClassName('min-page-menu')[0].appendChild(gentable.SETrowFROMobject({name:'',notes:'',cat:''},true));
+  accfilterrow = cont.getElementsByClassName('min-page-menu')[0].lastChild;
+  accfilterrow.classList.add(moddom.views.mods.listrow);
+  accfilterrow.children[2].setAttribute('type','search');
+  accfilterrow.children[2].setAttribute('list','mod-add-cat-list');
+  accfilterrow.addEventListener('change',(ele)=>{
+    let flts = gentable.GETrowTOobject(cont.getElementsByClassName('min-page-menu')[0].lastChild,true);
+    SETacclist(cont,modlist.TRIMlist(flts,true));
+  });
+}
 /* Sets the accessories list
     used for selection both ADDs and DEDs
 */
 var SETacclist=(cont,alist)=>{
   let list = cont.getElementsByClassName(moddom.views.mods.list)[0];
-
-  list.appendChild(gentable.SETrowFROMobject(alist[0],true));
-  list.lastChild.classList.add(moddom.views.mods.listrow);
+  list.innerHTML="";
   //
   for(let x=0;x<alist.length;x++){
     list.appendChild(gentable.SETrowFROMobject(alist[x]));
