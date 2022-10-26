@@ -238,6 +238,7 @@ document.getElementById('rrq-create-presentation').addEventListener('click',(ele
     associated with the name of the last open view before the function toggled
 */
 let lastv = false;
+
 var TOGGLEsummary=()=>{
   if(blddom.nav.viewbuttons[lastv]){
     document.getElementsByClassName(blddom.nav.left)[0].getElementsByClassName(blddom.nav.viewbuttons[lastv])[0].click();

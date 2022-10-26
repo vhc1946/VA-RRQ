@@ -47,7 +47,7 @@
             <div class="build-mod-add-controls-cont">
               <div class="build-mod-add-filter-cont">
                 <input class="build-mod-add-in" placeholder='Add Addition...'/>
-                <span class="icon-action-button"><img class="build-mod-add-inbutton vc-actionbutton"src="../bin/repo/assets/icons/plus-icon.png"/ ></span>
+                <span class="icon-action-button"><img class="build-mod-add-inbutton viewcontrol-actionbutton"src="../bin/repo/assets/icons/plus-icon.png"/ ></span>
                 <div class="flat-action-button modslist-show">SHOW</div>
               </div>
               <div class="flat-action-button build-mod-add-delete">DELETE</div>
