@@ -143,7 +143,6 @@ var ADDmodsystem=(sname,sys=undefined)=>{
 
   $(modsys).show();
 
-
   SETaddblock(modsys.getElementsByClassName(moddom.views.mods.cont)[0],sys);
   SETdscntblock(modsys.getElementsByClassName(moddom.views.dscnts.cont)[0],sys);//Setup Discount Block
 
