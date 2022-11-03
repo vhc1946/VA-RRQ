@@ -88,6 +88,7 @@ ipcRenderer.on(settingsroutes.createkey,(eve,data)=>{
 //  FINANCE  //
 document.getElementById(quodom.finance).addEventListener('change',(ele)=>{
   appsettings.quotesettings.finance = vgtables.READintable(document.getElementById(quodom.finance).children);
+  SAVEsettings();
   console.log(appsettings);
 });
 /////////////////////////
