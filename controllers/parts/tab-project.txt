@@ -1,11 +1,12 @@
 
 
 <div class="viewcontrol-menu">
-  <div>
+  <div class="viewcontrol-menubox">
     <div class="viewcontrol-menu-item" title="JOB">Job</div>
     <div class="viewcontrol-menu-item" title="CUSTOMER">Customer</div>
     <div class="viewcontrol-menu-item" title="TRACKING">Tracking</div>
   </div>
+  <div class="viewcontrol-quick-actions"></div>
 </div>
 <div class="viewcontrol-port">
   <div class="viewcontrol-port-item" title="JOB">

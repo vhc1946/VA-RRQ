@@ -31,23 +31,25 @@ var discdom={
 
 var finalc = require('./rrq-buildfinal.js');
 
-var sumcont = document.getElementById(bsdom.cont);
-
-vcontrol.SETUPviews(sumcont,'mtl');
+var sumviews = new vcontrol.ViewGroup({
+  create:false,
+  cont:document.getElementById(bsdom.cont),
+  type:'mtl'
+})
 
 
 
 var INITbuildsum=()=>{
   for(let x=0;x<qbuild.systems.length;x++){
-    vcontrol.ADDview(qbuild.systems[x].name,ADDsumsystem(x,qbuild.systems[x]),sumcont);
+    sumviews.ADDview(qbuild.systems[x].name,ADDsumsystem(x,qbuild.systems[x]));
   }
 }
 var REFRESHsumsystem=(sysinfo,sysid)=>{
-  let views = sumcont.getElementsByClassName(vcontrol.vcdom.port.cont)[0];
-  views.children[sysid].innerHTML = '';
-  views.children[sysid].appendChild(ADDsumsystem(sysid,sysinfo).children[0]);
-  //views.removeChild(views.children[sysid]);
-  //views.insertBefore(ADDsumsystem(sysid,sysinfo),views.children[sysid]);
+  let views = sumviews.port.children;
+  views[sysid].innerHTML = '';
+  views[sysid].appendChild(ADDsumsystem(sysid,sysinfo).children[0]);
+  //views.removeChild(views[sysid]);
+  //views.insertBefore(ADDsumsystem(sysid,sysinfo),views[sysid]);
 }
 
 var ADDsumsystem=(sysnum=null,sysinfo=null)=>{
@@ -71,7 +73,7 @@ var ADDsumsystem=(sysnum=null,sysinfo=null)=>{
 }
 
 var GETsumsystems=()=>{
-  let views = sumcont.getElementsByClassName(vcontrol.vcdom.port.view);
+  let views = sumviews.port.children;
   let systems = []
   for(let x=0;x<views.length;x++){
     systems.push(views[x].innerHTML);
@@ -243,5 +245,6 @@ module.exports={
   ADDsumsystem,
   REFRESHsumsystem,
   GETsumsystems,
-  bsdom
+  bsdom,
+  sumviews
 }
