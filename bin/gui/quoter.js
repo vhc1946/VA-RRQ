@@ -171,14 +171,19 @@ ipcRenderer.on(quoteroutes.deletequote,(eve,data)=>{
 });
 ipcRenderer.on(quoteroutes.savequote,(eve,data)=>{
   chcksavequote = true;
+  console.log('QUOTE',data.quote);
   if(data.quote&&data.quote!=undefined){
+    tquote = data.quote;
     DropNote('tr',data.msg,'green');
   }else{DropNote('tr',data.msg,'red')}
   TOGGLEsummary();
 });
 ipcRenderer.on(quoteroutes.createcontract,(eve,data)=>{
   if(data.status){
-    SAVEquote();
+    if(data.quote&&data.quote!=undefined){
+      tquote = data.quote; //to update the contract object
+      SAVEquote();
+    }
     DropNote('tr',data.msg,'green');
   }
   else{DropNote('tr',data.msg,'red'),true}

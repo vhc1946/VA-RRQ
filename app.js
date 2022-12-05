@@ -407,7 +407,11 @@ ipcMain.on(quoteroutes.createcontract,(eve,data)=>{
   if(data.quote!=undefined && data.contract!=undefined){
     qflows.UPDATEcontract(data.contract,data.quote.froot,au.auser).then(
       (stat)=>{
-        if(stat){eve.sender.send(quoteroutes.createcontract,{msg:'Contract Created',status:true});}
+        console.log(stat);
+        if(stat){
+          data.quote.info.contracts[data.contract.system.name]=data.contract;
+          eve.sender.send(quoteroutes.createcontract,{msg:'Contract Created',status:true,quote:data.quote});
+        }
         else{eve.sender.send(quoteroutes.createcontract,{msg:'Contract NOT Updated, Close contract file',status:false})}
       }
     );

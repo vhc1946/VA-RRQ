@@ -98,8 +98,9 @@ SETUPmodviewer();
 var modlist; //modifications list
 var modlisthead; //modifications header
 
-var modcont = document.getElementById(moddom.cont);
+//var modcont = document.getElementById(moddom.cont);
 var modviews = new vcontrol.ViewGroup({
+  create:false,
   cont:document.getElementById(moddom.cont),
   type:'mtl'
 })
@@ -115,6 +116,7 @@ var INITbuildmod=()=>{
 
 var GETbuildmod=()=>{
   let cont = document.getElementById('build-mod-views').getElementsByClassName('build-mod-system');
+  console.log(cont)
   for(let x=0;x<cont.length;x++){ //loop through systems
     let list = cont[x].getElementsByClassName(moddom.views.mods.enh.selects)[0].children;
     qbuild.systems[x].enhancments=[];
@@ -387,12 +389,12 @@ var SETacclist=(cont,alist)=>{
   //list.lastChild.classList.add(moddom.views.mods.listrow);
   let tlist = [];
   gentable.BUILDtruetable(tlist.concat(modlisthead,alist),list,true,moddom.views.mods.listrow);
-  
+
   //for(let x=0;x<alist.length;x++){
   //  list.appendChild(gentable.SETrowFROMobject(alist[x]));
   //  list.lastChild.classList.add(moddom.views.mods.listrow);
   //}
-  
+
 }
 
 //setup up filter input
