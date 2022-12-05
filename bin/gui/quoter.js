@@ -6,12 +6,9 @@ var Titlebar=require('../bin/repo/gui/js/modules/vg-titlebar.js');
 
 //layouts
 var {stdbook}=require('../bin/repo/gui/js/layouts/vg-stdbook.js');
-
-var gentable=require('../bin/repo/gui/js/modules/vg-tables.js')
 var domtools=require('../bin/repo/gui/js/tools/vg-displaytools.js');
 
 //tools
-var {ObjList}=require('../bin/repo/tools/box/vg-lists.js');
 var {DropNote}=require('../bin/repo/gui/js/modules/vg-dropnote.js');
 
 //useful paths
