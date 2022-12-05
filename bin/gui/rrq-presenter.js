@@ -112,7 +112,7 @@ var LOADresipresi=()=>{
 
 
   for(let i=0;i<tquote.info.build.systems[sysnum].tiers.length;i++){
-      
+
     // User Experience ///////////
 
     document.getElementsByClassName('rrq-user-experience')[i].src = diricon + '/SmileyFace_'+(i+1)+'.png';

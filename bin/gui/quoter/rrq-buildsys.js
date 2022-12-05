@@ -165,6 +165,7 @@ var CHECKsystemsize=(fltrs,sys)=>{
 // READING systems //////////////////////////////////////////////////////////////
 var SETsystem=(card,sys)=>{
   card.getElementsByClassName(sbdom.system.info.group)[0].value = sys.group || '';
+  card.getElementsByClassName(sbdom.system.info.areaserve)[0].value = sys.areaserve || '';
   card.getElementsByClassName(sbdom.system.info.btucooling)[0].value = sys.btucooling || '';
   card.getElementsByClassName(sbdom.system.info.btuheating)[0].value = sys.btuheating || '';
   card.getElementsByClassName(sbdom.system.info.outlocation)[0].value = sys.outlocation ||'';
@@ -194,6 +195,7 @@ var GETsystems=()=>{
     systems.push({ //declaration of system object
       name:sysnames[x],
       group:syslist[x].getElementsByClassName(sbdom.system.info.group)[0].value,
+      areaserve:syslist[x].getElementsByClassName(sbdom.system.info.areaserve)[0].value,
       btucooling:syslist[x].getElementsByClassName(sbdom.system.info.btucooling)[0].value,
       btuheating:syslist[x].getElementsByClassName(sbdom.system.info.btuheating)[0].value,
       outlocation:syslist[x].getElementsByClassName(sbdom.system.info.outlocation)[0].value,

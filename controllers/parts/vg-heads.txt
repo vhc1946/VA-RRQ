@@ -4,4 +4,3 @@
 <link rel="stylesheet" href="../bin/repo/gui/styles/vg-utility.css"/>
 <link rel="stylesheet" href="../bin/repo/gui/styles/vg-general.css"/>
 <link rel="stylesheet" href="../bin/repo/gui/styles/vg-support.css"/>
-<link rel="stylesheet" href="../bin/repo/gui/styles/modules/vg-dropnote.css"/>

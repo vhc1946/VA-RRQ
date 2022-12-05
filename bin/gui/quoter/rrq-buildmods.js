@@ -373,10 +373,13 @@ var SETacclist=(cont,alist)=>{
   list.innerHTML="";
   list.appendChild(gentable.SETrowFROMobject(modlisthead));
   list.lastChild.classList.add(moddom.views.mods.listrow);
+  //gentable.BUILDtruetable(alist,list,true,'acc-row');
+  
   for(let x=0;x<alist.length;x++){
     list.appendChild(gentable.SETrowFROMobject(alist[x]));
     list.lastChild.classList.add(moddom.views.mods.listrow);
   }
+  
 }
 
 //setup up filter input

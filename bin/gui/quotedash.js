@@ -16,7 +16,6 @@ var gendis = require('../bin/repo/gui/js/tools/vg-displaytools.js');
 var {CREATEticket} = require('../bin/repo/logger/things/support-form.js');
 
 var {usersls,quotesls}=require('../bin/gui/storage/lstore.js');
-const { each } = require('jquery');
 
 var uquotes = new ObjList();
 var quoteset = null;
@@ -235,7 +234,7 @@ var SETquotetable=()=>{
     v = qtableviews.ADDview(quoteset.status[s],v);
     v.appendChild(document.createElement('div'));
     v.lastChild.classList.add(gentable.gtdom.table);
-    gentable.BUILDdistable(l,v.lastChild,true,qddom.tables.row,quotetablemaps[s]);
+    gentable.BUILDtruetable(l,v.lastChild,true,qddom.tables.row,quotetablemaps[s]);
 
   }
 

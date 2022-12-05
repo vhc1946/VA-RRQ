@@ -5,6 +5,10 @@
     --tier4: rgb(181,227,220);
 }
 
+#quote-calc-cont{
+    height: calc(100vh - 25px);
+}
+
 .build-tier-block{
     display: grid;
     grid-template-columns: 1fr 5fr;
