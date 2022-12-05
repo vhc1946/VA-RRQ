@@ -213,12 +213,15 @@ body::-webkit-scrollbar{
 
 
 /* PRINTING */
-#rrq-presi-header{
+#rrq-presi-header,
+.rrq-multi-cont-header-print{
    display:none;
 }
 @media print{
     #rrq-presi-header{display: grid;}
-    .rrq-multi-cont-impact{page-break-before: always;}
+    .rrq-multi-cont-header-print{
+        page-break-before: always;
+        display:grid;}
 }
 
 @page{
