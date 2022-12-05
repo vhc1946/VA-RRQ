@@ -6,7 +6,7 @@ var RROOT='../bin/repo/';
 var Titlebar = require('../bin/repo/gui/js/modules/vg-titlebar.js');
 var gentable = require('../bin/repo/gui/js/modules/vg-tables.js');
 var floatv = require('../bin/repo/gui/js/modules/vg-floatviews.js');
-var {DropNote}=require('../bin/repo/gui/js/modules/vg-poppers.js');
+var {DropNote}=require('../bin/repo/gui/js/modules/vg-dropnote.js');
 
 var vcontrol = require('../bin/repo/gui/js/layouts/view-controller.js');
 

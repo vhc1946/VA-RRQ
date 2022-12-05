@@ -1,6 +1,6 @@
 var {ipcRenderer}=require('electron');
 var {settingsroutes}=require('../bin/routes.js');
-var {DropNote}=require('../bin/repo/gui/js/modules/vg-poppers.js');
+var {DropNote}=require('../bin/repo/gui/js/modules/vg-dropnote.js');
 ///Admin Close Button
 document.getElementById('close-admin').addEventListener('click',(ele)=>{
   $(document.getElementById('vg-center-info-admin')).hide();

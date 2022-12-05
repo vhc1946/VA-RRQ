@@ -4,7 +4,6 @@ var {ipcRenderer, contextBridge}=require('electron');
 var $ = require('jquery');
 var RROOT = '../bin/repo/';
 var Titlebar = require('../bin/repo/gui/js/modules/vg-titlebar.js');
-var {DropNote}=require('../bin/repo/gui/js/modules/vg-poppers.js');
 var path=require('path');
 
 var {quotesls}=require('../bin/gui/storage/lstore.js');

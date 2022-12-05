@@ -5,7 +5,7 @@ var RROOT = '../bin/repo/';
 
 var domtools = require('../bin/repo/gui/js/tools/vg-displaytools.js');
 var vgtables = require('../bin/repo/gui/js/modules/vg-tables.js');
-var {DropNote}=require('../bin/repo/gui/js/modules/vg-poppers.js');
+var {DropNote}=require('../bin/repo/gui/js/modules/vg-dropnote.js');
 var Titlebar = require('../bin/repo/gui/js/modules/vg-titlebar.js');
 var SMView = require('../bin/repo/gui/js/layouts/vg-sidemenuview.js');
 
