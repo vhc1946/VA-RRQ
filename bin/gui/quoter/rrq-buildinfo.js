@@ -42,9 +42,11 @@ var bidom={
 }
 
 var infocont = document.getElementById(bidom.edit.cont);
-console.log(infocont);
 infocont.classList.add(vcontrol.vcdom.cont);
-vcontrol.SETUPviews(infocont);
+var qinfoviews = new vcontrol.ViewGroup({
+  create:false,
+  cont:infocont
+})
 
 var SETquoteinfo=()=>{
   document.getElementById(Titlebar.tbdom.title).innerText = tquote.id+' - '+tquote.name;

@@ -4,6 +4,7 @@ var {ipcRenderer, contextBridge}=require('electron');
 var $ = require('jquery');
 var RROOT = '../bin/repo/';
 var Titlebar = require('../bin/repo/gui/js/modules/vg-titlebar.js');
+var {DropNote}=require('../bin/repo/gui/js/modules/vg-dropnote.js');
 var path=require('path');
 
 var {quotesls}=require('../bin/gui/storage/lstore.js');
@@ -20,11 +21,6 @@ ipcRenderer.on('GET-quotesettings',(eve,data)=>{
 });
 
 // TITLE bar //
-document.getElementById(Titlebar.tbdom.page.print).addEventListener('dblclick',(ele)=>{
-  ipcRenderer.send('print-screen',{file:document.getElementById(Titlebar.tbdom.title).innerText})
-});
-////////////////////
-
 
 var pnavdom = {
   cont:'page-buttons',
@@ -43,19 +39,25 @@ var pnavdom = {
 var qactions={
   part:{
     id:'partials-toggle',
-    src:'../bin/repo/assets/icons/layers.png'
+    src:'../bin/repo/assets/icons/layers.png',
+    onclick:(ele)=>{$(document.getElementsByClassName('rrq-multi-cont-partials')[0]).toggle();}
   },
   up:{
     id:pnavdom.system.up,
-    src:'../bin/repo/assets/icons/angle-down.png'
+    src:'../bin/repo/assets/icons/angle-down.png',
+    onclick:CHANGEsys
   },
   down:{
     id:pnavdom.system.down,
-    src:'../bin/repo/assets/icons/angle-up.png'
+    src:'../bin/repo/assets/icons/angle-up.png',
+    onclick:CHANGEsys
   }
 }
 
-Titlebar.ADDqactions(Titlebar.CREATEactionbuttons(qactions));
+Titlebar.SETUPtitlebar(qactions);
+
+////////////////////
+
 
 var apaths=require('../app/paths.json');
 var tquote=null;
@@ -110,6 +112,7 @@ var LOADresipresi=()=>{
 
 
   for(let i=0;i<tquote.info.build.systems[sysnum].tiers.length;i++){
+
     // User Experience ///////////
 
     document.getElementsByClassName('rrq-user-experience')[i].src = diricon + '/SmileyFace_'+(i+1)+'.png';
@@ -183,7 +186,7 @@ var LOADresipresi=()=>{
     }else{
       disc.lastChild.appendChild(document.createElement('div')).innerText = tquote.info.build.systems[sysnum].tiers[i].size.rebateelec;
     }
-    
+
     if(tquote.info.build.systems[sysnum].tiers[i].size.rebategas!=''){
       disc.appendChild(document.createElement('div')).classList.add('rrq-disc-row');
       disc.lastChild.appendChild(document.createElement('div')).innerText = 'Spire (Post-Purchase)';
@@ -193,7 +196,7 @@ var LOADresipresi=()=>{
     document.getElementsByClassName("rrq-multi-tier-discount")[i].innerHTML = "";
     document.getElementsByClassName("rrq-multi-tier-discount")[i].appendChild(disc);
 
-     
+
 
     // Investment /////////////////////////////////////
     document.getElementsByClassName('fin-uf-price')[i].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[0].opts.sysprice.price);
@@ -214,6 +217,7 @@ var LOADresipresi=()=>{
 }
 
 var CHANGEsys=(ele)=>{
+  console.log('here')
   if(ele.target.id==pnavdom.system.down){
     sysnum--;if(sysnum<0){sysnum=tquote.info.build.systems.length-1;}
   }else{
@@ -269,13 +273,6 @@ var SETUPpresnav=()=>{
   document.getElementById(pnavdom.tier.left).addEventListener('click',CHANGEtier);
   document.getElementById(pnavdom.tier.right).addEventListener('click',CHANGEtier);
 }
-
-document.getElementById(pnavdom.system.up).addEventListener('click',CHANGEsys);
-document.getElementById(pnavdom.system.down).addEventListener('click',CHANGEsys);
-document.getElementById('partials-toggle').addEventListener('click',(ele)=>{
-  $(document.getElementsByClassName('rrq-multi-cont-partials')[0]).toggle();
-});
-
 
 module.exports={
 

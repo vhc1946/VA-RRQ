@@ -99,15 +99,17 @@ var modlist; //modifications list
 var modlisthead; //modifications header
 
 var modcont = document.getElementById(moddom.cont);
-
-vcontrol.SETUPviews(modcont,'mtl');
+var modviews = new vcontrol.ViewGroup({
+  cont:document.getElementById(moddom.cont),
+  type:'mtl'
+})
 
 var INITbuildmod=()=>{
   modlist = new ObjList([...qkey.accessories]); //copy the accessories array
   modlisthead = modlist.GETlist().shift();
 
   for(let x=0;x<qbuild.systems.length;x++){
-    vcontrol.ADDview(qbuild.systems[x].name,ADDmodsystem(qbuild.systems[x].name,qbuild.systems[x]),modcont);
+    modviews.ADDview(qbuild.systems[x].name,ADDmodsystem(qbuild.systems[x].name,qbuild.systems[x]));
   }
 }
 
@@ -581,5 +583,6 @@ module.exports = {
   GETbuildmod,
   UPDATEenhlist,
   UPDATEdscntlist,
-  moddom
+  moddom,
+  modviews
 }

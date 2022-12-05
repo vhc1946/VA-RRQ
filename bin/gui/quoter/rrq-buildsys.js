@@ -13,11 +13,12 @@
 */
 
 var ADJUSTdependents=(view)=>{
-  console.log('ADJUSTDING> ',view.title);
-  try{
-    vcontrol.REMOVEview(vcontrol.FINDbutton(view.title,document.getElementById(modbuild.moddom.cont)),document.getElementById(modbuild.moddom.cont));
-    vcontrol.REMOVEview(vcontrol.FINDbutton(view.title,document.getElementById(sumbuild.bsdom.cont)),document.getElementById(sumbuild.bsdom.cont));
-  }catch{}
+
+  console.log('ADJUSTDING> ',view);
+  //try{
+    modbuild.modviews.REMOVEview(modbuild.modviews.FINDbutton(view.title));//vcontrol.REMOVEview(vcontrol.FINDbutton(view.title,document.getElementById(modbuild.moddom.cont)),document.getElementById(modbuild.moddom.cont));
+    sumbuild.sumviews.REMOVEview(sumbuild.sumviews.FINDbutton(view.title));//vcontrol.REMOVEview(vcontrol.FINDbutton(view.title,document.getElementById(sumbuild.bsdom.cont)),document.getElementById(sumbuild.bsdom.cont));
+  //}catch{}
 }
 
 var sbdom = {
@@ -60,15 +61,19 @@ var sbdom = {
 var currtier = null; //holds the tier selected when choosing sizes (holds element)
 
 var syscont = document.getElementById(sbdom.cont);
-
-vcontrol.SETUPviews(syscont,'mtl');
+var sysviews = new vcontrol.ViewGroup({
+  create:false,
+  cont:document.getElementById(sbdom.cont),
+  type:'mtl',
+  delEve:ADJUSTdependents
+})
 
 var CreateSystemCard=(sysname,sys=null)=>{
   let newsys = document.getElementById(sbdom.system.cont).cloneNode(true); //system tab
   newsys.id='';
   newsys.classList.add(sbdom.system.cont);
 
-  vcontrol.ADDview(sysname,newsys,syscont,true,ADJUSTdependents);
+  sysviews.ADDview(sysname,newsys,true);
   SetupSystemCard(newsys,sys); //setup as new system
   $(newsys).show();
 }
@@ -251,8 +256,8 @@ document.getElementById(sbdom.add.button).addEventListener('click',(eve)=>{//add
     console.log('ADDED >',qbuild.systems);
     console.log('ADDED >',qprice.systems);
 
-    vcontrol.ADDview(sysname.value,modbuild.ADDmodsystem(sysname),document.getElementById(modbuild.moddom.cont),false);
-    vcontrol.ADDview(sysname.value,sumbuild.ADDsumsystem(qbuild.systems.length-1,qbuild.systems[qbuild.systems.length-1]),document.getElementById(sumbuild.bsdom.cont),false);
+    modbuild.modviews.ADDview(sysname.value,modbuild.ADDmodsystem(sysname),false);
+    sumbuild.sumviews.ADDview(sysname.value,sumbuild.ADDsumsystem(qbuild.systems.length-1,qbuild.systems[qbuild.systems.length-1]),false);
   }else{DropNote('tr','Bad System Name','red')}
   sysname.value = '';
 });

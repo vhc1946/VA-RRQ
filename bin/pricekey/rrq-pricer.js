@@ -73,25 +73,27 @@ var GETmonthlyfin=(price,payment)=>{
 }
 
 var GETsizeprice=(tinfo,size,discounts,tiernum,payment)=>{
+  console.log('Discounts',discounts);
   let tpobj = {
     payment:payment,
     opts:{
       sysprice:{
         price:RUNpricecalc(size.pricebase,payment.cost,tinfo.addprice),
-        monthly:GETmonthlyfin(RUNpricecalc(size.pricebase,payment.cost,tinfo.addprice),payment)
+        monthly:0
       },
       inprice:{
         price:RUNpricecalc(size.priceindoor,payment.cost,tinfo.addprice),
-        monthly:GETmonthlyfin(RUNpricecalc(size.pricebase,payment.cost,tinfo.addprice),payment)
+        monthly:0
       },
       outprice:{
         price:RUNpricecalc(size.priceoutdoor,payment.cost,tinfo.addprice),
-        monthly:GETmonthlyfin(RUNpricecalc(size.pricebase,payment.cost,tinfo.addprice),payment)
+        monthly:0
       }
     }
   }
   for(let po in tpobj.opts){ //loop through to apply discounts
     tpobj.opts[po].price=tpobj.opts[po].price-GETdscntstotal(tiernum,discounts,tpobj.opts[po].price);
+    tpobj.opts[po].monthly=GETmonthlyfin(tpobj.opts[po].price,payment); //calculate monthly after discounts
   }
   return tpobj;
 }
