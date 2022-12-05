@@ -14,12 +14,12 @@ var keyguide = require('./keygroups.json'); //get the list  of groups to include
         objhd = first object in sheet key holding option var names
         obj = option to be assigned the var names in objhd
 */
-var keyoptob = (obj,objhd)=>{
+var keyoptob = (obj,objhd,isvalue=true)=>{
     let tobj = {};
 
     for(let o in objhd){
         tobj[objhd[o]] = obj[o] || '';
-        if('instheight' == objhd[o] ||
+        if(isvalue && 'instheight' == objhd[o] ||
            'pricenet'==objhd[o] ||
            'pricebase'==objhd[o] ||
            'priceoutdoor'==objhd[o] ||
@@ -28,6 +28,7 @@ var keyoptob = (obj,objhd)=>{
     }
     return tobj;
 }
+
 
 /* Accessory property names
 */
@@ -72,8 +73,7 @@ var rrqkeymaker=(fname,reader)=>{
                           // can hold variables/objects that all tiers use
           key.groups[xlkey.SheetNames[x]]={}; //name the GROUP
           let optvars = tsheet[0]; //size variables (for each system in the tier)
-
-          key.groups[xlkey.SheetNames[x]].optheads = keyoptob(tsheet[1],optvars); //size headers to display (for each size variable)
+          key.groups[xlkey.SheetNames[x]].optheads = keyoptob(tsheet[1],optvars,false); //size headers to display (for each size variable)
           key.groups[xlkey.SheetNames[x]].systems = []; //array for tiers
 
           for(let y=2;y<tsheet.length;y++){ //Start loop of key group

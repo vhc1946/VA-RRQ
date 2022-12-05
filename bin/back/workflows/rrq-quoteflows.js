@@ -83,7 +83,7 @@ var MOVEquotefolder=(quote,auser,toFolder)=>{
 var UPDATEcontract=(contract,froot,auser)=>{
   return new Promise((resolve,reject)=>{
     var contracttemplate = path.join(auser.cuser.spdrive,paths.contracttemp);
-    var contractout = path.join(auser.cuser.spdrive,froot,paths.jobsubfolders.contracts,contract.system.name + '-'+ contract.customer.name.split(',')[0] + '.xlsx');
+    var contractout = path.join(auser.cuser.spdrive,froot,paths.jobsubfolders.contracts,contract.customer.name.split(',')[0]+ '-' + contract.group + '-' + contract.system.name  + '.xlsx');
     contractIO.WRITEexcel(contract,contracttemplate,contractout).then(
       (stat)=>{
         fs.stat(contractout,(err,stats)=>{
