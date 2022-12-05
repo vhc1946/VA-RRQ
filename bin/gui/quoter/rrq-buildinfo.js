@@ -46,7 +46,9 @@ infocont.classList.add(vcontrol.vcdom.cont);
 var qinfoviews = new vcontrol.ViewGroup({
   create:false,
   cont:infocont
-})
+});
+
+console.log(qinfoviews.cont);
 
 var SETquoteinfo=()=>{
   document.getElementById(Titlebar.tbdom.title).innerText = tquote.id+' - '+tquote.name;
