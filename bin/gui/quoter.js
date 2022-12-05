@@ -6,8 +6,8 @@ var Titlebar=require('../bin/repo/gui/js/modules/vg-titlebar.js');
 
 //layouts
 var {stdbook}=require('../bin/repo/gui/js/layouts/vg-stdbook.js');
-
-var gentable=require('../bin/repo/gui/js/modules/vg-tables.js')
+var vcontrol=require('../bin/repo/gui/js/layouts/view-controller.js');
+var gentable=require('../bin/repo/gui/js/modules/vg-tables.js');
 var domtools=require('../bin/repo/gui/js/tools/vg-displaytools.js');
 
 //tools
@@ -17,6 +17,8 @@ var {DropNote}=require('../bin/repo/gui/js/modules/vg-dropnote.js');
 //useful paths
 var {quotesls}=require('../bin/gui/storage/lstore.js');
 var {quoteroutes,navroutes}=require('../bin/routes.js');
+
+var pricer = require('../bin/pricekey/rrq-pricer.js');
 
 var blddom={ //build dom
   cont:'vg-stdbook-pages',
@@ -99,60 +101,50 @@ ipcRenderer.on('GET-quotesettings',(eve,data)=>{
 let mactions={
   delete:{
     id:'delete-quote',
-    src:'../bin/repo/assets/icons/trash.png'
+    src:'../bin/repo/assets/icons/trash.png',
+    ondblclick:(ele)=>{
+      if(chckdeletequote){
+        DropNote('tr','Deleting','green');
+        ipcRenderer.send(quoteroutes.deletequote,tquote.id);
+        chckdeletequote = false;
+      }else{DropNote('tr','...Currently Deleteing','yellow');}
+    }
   },
   refresh:{
     id:'refresh-quotekey',
-    src:'../bin/repo/assets/icons/key.png'
+    src:'../bin/repo/assets/icons/key.png',
+    ondblclick:(ele)=>{
+      if(chcknewkey){
+        console.log('Refresh Key')
+        ipcRenderer.send(quoteroutes.refreshquotekey,'Refresh Quote Key...');
+        chcknewkey = false;
+      }else{DropNote('tr','...Currently Loading Key','yellow')}
+    }
   },
   pricer:{
     id:'refresh-key',
-    src:'../bin/repo/assets/icons/dollar-thin.png'
+    src:'../bin/repo/assets/icons/dollar-thin.png',
+    ondblclick:(ele)=>{
+      qprice.systems = pricer.GETsystemprices(qsettings,qbuild);
+      console.log(qprice);
+    }
   }
 }
 let qactions={
   save:{
     id:'save-quote',
-    src:'../bin/repo/assets/icons/disk.png'
+    src:'../bin/repo/assets/icons/disk.png',
+    ondblclick:(ele)=>{
+      if(chcksavequote){
+        SAVEquote();
+        chcksavequote=false;
+      }else{DropNote('tr','...Currently Saving','yellow');}
+    }
   }
 }
 
-let malist=Titlebar.CREATEactionbuttons(mactions);
-let qalist=Titlebar.CREATEactionbuttons(qactions);
+Titlebar.SETUPtitlebar(qactions,mactions);
 
-Titlebar.ADDmactions(malist);
-Titlebar.ADDqactions(qalist);
-
-document.getElementById(qactions.save.id).addEventListener('dblclick',(ele)=>{
-  if(chcksavequote){
-    SAVEquote();
-    chcksavequote=false;
-  }else{DropNote('tr','...Currently Saving','yellow');}
-});
-document.getElementById(Titlebar.tbdom.page.print).addEventListener('dblclick',(ele)=>{
-  ipcRenderer.send('print-screen',{file:document.getElementById(Titlebar.tbdom.title).innerText});
-});
-document.getElementById(mactions.refresh.id).addEventListener('dblclick',(ele)=>{
-  if(chcknewkey){
-    console.log('Refresh Key')
-    ipcRenderer.send(quoteroutes.refreshquotekey,'Refresh Quote Key...');
-    chcknewkey = false;
-  }else{DropNote('tr','...Currently Loading Key','yellow')}
-});
-document.getElementById(mactions.delete.id).addEventListener('dblclick',(ele)=>{
-  if(chckdeletequote){
-    DropNote('tr','Deleting','green');
-    ipcRenderer.send(quoteroutes.deletequote,tquote.id);
-    chckdeletequote = false;
-  }else{DropNote('tr','...Currently Deleteing','yellow');}
-});
-
-
-var pricer = require('../bin/pricekey/rrq-pricer.js');
-document.getElementById(mactions.pricer.id).addEventListener('dblclick',(ele)=>{
-  qprice.systems = pricer.GETsystemprices(qsettings,qbuild);
-  console.log(qprice);
-});
 
 // WORKING VARIABLES //
 var chckcreatecontract = true;
@@ -160,6 +152,8 @@ var chckdeletequote = true;
 var chcksavequote = true;
 var chcknewkey = true;
 ///////////////////////
+
+
 
 ipcRenderer.on(quoteroutes.refreshquotekey,(eve,data)=>{
   chcknewkey = true;
@@ -198,6 +192,7 @@ ipcRenderer.on(navroutes.gotopresi,(eve,data)=>{
     DropNote('tr',data.msg,'yellow');
   }
 });
+
 //////////////////////////////////////////////////
 
 ///// END PAGE SETUP / LISTENERS ///////////////////////////////////////////////
@@ -224,7 +219,6 @@ document.getElementById('rrq-create-presentation').addEventListener('click',(ele
   //ipcRenderer.send(quoteroutes.createpresentation,{quote:})
   ipcRenderer.send(navroutes.gotopresi,{quote:tquote});
 });
-
 
 ////////////////////////////////////////////////////////////////////////////////
 

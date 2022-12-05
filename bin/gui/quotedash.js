@@ -95,35 +95,21 @@ let mactions={
   support:{
     id:'support-ticket',
     src:'../bin/repo/assets/icons/info.png',
-    title:'Support'
+    title:'Support',
+    ondblclick:(ele)=>{CREATEticket();}
   }
 }
 let qactions={
   refresh:{
     id:'refresh-dash',
     src:'../bin/repo/assets/icons/refresh-icon.png',
-    title:'Refresh Dash'
+    title:'Refresh Dash',
+    ondblclick:(ele)=>{ipcRenderer.send(qdashroutes.getuserquotes,"Refresh Dash...");}
   }
 }
 
-let malist=Titlebar.CREATEactionbuttons(mactions);
-let qalist=Titlebar.CREATEactionbuttons(qactions);
+Titlebar.SETUPtitlebar(qactions,mactions);
 
-Titlebar.ADDmactions(malist);
-Titlebar.ADDqactions(qalist);
-
-document.getElementById(qactions.refresh.id).addEventListener('dblclick',(ele)=>{
-  ipcRenderer.send(qdashroutes.getuserquotes,"Refresh Dash...")
-});
-document.getElementById(Titlebar.tbdom.page.print).addEventListener('dblclick',(ele)=>{
-  ipcRenderer.send('print-screen');
-  DropNote('tr','Printing Screen','green');
-});
-
-
-document.getElementById(mactions.support.id).addEventListener('dblclick',(ele)=>{
-  CREATEticket();
-});
 /////////////////
 
 //  QUOTE TABLE //
