@@ -110,32 +110,23 @@ background-color:  rgb(244 162 162);
     background-color: unset;
     cursor: unset;
 }
-.build-mod-add-list>:nth-child(1){
-    background-color: var(--background-dark) !important;
-    color: var(--text-light);
-    position: sticky;
-    top:0;
-}
-.list-row>:nth-child(1){
-    width: 250px;
-}
-.list-row>:nth-child(8),
-.list-row>:nth-child(9),
-.list-row>:nth-child(10){
+.acc-row>:nth-child(8),
+.acc-row>:nth-child(9),
+.acc-row>:nth-child(10){
     width: 100px;
     text-align: center;
 }
-.list-row>:nth-child(2),
-.list-row>:nth-child(5),
-.list-row>:nth-child(6),
-.list-row>:nth-child(7){
+.acc-row>:nth-child(2),
+.acc-row>:nth-child(5),
+.acc-row>:nth-child(6),
+.acc-row>:nth-child(7){
     display: none;
 }
 
 .build-mod-add-in{
     width:250px;
 }
-.min-page-menu>.list-row{
+.min-page-menu>.acc-row{
     padding-top:20px;
     padding-left:20px;
 }
@@ -147,4 +138,5 @@ background-color:  rgb(244 162 162);
   background-color:var(--background-dark);
   color:var(--text-light);
   font-size: 1.15em;
+  padding-left: 5px;
 }

@@ -9,7 +9,7 @@
     - qkey
 
 */
-var {SETdatalistSPC}=require('../../repo/gui/js/tools/vg-displaytools.js');
+var {SETdatalistSPC, FINDparentele}=require('../../repo/gui/js/tools/vg-displaytools.js');
 
 
 var moddom = {
@@ -53,7 +53,7 @@ var moddom = {
         prices:'build-mod-add-prices'
       },
       list:'build-mod-add-list',
-      listrow:'list-row'
+      listrow:'acc-row'
     },
     iaq:{
       cont:'build-iaq-cont'
@@ -200,15 +200,25 @@ var SETaddblock=(block,sys=undefined)=>{
   SETacclist(block,modlist.list); //exclude enhancements
 
   block.getElementsByClassName(moddom.views.mods.list)[0].addEventListener('click',(ele)=>{ // Add to selects from list
+    let lrow = FINDparentele(ele.target,'acc-row');
+    lrow=ADDselectline(gentable.GETrowTOobject(lrow)); //get row to compare
+    if(Dupcheck(block,lrow)){//check to see if item has been added
+      block.getElementsByClassName(moddom.views.mods.adds.selects)[0].appendChild(lrow);
+    }else{
+      DropNote('tr','Already on List','yellow');
+    }
+    /*
     let lrow = ele.target.parentNode;
     if(lrow.classList.contains(moddom.views.mods.listrow) && lrow!=block.getElementsByClassName(moddom.views.mods.list)[0].children[0]){
       lrow=ADDselectline(gentable.GETrowTOobject(lrow)); //get row to compare
+      console.log(lrow);
       if(Dupcheck(block,lrow)){//check to see if item has been added
         block.getElementsByClassName(moddom.views.mods.adds.selects)[0].appendChild(lrow);
       }else{
         DropNote('tr','Already on List','yellow');
       }
     }
+    */
 
     document.getElementById(moddom.cont).dispatchEvent(new Event('change')); //to refresh quote
   });
@@ -370,15 +380,16 @@ var SETaccfilters=(cont)=>{
 var SETacclist=(cont,alist)=>{
   console.log('ACCLIST',alist);
   let list = cont.getElementsByClassName(moddom.views.mods.list)[0];
-  list.innerHTML="";
-  list.appendChild(gentable.SETrowFROMobject(modlisthead));
-  list.lastChild.classList.add(moddom.views.mods.listrow);
-  //gentable.BUILDtruetable(alist,list,true,'acc-row');
+  //list.innerHTML="";
+  //list.appendChild(gentable.SETrowFROMobject(modlisthead));
+  //list.lastChild.classList.add(moddom.views.mods.listrow);
+  let tlist = [];
+  gentable.BUILDtruetable(tlist.concat(modlisthead,alist),list,true,moddom.views.mods.listrow);
   
-  for(let x=0;x<alist.length;x++){
-    list.appendChild(gentable.SETrowFROMobject(alist[x]));
-    list.lastChild.classList.add(moddom.views.mods.listrow);
-  }
+  //for(let x=0;x<alist.length;x++){
+  //  list.appendChild(gentable.SETrowFROMobject(alist[x]));
+  //  list.lastChild.classList.add(moddom.views.mods.listrow);
+  //}
   
 }
 
