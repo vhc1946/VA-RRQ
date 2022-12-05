@@ -26,7 +26,7 @@ var quotefloat = document.getElementById('quote-center');
 
 
 var qddom={
-  cont:'',
+  cont:'quote-tables-container',
   actions:{
     createnewquote:'quote-action-createnewquote',
     resumelastquote:'quote-action-resumelastquote'
@@ -215,6 +215,23 @@ var quotetablemaps={
     }
   }
 }
+var qtableacts = {
+  createnewquote:{
+    id:'quote-action-createnewquote',
+    src:'../bin/repo/assets/icons/open-new.png'
+  },
+  resumelastquote:{
+    id:'quote-action-resumelastquote',
+    src:'../bin/repo/assets/icons/open-last.png'
+  }
+}
+
+//vcontrol.SETUPviews(document.getElementById(qddom.tables.cont),'mtl');
+var qtableviews = new vcontrol.ViewGroup({
+  cont:document.getElementById(qddom.tables.cont),
+  type:'mtl',
+  qactions:qtableacts
+});
 
 /* Set/Reset the quote TABLES
     Quote tables are based on the quote.status. Appset is used to determine
@@ -222,31 +239,31 @@ var quotetablemaps={
 */
 var SETquotetable=()=>{
   let tcont = document.getElementById(qddom.tables.cont);
-  vcontrol.CLEARview(tcont);
+  qtableviews.CLEARview(tcont);
 
   let fbutton = null;
   //tcont
   for(let s in quoteset.status){
     var v = document.createElement('div');
     let l = [].concat(quotetableheads[s],uquotes.TRIMlist({status:s}));
-    v = vcontrol.ADDview(quoteset.status[s],v,tcont);
+    v = qtableviews.ADDview(quoteset.status[s],v);
     v.appendChild(document.createElement('div'));
     v.lastChild.classList.add(gentable.gtdom.table);
     gentable.BUILDdistable(l,v.lastChild,true,qddom.tables.row,quotetablemaps[s]);
 
   }
-  tcont.getElementsByClassName(vcontrol.vcdom.menu.cont)[0].children[0].children[0].click(); //fires a click event
+
+  qtableviews.buttons.children[0].click(); //fires a click event
 
 }
 
-document.getElementById('quote-tables').addEventListener('dblclick',(ele)=>{
+qtableviews.port.addEventListener('dblclick',(ele)=>{
   let lrow = gendis.FINDparentele(ele.target,qddom.tables.row);
   if(lrow){
     //transform to object
     ipcRenderer.send(qdashroutes.getquote,{id:lrow.children[0].innerText});
   }
 });
-vcontrol.SETUPviews(document.getElementById(qddom.tables.cont),'mtl');
 
 // FILTERING  //
 
@@ -354,7 +371,7 @@ ipcRenderer.on(quoteroutes.sellquote,(eve,data)=>{
 //  Float Views ////////////////////////////////////////////
 
 var POPpreview=(quote)=>{
-  let preview = document.getElementById('preview-area-systems');
+  let preview = new vcontrol.ViewGroup({create:false,cont:document.getElementById('preview-area-systems'),type:'mtl'});
 
   document.getElementById('preview-quote-id').innerText = quote.id;
   document.getElementById(predom.client.name).innerText = quote.customer.name;
@@ -367,15 +384,13 @@ var POPpreview=(quote)=>{
 
 
   let menutemp = document.getElementById('preview-area-systems').getElementsByClassName(vcontrol.vcdom.menu.cont)[0];
-  menutemp.children[0].innerHTML = "";
-  $(menutemp).removeClass();
-  menutemp.classList.add(vcontrol.vcdom.menu.cont);
-  document.getElementById('preview-area-systems').getElementsByClassName(vcontrol.vcdom.port.cont)[0].innerHTML = "";
+  preview.CLEARview();
+  //$(preview.menu).removeClass();
+  //menutemp.classList.add(vcontrol.vcdom.menu.cont);
 
   if(quote.info.pricing!=undefined&&quote.info.pricing.systems!=undefined){
-    vcontrol.SETUPviews(preview,'mtl');
     for(let x=0;x<quote.info.pricing.systems.length;x++){
-      vcontrol.ADDview(quote.info.pricing.systems[x].name,PREVIEWpricing(quote,x),preview);
+      preview.ADDview(quote.info.pricing.systems[x].name,PREVIEWpricing(quote,x));
     }
   }else{
     let noprice = document.getElementById('preview-area-systems').getElementsByClassName(vcontrol.vcdom.port.cont)[0];

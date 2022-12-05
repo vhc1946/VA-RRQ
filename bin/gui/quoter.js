@@ -6,7 +6,6 @@ var Titlebar=require('../bin/repo/gui/js/modules/vg-titlebar.js');
 
 //layouts
 var {stdbook}=require('../bin/repo/gui/js/layouts/vg-stdbook.js');
-var vcontrol=require('../bin/repo/gui/js/layouts/view-controller.js');
 
 var gentable=require('../bin/repo/gui/js/modules/vg-tables.js')
 var domtools=require('../bin/repo/gui/js/tools/vg-displaytools.js');
