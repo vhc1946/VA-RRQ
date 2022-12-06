@@ -289,28 +289,8 @@ document.getElementsByClassName('min-page-hide-button')[0].addEventListener('cli
   $(document.getElementsByClassName('min-page-cont')[0]).hide();
 });
 
-document.getElementsByClassName('min-page-view')[0].getElementsByClassName(sbdom.system.tier.size.list)[0].addEventListener('click',SELECTsystemsize);
-
-//  Private KEY functions ////////////////////////////
-
-/* FINDs a System in the key
-    PASS:
-    - grp - group name
-    - sysid - system id
-*/
-var FINDsystem = (grp,sysid)=>{
-  if(qkey.groups[grp]!=undefined){
-    for(let x=0;x<qkey.groups[grp].systems.length;x++){
-      if(qkey.groups[grp].systems[x].info.sysid == sysid){
-        return qkey.groups[grp].systems[x].info;
-      }
-    }
-  }
-  return null;
-}
-
-
 var SELECTsystemsize = (ele)=>{
+  console.log(ele);
   if(ele.target.parentNode.classList.contains(sbdom.system.tier.size.row)){
     currtier.getElementsByClassName(sbdom.system.tier.size.cont)[0].innerHTML = ele.target.parentNode.innerHTML;
 
@@ -342,6 +322,27 @@ var SELECTsystemsize = (ele)=>{
     }
   }
 }
+
+document.getElementsByClassName('min-page-view')[0].getElementsByClassName(sbdom.system.tier.size.list)[0].addEventListener('click',SELECTsystemsize);
+
+//  Private KEY functions ////////////////////////////
+
+/* FINDs a System in the key
+    PASS:
+    - grp - group name
+    - sysid - system id
+*/
+var FINDsystem = (grp,sysid)=>{
+  if(qkey.groups[grp]!=undefined){
+    for(let x=0;x<qkey.groups[grp].systems.length;x++){
+      if(qkey.groups[grp].systems[x].info.sysid == sysid){
+        return qkey.groups[grp].systems[x].info;
+      }
+    }
+  }
+  return null;
+}
+
 
 var UPDATEsystemtier = (syscard)=>{
   let grpname =  syscard.getElementsByClassName(sbdom.system.info.group)[0].value;
