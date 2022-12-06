@@ -63,17 +63,22 @@
     background-color: var(--tier4);
 }
 
-.build-system-tier-size,.build-system-tiers-headers{
-    min-height:400px;
-    display: grid;
-    grid-auto-flow: row;
-    grid-auto-rows: 1fr;
+.build-system-tier-size,
+.build-system-tiers-headers{
+    min-height: 400px;
     border-left: 1px solid black;
 }
-.build-system-tier-size>div,.build-system-tiers-headers>div{
+.build-system-tier-size>div,
+.build-system-tiers-headers>div{
     padding-left:3px;
+    height: 24px;
 }
-
+.build-system-tier-size>div>input{
+    border-width: 0px;
+}
+.build-system-tiers-headers>div:hover{
+    cursor:pointer;
+}
 
 
 /*-- Min Tab --------------*/
