@@ -12,6 +12,8 @@
 
 */
 
+var {SWAPdivorin}=require('../../repo/gui/js/tools/vg-displaytools.js');
+
 var ADJUSTdependents=(view)=>{
 
   console.log('ADJUSTDING> ',view);
@@ -61,12 +63,12 @@ var sbdom = {
 var currtier = null; //holds the tier selected when choosing sizes (holds element)
 
 var syscont = document.getElementById(sbdom.cont);
-var sysviews = new vcontrol.ViewGroup({
+var sysviews = new vcontrol.ViewGroup({ //selection views
   create:false,
   cont:document.getElementById(sbdom.cont),
   type:'mtl',
   delEve:ADJUSTdependents
-})
+});
 
 var CreateSystemCard=(sysname,sys=null)=>{
   let newsys = document.getElementById(sbdom.system.cont).cloneNode(true); //system tab
@@ -111,7 +113,32 @@ var SetupSystemCard=(card,qsys=null)=>{
 
   card.getElementsByClassName(sbdom.system.tier.list)[0].setAttribute('style',`grid-template-columns:repeat(${qsettings.tiers.length-1},1fr)`); //adjust grid-template-columns
 
-  if(qsys&&qsys.group!=''){card.getElementsByClassName('build-system-tiers-headers')[0].innerHTML = gentable.SETrowFROMobject(tquote.info.key.groups[qsys.group].optheads).innerHTML;};
+  if(qsys&&qsys.group!=''){
+    card.getElementsByClassName('build-system-tiers-headers')[0].innerHTML = gentable.SETrowFROMobject(tquote.info.key.groups[qsys.group].optheads).innerHTML;
+  };
+  card.getElementsByClassName('build-system-tiers-headers')[0].addEventListener('click',(ele)=>{ //for editing the system tier size information
+    let tiers = card.getElementsByClassName(sbdom.system.tier.cont);
+    for(let x=0;x<tiers.length;x++){
+      let tiersize = tiers[x].getElementsByClassName('build-system-tier-size')[0].children;
+
+      for(let y=0;y<tiersize.length;y++){
+        if(ele.target.title===tiersize[y].title){
+          if(tiersize[y].children.length===0){console.log('div');SWAPdivorin(tiersize[y],true);}
+          else{
+            SWAPdivorin(tiersize[y],false);
+            for(let z=0,l=card.parentNode.children.length;z<l;z++){//refract the system tier change
+              if(card.parentNode.children[z]===card){
+                qbuild.systems = GETsystems();
+                qprice.systems = pricer.GETsystemprices(qsettings,qbuild);
+                sumbuild.REFRESHsumsystem(qbuild.systems[z],z);  //y=sysid x=optid
+              }
+            }
+          }
+        }
+      }
+    }
+    console.log(GETsystems());
+  })
 
   card.getElementsByClassName(sbdom.system.tier.list)[0].removeChild(card.getElementsByClassName(sbdom.system.tier.cont)[0]);//clean tier list
 
@@ -267,7 +294,28 @@ document.getElementsByClassName('min-page-hide-button')[0].addEventListener('cli
   $(document.getElementsByClassName('min-page-cont')[0]).hide();
 });
 
-document.getElementsByClassName('min-page-view')[0].getElementsByClassName(sbdom.system.tier.size.list)[0].addEventListener('click',(ele)=>{
+document.getElementsByClassName('min-page-view')[0].getElementsByClassName(sbdom.system.tier.size.list)[0].addEventListener('click',SELECTsystemsize);
+
+//  Private KEY functions ////////////////////////////
+
+/* FINDs a System in the key
+    PASS:
+    - grp - group name
+    - sysid - system id
+*/
+var FINDsystem = (grp,sysid)=>{
+  if(qkey.groups[grp]!=undefined){
+    for(let x=0;x<qkey.groups[grp].systems.length;x++){
+      if(qkey.groups[grp].systems[x].info.sysid == sysid){
+        return qkey.groups[grp].systems[x].info;
+      }
+    }
+  }
+  return null;
+}
+
+
+var SELECTsystemsize = (ele)=>{
   if(ele.target.parentNode.classList.contains(sbdom.system.tier.size.row)){
     currtier.getElementsByClassName(sbdom.system.tier.size.cont)[0].innerHTML = ele.target.parentNode.innerHTML;
 
@@ -276,7 +324,7 @@ document.getElementsByClassName('min-page-view')[0].getElementsByClassName(sbdom
     let sysid = gentable.GETrowTOobject(ele.target.parentNode).sysid;
     let sysname = currtier.parentNode.parentNode.title;
     let sysinfo = FINDsystem(grpname,sysid);
-
+    //UPDATEsystemcard(syscard,sysinfo,sysnum,systier);
     if(sysinfo){
       currtier.getElementsByClassName(sbdom.system.tier.info.system)[0].innerHTML = gentable.SETrowFROMobject(sysinfo).innerHTML;
       for(let y=0;y<syscard.parentNode.children.length;y++){
@@ -298,25 +346,33 @@ document.getElementsByClassName('min-page-view')[0].getElementsByClassName(sbdom
       //put headers
     }
   }
-});
+}
 
-//  Private KEY functions ////////////////////////////
+var UPDATEsystemtier = (syscard)=>{
+  let grpname =  syscard.getElementsByClassName(sbdom.system.info.group)[0].value;
+  let sysid = gentable.GETrowTOobject(ele.target.parentNode).sysid;
+  let sysname = currtier.parentNode.parentNode.title;
+  //let sysinfo = FINDsystem(grpname,sysid);
 
-/* FINDs a System in the key
-    PASS:
-    - grp - group name
-    - sysid - system id
-*/
-var FINDsystem=(grp,sysid)=>{
-  if(qkey.groups[grp]!=undefined){
-    for(let x=0;x<qkey.groups[grp].systems.length;x++){
-      if(qkey.groups[grp].systems[x].info.sysid == sysid){
-        return qkey.groups[grp].systems[x].info;
+  if(sysinfo){
+    for(let y=0;y<syscard.parentNode.children.length;y++){
+      if(syscard.parentNode.children[y] == syscard){//find the index of the system
+        for(let x=0;x<currtier.parentNode.children.length;x++){
+          if(currtier.parentNode.children[x]==currtier){ //find the index of the tier
+            modbuild.UPDATEenhlist(sysinfo,y,x);
+            modbuild.UPDATEdscntlist(sysinfo,y,x);
+            qbuild.systems = GETsystems();
+            qprice.systems = pricer.GETsystemprices(qsettings,qbuild);
+            modbuild.GETbuildmod();
+            sumbuild.REFRESHsumsystem(qbuild.systems[y],y);  //y=sysid x=optid
+          }
+        }
       }
     }
+    syscard.getElementsByClassName('build-system-tiers-headers')[0].innerHTML = gentable.SETrowFROMobject(tquote.info.key.groups[grpname].optheads).innerHTML;
   }
-  return null;
 }
+
 
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////

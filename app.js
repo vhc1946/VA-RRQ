@@ -421,6 +421,7 @@ ipcMain.on(quoteroutes.createcontract,(eve,data)=>{
 ipcMain.on(quoteroutes.sellquote,(eve,data)=>{
   if(data && data!=undefined){
     data.subdate = new Date().toISOString();
+    data.sold = true;
     fs.readdir(path.join(au.auser.cuser.spdrive,data.froot,qflows.paths.jobsubfolders.contracts),(err,files)=>{
       if(!err && files.length>0){
         qflows.MOVEquotefolder(data,au.auser,'S').then(

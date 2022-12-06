@@ -90,7 +90,6 @@ ipcRenderer.on('GET-quotesettings',(eve,data)=>{
     sysbuild.sumbuild.INITbuildsum();
   }
 });
-
 ////////////////////////////////////////////////////////////////////////////////
 
 // Page Setup //////////////////////////////////////////////////////////////////
@@ -248,7 +247,6 @@ var TOGGLEsummary=()=>{
 
 }
 ///////////////////////////////////////
-
 var SAVEquote = ()=>{
   qbuild.systems = sysbuild.GETsystems();
   custbuild.GETquoteinfo();
