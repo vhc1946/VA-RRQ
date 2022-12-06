@@ -10,6 +10,7 @@ class SystemSelection extends VHCforms{
     sysviews.ADDview(sysname,newsys,true);
     SetupSystemCard(newsys,sys); //setup as new system
     $(newsys).show();
+    
   }
 
   CreateSystemCard(sysname,sys=null){
