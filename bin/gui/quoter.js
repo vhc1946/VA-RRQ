@@ -82,7 +82,6 @@ ipcRenderer.send('GET-quotesettings','Initial');
 ipcRenderer.on('GET-quotesettings',(eve,data)=>{
   if(data){
     qsettings = data;
-    console.log(qsettings);
     domtools.SETdatalistFROMobject(qkey.groups,'system-groups-list');
     sysbuild.InitSysBuild();
     custbuild.InitInfoBuild();
@@ -158,9 +157,9 @@ ipcRenderer.on(quoteroutes.refreshquotekey,(eve,data)=>{
   chcknewkey = true;
   if(data.key && data.key!=undefined){
     DropNote('tr',data.msg,'green');
-    console.log(tquote);
     tquote.info.key = data.key;//update tquote
     qkey = tquote.info.key;//relink qkey
+    console.log('QUOTE ',tquote);
   }else{DropNote('tr',data.msg,'red')}
 });
 ipcRenderer.on(quoteroutes.deletequote,(eve,data)=>{
@@ -170,9 +169,9 @@ ipcRenderer.on(quoteroutes.deletequote,(eve,data)=>{
 });
 ipcRenderer.on(quoteroutes.savequote,(eve,data)=>{
   chcksavequote = true;
-  console.log('QUOTE',data.quote);
   if(data.quote&&data.quote!=undefined){
     tquote = data.quote;
+    console.log('QUOTE ',tquote);
     DropNote('tr',data.msg,'green');
   }else{DropNote('tr',data.msg,'red')}
   TOGGLEsummary();
@@ -210,7 +209,6 @@ var sysbuild=require('../bin/gui/quoter/rrq-buildsys.js'); //Systems module
 ////////////////////////////////////////////////////////////////////////////////
 
 document.getElementById(modbuild.moddom.cont).addEventListener('change',(ele)=>{ //change to Modifications
-  console.log('mod change');
   modbuild.GETbuildmod(); //update Modifications
   qprice.systems = pricer.GETsystemprices(qsettings,qbuild);
   for(let x=0;x<qbuild.systems.length;x++){

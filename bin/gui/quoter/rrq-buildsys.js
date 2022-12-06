@@ -137,7 +137,6 @@ var SetupSystemCard=(card,qsys=null)=>{
         }
       }
     }
-    console.log(GETsystems());
   })
 
   card.getElementsByClassName(sbdom.system.tier.list)[0].removeChild(card.getElementsByClassName(sbdom.system.tier.cont)[0]);//clean tier list
@@ -261,7 +260,6 @@ var InitSysBuild=()=>{
 // modules
 
 var CHECKforsystemname=(name)=>{
-  console.log(qbuild.systems)
   if(qbuild.systems!=undefined){
     for(let x=0;x<qbuild.systems.length;x++){
       if(qbuild.systems[x].name==name){return true}
@@ -279,9 +277,6 @@ document.getElementById(sbdom.add.button).addEventListener('click',(eve)=>{//add
     CreateSystemCard(sysname.value);
     qbuild.systems = GETsystems();
     qprice.systems = pricer.GETsystemprices(qsettings,qbuild);
-
-    console.log('ADDED >',qbuild.systems);
-    console.log('ADDED >',qprice.systems);
 
     modbuild.modviews.ADDview(sysname.value,modbuild.ADDmodsystem(sysname),false);
     sumbuild.sumviews.ADDview(sysname.value,sumbuild.ADDsumsystem(qbuild.systems.length-1,qbuild.systems[qbuild.systems.length-1]),false);

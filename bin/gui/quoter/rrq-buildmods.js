@@ -116,7 +116,6 @@ var INITbuildmod=()=>{
 
 var GETbuildmod=()=>{
   let cont = document.getElementById('build-mod-views').getElementsByClassName('build-mod-system');
-  console.log(cont)
   for(let x=0;x<cont.length;x++){ //loop through systems
     let list = cont[x].getElementsByClassName(moddom.views.mods.enh.selects)[0].children;
     qbuild.systems[x].enhancments=[];
@@ -151,10 +150,8 @@ var ADDmodsystem=(sname,sys=undefined)=>{
   SETdscntblock(modsys.getElementsByClassName(moddom.views.dscnts.cont)[0],sys);//Setup Discount Block
 
   modsys.getElementsByClassName(moddom.views.mods.form.addbutton)[0].addEventListener('dblclick',(ele)=>{
-    console.log('fired')
     let value = modsys.getElementsByClassName(modbuild.moddom.views.mods.form.addin)[0].value;
     if(value!=''){
-      console.log(33);
       modsys.getElementsByClassName(moddom.views.mods.adds.selects)[0].appendChild(ADDselectline({
         name:value,
         notes:'',
@@ -200,7 +197,6 @@ var SETaddblock=(block,sys=undefined)=>{
   SETdatalistSPC(modlist.list,{cat:'mod-add-cat-list'});
   SETaccfilters(block);
 
-  console.log(modlist.list);
   SETacclist(block,modlist.list); //exclude enhancements
 
   block.getElementsByClassName(moddom.views.mods.list)[0].addEventListener('click',(ele)=>{ // Add to selects from list
@@ -354,7 +350,6 @@ var GETselectline=(aline)=>{
 var UPDATEenhlist=(sysinfo,sysnum,tiernum)=>{
   let syscont = document.getElementById(moddom.cont).getElementsByClassName(moddom.system.cont);
   let enlist = syscont[sysnum].getElementsByClassName(moddom.views.mods.enh.selects)[0].children;
-  console.log(enlist)
   for(let x=1;x<enlist.length;x++){
     let val=0;
     if(sysinfo[enlist[x].children[1].innerText]!=0){val=1;}
@@ -382,7 +377,6 @@ var SETaccfilters=(cont)=>{
     used for selection both ADDs and DEDs
 */
 var SETacclist=(cont,alist)=>{
-  console.log('ACCLIST',alist);
   let list = cont.getElementsByClassName(moddom.views.mods.list)[0];
   //list.innerHTML="";
   //list.appendChild(gentable.SETrowFROMobject(modlisthead));
@@ -463,12 +457,10 @@ document.getElementById(wpdscnts.multisys.id).addEventListener('click',(ele)=>{
   else{console.log('adding');ele.target.classList.add('vg-checkbox-checked');toadd=true;}
 
   UPDATEwpdscnts(GETwpdscntinfo('multisys'),toadd);
-  console.log(document.getElementById(moddom.cont));
   document.getElementById(moddom.cont).dispatchEvent(new Event('change'));
 });
 
 document.getElementById(wpdscnts.frndsfam.id).addEventListener('click',(ele)=>{
-  console.log(ele.target);
   let toadd=false;
   if(ele.target.classList.contains('vg-checkbox-checked')){ele.target.classList.remove('vg-checkbox-checked');}
   else{ele.target.classList.add('vg-checkbox-checked');toadd=true;}
@@ -476,7 +468,6 @@ document.getElementById(wpdscnts.frndsfam.id).addEventListener('click',(ele)=>{
   document.getElementById(moddom.cont).dispatchEvent(new Event('change'));
 });
 document.getElementById(wpdscnts.noremorse.id).addEventListener('click',(ele)=>{
-  console.log(ele.target);
   let toadd=false;
   if(ele.target.classList.contains('vg-checkbox-checked')){ele.target.classList.remove('vg-checkbox-checked');}
   else{ele.target.classList.add('vg-checkbox-checked');toadd=true;}
