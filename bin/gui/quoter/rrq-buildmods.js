@@ -132,6 +132,7 @@ var GETbuildmod=()=>{
     //iaq
     //Discounts
     list = cont[x].getElementsByClassName(moddom.views.dscnts.list)[0].children;
+    console.log(list);
     qbuild.systems[x].discounts=[];
     for(let y=0;y<list.length;y++){
       qbuild.systems[x].discounts.push(GETdscntline(list[y]));

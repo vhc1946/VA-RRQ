@@ -169,6 +169,7 @@ ipcRenderer.on(quoteroutes.deletequote,(eve,data)=>{
 });
 ipcRenderer.on(quoteroutes.savequote,(eve,data)=>{
   chcksavequote = true;
+
   if(data.quote&&data.quote!=undefined){
     tquote = data.quote;
     console.log('QUOTE ',tquote);
@@ -246,9 +247,9 @@ var TOGGLEsummary=()=>{
 }
 ///////////////////////////////////////
 var SAVEquote = ()=>{
-  qbuild.systems = sysbuild.GETsystems();
   custbuild.GETquoteinfo();
-  sysbuild.modbuild.GETbuildmod();
+  qbuild.systems = sysbuild.GETsystems();
+  modbuild.GETbuildmod();
   localStorage.setItem(quotesls.quotetoload,JSON.stringify(tquote)); //save to localStorage (quotetoload for dev)
   ipcRenderer.send(quoteroutes.savequote,{quote:tquote});//send quote to main
   TOGGLEsummary();
