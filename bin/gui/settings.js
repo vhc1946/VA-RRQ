@@ -142,7 +142,8 @@ var SAVEsettings=()=>{
 ipcRenderer.on(settingsroutes.save,(eve,data)=>{
   console.log(data.msg, '-', data.data);
 });
-
+/*
 document.getElementById(Titlebar.tbdom.page.save).addEventListener('click',(ele)=>{
   SAVEsettings();
 })
+*/
