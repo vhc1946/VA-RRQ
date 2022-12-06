@@ -89,7 +89,7 @@ var LOADresipresi=()=>{
   let diricon = path.join(asspath,apaths.assets.pvicons);
   let dirlogo = path.join(asspath,apaths.assets.logos);
 
-  // Header /////////////////
+  // Print Header /////////////////
 
   document.getElementById('header-client-name').innerText = tquote.customer.name;
   document.getElementById('header-client-street').innerText = tquote.street;
@@ -99,6 +99,7 @@ var LOADresipresi=()=>{
   document.getElementById('cons-name').innerText = cons.name;
   document.getElementById('vogel-logo').src = dirlogo + '/Vogel Logo.png';
 
+  // Set icons /////////////////////
 
   document.getElementById('experience-main-icon').src = diricon + '/UserExperience.png';
   document.getElementById('comfort-main-icon').src = diricon + '/ComfortIcon.png';
@@ -111,7 +112,7 @@ var LOADresipresi=()=>{
   document.getElementById('partial-main-icon').src = diricon + '/StepIcon_V2-01.png';
 
 
-  for(let i=0;i<tquote.info.build.systems[sysnum].tiers.length;i++){
+  for(let i=0;i<sysbuild.tiers.length;i++){
 
     // User Experience ///////////
 
@@ -172,6 +173,7 @@ var LOADresipresi=()=>{
     let disc = document.createElement('div');
     disc.classList.add('rrq-disc-applied');
     let discounts = tquote.info.build.systems[sysnum].discounts;
+    console.log(discounts);
     for(let d=0;d<discounts.length;d++){
       if(discounts[d].tiers[i]>0){
         disc.appendChild(document.createElement('div')).classList.add('rrq-disc-row');
