@@ -44,13 +44,13 @@ var qactions={
   },
   up:{
     id:pnavdom.system.up,
-    src:'../bin/repo/assets/icons/angle-down.png',
-    onclick:CHANGEsys
+    src:'../bin/repo/assets/icons/angle-up.png',
+    onclick:(ele)=>{CHANGEsys(ele);}
   },
   down:{
     id:pnavdom.system.down,
-    src:'../bin/repo/assets/icons/angle-up.png',
-    onclick:CHANGEsys
+    src:'../bin/repo/assets/icons/angle-down.png',
+    onclick:(ele)=>{CHANGEsys(ele);}
   }
 }
 
@@ -113,113 +113,133 @@ var LOADresipresi=()=>{
 
 
   for(let i=0;i<sysbuild.tiers.length;i++){
+    if(sysbuild.tiers[i].size){
 
-    // User Experience ///////////
+      $(document.getElementsByClassName('rrq-multi-cont-header')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
+      $(document.getElementsByClassName('rrq-multi-cont-exp')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
+      $(document.getElementsByClassName('rrq-multi-cont-comfort')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
+      $(document.getElementsByClassName('rrq-multi-cont-value')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
+      $(document.getElementsByClassName('rrq-multi-cont-impact')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
+      $(document.getElementsByClassName('rrq-multi-cont-enhance')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
+      $(document.getElementsByClassName('rrq-multi-cont-adds')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
+      $(document.getElementsByClassName('rrq-multi-cont-finance')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
+      $(document.getElementsByClassName('rrq-multi-cont-discount')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
 
-    document.getElementsByClassName('rrq-user-experience')[i].src = diricon + '/SmileyFace_'+(i+1)+'.png';
+      // User Experience ///////////
 
-    // Home Comfort //////////////
-    document.getElementsByClassName('rrq-pres-comfort-cooling')[i].src = diricon + '/comfort-cooling_'+(sysbuild.tiers[i].info['feat_comfort_cooling'])+'.png';
-    document.getElementsByClassName('rrq-pres-comfortfeels-cooling')[i].src = diricon + '/comfort-coolingfeels_'+(sysbuild.tiers[i].info['feat_comfort_coolingfeels'])+'.png';
+      document.getElementsByClassName('rrq-user-experience')[i].src = diricon + '/SmileyFace_'+(i+1)+'.png';
 
-    document.getElementsByClassName('rrq-pres-comfort-heating')[i].src = diricon + '/comfort-heating_'+(sysbuild.tiers[i].info['feat_comfort_heating'])+'.png';
-    document.getElementsByClassName('rrq-pres-comfortfeel-heating')[i].src = diricon + '/comfort-heatingfeels_'+(sysbuild.tiers[i].info['feat_comfort_heatingfeels'])+'.png';
+      // Home Comfort //////////////
+      document.getElementsByClassName('rrq-pres-comfort-cooling')[i].src = diricon + '/comfort-cooling_'+(sysbuild.tiers[i].info['feat_comfort_cooling'])+'.png';
+      document.getElementsByClassName('rrq-pres-comfortfeels-cooling')[i].src = diricon + '/comfort-coolingfeels_'+(sysbuild.tiers[i].info['feat_comfort_coolingfeels'])+'.png';
 
-    document.getElementsByClassName('rrq-pres-comfort-soundslike')[i].src = diricon + '/comfort-soundslike_'+(sysbuild.tiers[i].info['feat_comfort_soundslike'])+'.png';
-    document.getElementsByClassName('rrq-pres-comfort-filters')[i].src = diricon + '/comfort-filters_'+(sysbuild.tiers[i].info['feat_comfort_filters'])+'.png';
+      document.getElementsByClassName('rrq-pres-comfort-heating')[i].src = diricon + '/comfort-heating_'+(sysbuild.tiers[i].info['feat_comfort_heating'])+'.png';
+      document.getElementsByClassName('rrq-pres-comfortfeel-heating')[i].src = diricon + '/comfort-heatingfeels_'+(sysbuild.tiers[i].info['feat_comfort_heatingfeels'])+'.png';
 
-    // Value /////////////////////
-    document.getElementsByClassName('rrq-energy')[i].innerText = sysbuild.tiers[i].info['feat_value_energy'];
-    document.getElementsByClassName('rrq-warranty')[i].innerText = sysbuild.tiers[i].info.warrlab;
-    document.getElementsByClassName('value-icon')[i].src = diricon + '/value-icon_'+(sysbuild.tiers[i].info['feat_value'])+'.png';
+      document.getElementsByClassName('rrq-pres-comfort-soundslike')[i].src = diricon + '/comfort-soundslike_'+(sysbuild.tiers[i].info['feat_comfort_soundslike'])+'.png';
+      document.getElementsByClassName('rrq-pres-comfort-filters')[i].src = diricon + '/comfort-filters_'+(sysbuild.tiers[i].info['feat_comfort_filters'])+'.png';
 
-    // Impact ////////////////////
-    document.getElementsByClassName('rrq-impact-pic')[i].src=diricon + '/impact-icon_'+(sysbuild.tiers[i].info['feat_impact'])+'.png';
-    document.getElementsByClassName('rrq-impact-carbonreduct')[i].innerText = sysbuild.tiers[i].info['feat_impact_carbonreduct'] + '% Reduction';
-    document.getElementsByClassName('rrq-impact-emissions')[i].innerText = sysbuild.tiers[i].info['feat_impact_emissions'] + ' Metric Tons';
-    document.getElementsByClassName('rrq-impact-trees')[i].innerText = sysbuild.tiers[i].info['feat_impact_trees'] + ' Trees';
+      // Value /////////////////////
+      document.getElementsByClassName('rrq-energy')[i].innerText = sysbuild.tiers[i].info['feat_value_energy'];
+      document.getElementsByClassName('rrq-warranty')[i].innerText = sysbuild.tiers[i].info.warrlab;
+      document.getElementsByClassName('value-icon')[i].src = diricon + '/value-icon_'+(sysbuild.tiers[i].info['feat_value'])+'.png';
 
-    ///////////////////////////////
+      // Impact ////////////////////
+      document.getElementsByClassName('rrq-impact-pic')[i].src=diricon + '/impact-icon_'+(sysbuild.tiers[i].info['feat_impact'])+'.png';
+      document.getElementsByClassName('rrq-impact-carbonreduct')[i].innerText = sysbuild.tiers[i].info['feat_impact_carbonreduct'] + '% Reduction';
+      document.getElementsByClassName('rrq-impact-emissions')[i].innerText = sysbuild.tiers[i].info['feat_impact_emissions'] + ' Metric Tons';
+      document.getElementsByClassName('rrq-impact-trees')[i].innerText = sysbuild.tiers[i].info['feat_impact_trees'] + ' Trees';
+
+      ///////////////////////////////
 
 
-    // Enhancements /////////////////////////////////////
-    document.getElementsByClassName('rrq-multi-tier-enhance')[i].innerHTML = '';
-    for(let e=0;e<tquote.info.build.systems[sysnum].enhancments.length;e++){
-      if(tquote.info.build.systems[sysnum].enhancments[e].tiers[i]>=1){
-        let spot = document.getElementsByClassName('rrq-multi-tier-enhance')[i];
-        spot.appendChild(document.createElement('div'));
-        spot.lastChild.innerText = tquote.info.build.systems[sysnum].enhancments[e].name;
-      }
-    }
-
-    // Modifications ///////////////////////////////////
-    if(tquote.info.build.systems[sysnum].additions.length==0){
-      $(document.getElementsByClassName('rrq-multi-cont-adds')[0]).hide();
-    }else{
-      $(document.getElementsByClassName('rrq-multi-cont-adds')[0]).show();
-      document.getElementsByClassName('rrq-multi-tier-adds')[i].innerHTML = '';
-      for(let e=0;e<tquote.info.build.systems[sysnum].additions.length;e++){
-        if(tquote.info.build.systems[sysnum].additions[e].tiers[i]>=1){
-          let spot = document.getElementsByClassName('rrq-multi-tier-adds')[i];
+      // Enhancements /////////////////////////////////////
+      document.getElementsByClassName('rrq-multi-tier-enhance')[i].innerHTML = '';
+      for(let e=0;e<tquote.info.build.systems[sysnum].enhancments.length;e++){
+        if(tquote.info.build.systems[sysnum].enhancments[e].tiers[i]>=1){
+          let spot = document.getElementsByClassName('rrq-multi-tier-enhance')[i];
           spot.appendChild(document.createElement('div'));
-          spot.lastChild.innerText = tquote.info.build.systems[sysnum].additions[e].name;
+          spot.lastChild.innerText = tquote.info.build.systems[sysnum].enhancments[e].name;
         }
       }
-    }
 
-
-
-    //  Rebates / Discounts ////////////////////////////
-    let disc = document.createElement('div');
-    disc.classList.add('rrq-disc-applied');
-    let discounts = tquote.info.build.systems[sysnum].discounts;
-    console.log(discounts);
-    for(let d=0;d<discounts.length;d++){
-      if(discounts[d].tiers[i]>0){
-        disc.appendChild(document.createElement('div')).classList.add('rrq-disc-row');
-        disc.lastChild.appendChild(document.createElement('div')).innerText = discounts[d].name
-        disc.lastChild.appendChild(document.createElement('div')).innerText = discounts[d].tiers[i]
+      // Modifications ///////////////////////////////////
+      if(tquote.info.build.systems[sysnum].additions.length==0){
+        $(document.getElementsByClassName('rrq-multi-cont-adds')[0]).hide();
+      }else{
+        $(document.getElementsByClassName('rrq-multi-cont-adds')[0]).show();
+        document.getElementsByClassName('rrq-multi-tier-adds')[i].innerHTML = '';
+        for(let e=0;e<tquote.info.build.systems[sysnum].additions.length;e++){
+          if(tquote.info.build.systems[sysnum].additions[e].tiers[i]>=1){
+            let spot = document.getElementsByClassName('rrq-multi-tier-adds')[i];
+            spot.appendChild(document.createElement('div'));
+            spot.lastChild.innerText = tquote.info.build.systems[sysnum].additions[e].name;
+          }
+        }
       }
-    }
-    disc.appendChild(document.createElement('div')).classList.add('rrq-disc-row');
-    disc.lastChild.appendChild(document.createElement('div')).innerText = `Ameren (${tquote.info.build.systems[sysnum].tiers[i].size.seer} SEER)`;
-    if(tquote.info.build.systems[sysnum].tiers[i].size.rebateelec==''){
-      disc.lastChild.appendChild(document.createElement('div')).innerText = 0;
-    }else{
-      disc.lastChild.appendChild(document.createElement('div')).innerText = tquote.info.build.systems[sysnum].tiers[i].size.rebateelec;
-    }
 
-    if(tquote.info.build.systems[sysnum].tiers[i].size.rebategas!=''){
+
+
+      //  Rebates / Discounts ////////////////////////////
+      let disc = document.createElement('div');
+      disc.classList.add('rrq-disc-applied');
+      let discounts = tquote.info.build.systems[sysnum].discounts;
+      for(let d=0;d<discounts.length;d++){
+        if(discounts[d].tiers[i]>0){
+          disc.appendChild(document.createElement('div')).classList.add('rrq-disc-row');
+          disc.lastChild.appendChild(document.createElement('div')).innerText = discounts[d].name
+          disc.lastChild.appendChild(document.createElement('div')).innerText = discounts[d].tiers[i]
+        }
+      }
       disc.appendChild(document.createElement('div')).classList.add('rrq-disc-row');
-      disc.lastChild.appendChild(document.createElement('div')).innerText = 'Spire (Post-Purchase)';
-      disc.lastChild.appendChild(document.createElement('div')).innerText = tquote.info.build.systems[sysnum].tiers[i].size.rebategas;
+      disc.lastChild.appendChild(document.createElement('div')).innerText = `Ameren (${tquote.info.build.systems[sysnum].tiers[i].size.seer} SEER)`;
+      if(tquote.info.build.systems[sysnum].tiers[i].size.rebateelec==''){
+        disc.lastChild.appendChild(document.createElement('div')).innerText = 0;
+      }else{
+        disc.lastChild.appendChild(document.createElement('div')).innerText = tquote.info.build.systems[sysnum].tiers[i].size.rebateelec;
+      }
+
+      if(tquote.info.build.systems[sysnum].tiers[i].size.rebategas!=''){
+        disc.appendChild(document.createElement('div')).classList.add('rrq-disc-row');
+        disc.lastChild.appendChild(document.createElement('div')).innerText = 'Spire (Post-Purchase)';
+        disc.lastChild.appendChild(document.createElement('div')).innerText = tquote.info.build.systems[sysnum].tiers[i].size.rebategas;
+      }
+
+      document.getElementsByClassName("rrq-multi-tier-discount")[i].innerHTML = "";
+      document.getElementsByClassName("rrq-multi-tier-discount")[i].appendChild(disc);
+
+
+
+      // Investment /////////////////////////////////////
+      document.getElementsByClassName('fin-uf-price')[i].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[0].opts.sysprice.price);
+      document.getElementsByClassName('fin-promo-price')[i].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.sysprice.price);
+      document.getElementsByClassName('fin-promo-mo')[i].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.sysprice.monthly);
+      document.getElementsByClassName('fin-low-mo')[i].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[2].opts.sysprice.monthly);
+
+      // Partials ///////////////////////////////////////
+      document.getElementsByClassName('rrq-part-upfront')[i].childNodes[2].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[0].opts.outprice.price);
+      document.getElementsByClassName('rrq-part-upfront')[i].childNodes[3].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[0].opts.inprice.price);
+      document.getElementsByClassName('rrq-part-lowest')[i].childNodes[2].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[2].opts.outprice.monthly);
+      document.getElementsByClassName('rrq-part-lowest')[i].childNodes[3].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[2].opts.inprice.monthly);
+      document.getElementsByClassName('rrq-part-promo')[i].childNodes[2].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.outprice.price);
+      document.getElementsByClassName('rrq-part-promo')[i].childNodes[3].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.inprice.price);
+      document.getElementsByClassName('rrq-part-promomo')[i].childNodes[2].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.outprice.monthly);
+      document.getElementsByClassName('rrq-part-promomo')[i].childNodes[3].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.inprice.monthly);
+    }else{
+      $(document.getElementsByClassName('rrq-multi-cont-header')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
+      $(document.getElementsByClassName('rrq-multi-cont-exp')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
+      $(document.getElementsByClassName('rrq-multi-cont-comfort')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
+      $(document.getElementsByClassName('rrq-multi-cont-value')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
+      $(document.getElementsByClassName('rrq-multi-cont-impact')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
+      $(document.getElementsByClassName('rrq-multi-cont-enhance')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
+      $(document.getElementsByClassName('rrq-multi-cont-adds')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
+      $(document.getElementsByClassName('rrq-multi-cont-finance')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
+      $(document.getElementsByClassName('rrq-multi-cont-discount')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
     }
-
-    document.getElementsByClassName("rrq-multi-tier-discount")[i].innerHTML = "";
-    document.getElementsByClassName("rrq-multi-tier-discount")[i].appendChild(disc);
-
-
-
-    // Investment /////////////////////////////////////
-    document.getElementsByClassName('fin-uf-price')[i].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[0].opts.sysprice.price);
-    document.getElementsByClassName('fin-promo-price')[i].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.sysprice.price);
-    document.getElementsByClassName('fin-promo-mo')[i].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.sysprice.monthly);
-    document.getElementsByClassName('fin-low-mo')[i].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[2].opts.sysprice.monthly);
-
-    // Partials ///////////////////////////////////////
-    document.getElementsByClassName('rrq-part-upfront')[i].childNodes[2].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[0].opts.outprice.price);
-    document.getElementsByClassName('rrq-part-upfront')[i].childNodes[3].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[0].opts.inprice.price);
-    document.getElementsByClassName('rrq-part-lowest')[i].childNodes[2].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[2].opts.outprice.monthly);
-    document.getElementsByClassName('rrq-part-lowest')[i].childNodes[3].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[2].opts.inprice.monthly);
-    document.getElementsByClassName('rrq-part-promo')[i].childNodes[2].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.outprice.price);
-    document.getElementsByClassName('rrq-part-promo')[i].childNodes[3].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.inprice.price);
-    document.getElementsByClassName('rrq-part-promomo')[i].childNodes[2].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.outprice.monthly);
-    document.getElementsByClassName('rrq-part-promomo')[i].childNodes[3].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.inprice.monthly);
   }
 }
 
 var CHANGEsys=(ele)=>{
-  console.log('here')
   if(ele.target.id==pnavdom.system.down){
     sysnum--;if(sysnum<0){sysnum=tquote.info.build.systems.length-1;}
   }else{
