@@ -140,8 +140,15 @@ let qactions={
     }
   }
 }
+var closeeve=()=>{   // Event that fires when trying to close
+  if(window.confirm('Please save before closing!\n\nPress "Okay" to close.\nPress "Cancel" to go back to save.')){
+    window.close();
+  }else{
+  }
+}
 
-Titlebar.SETUPtitlebar(qactions,mactions);
+
+Titlebar.SETUPtitlebar(qactions,mactions,closeeve);
 
 
 // WORKING VARIABLES //
@@ -169,7 +176,6 @@ ipcRenderer.on(quoteroutes.deletequote,(eve,data)=>{
 });
 ipcRenderer.on(quoteroutes.savequote,(eve,data)=>{
   chcksavequote = true;
-
   if(data.quote&&data.quote!=undefined){
     tquote = data.quote;
     console.log('QUOTE ',tquote);

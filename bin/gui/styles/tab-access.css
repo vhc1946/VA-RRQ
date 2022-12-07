@@ -103,7 +103,7 @@ background-color:  rgb(244 162 162);
 
 /* Accessory Items Table */
 .build-mod-add-list{
-    max-height: 500px;
+    max-height: 400px;
     overflow-y: auto;
 }
 .build-mod-add-list>:nth-child(1):hover{
