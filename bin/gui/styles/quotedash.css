@@ -48,17 +48,8 @@
 
 
 /* Quote Tables */
-body{
-  overflow: none;
-}
 #quote-tables-container{
   height: calc(100vh - 25px - 108px);
-}
-#quote-tables{
-  overflow-y: auto;
-}
-.vg-gentable{
-  height: 100%;
 }
 
 

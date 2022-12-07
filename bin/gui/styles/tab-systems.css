@@ -116,3 +116,6 @@
 .build-system-tier-size-row>div:last-child:before{
     content: none;
 }
+.build-system-tier-sizes{
+    max-height: 400px;
+}

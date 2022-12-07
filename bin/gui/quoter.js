@@ -140,11 +140,10 @@ let qactions={
     }
   }
 }
-var closeeve=()=>{
-  if(window.confirm('Please save before closing! \nPress "Okay" to close the quote.\nPress "Cancel" to go back and save.')){
+var closeeve=()=>{   // Event that fires when trying to close
+  if(window.confirm('Please save before closing!\n\nPress "Okay" to close.\nPress "Cancel" to go back to save.')){
     window.close();
   }else{
-
   }
 }
 
@@ -177,7 +176,6 @@ ipcRenderer.on(quoteroutes.deletequote,(eve,data)=>{
 });
 ipcRenderer.on(quoteroutes.savequote,(eve,data)=>{
   chcksavequote = true;
-
   if(data.quote&&data.quote!=undefined){
     tquote = data.quote;
     console.log('QUOTE ',tquote);
