@@ -6,12 +6,14 @@ var RROOT = '../bin/repo/';
 var Titlebar = require('../bin/repo/gui/js/modules/vg-titlebar.js');
 var {DropNote}=require('../bin/repo/gui/js/modules/vg-dropnote.js');
 var path=require('path');
-
+var {auser} = require('../bin/appuser.js'); //initialize the app user object
 var {quotesls}=require('../bin/gui/storage/lstore.js');
 var {quoteroutes}=require('../bin/routes.js');
 
 
 var qsettings=null;
+
+
 
 ipcRenderer.send('GET-quotesettings','Initial'); //request quote settings
 ipcRenderer.on('GET-quotesettings',(eve,data)=>{
@@ -60,12 +62,13 @@ Titlebar.SETUPtitlebar(qactions);
 
 
 var apaths=require('../app/paths.json');
-var tquote=null;
-var cons=null;
+//var tquote=null; //to hold quote
+var tquote = JSON.parse(localStorage.getItem(quotesls.quotetopresi));
+var cons=auser;
 var asspath=null;
 var currtier=0;
 var sysnum=0;
-
+/*
 ipcRenderer.send(quoteroutes.createpresentation,'Open Presentation'); //request quote data
 ipcRenderer.on(quoteroutes.createpresentation,(eve,data)=>{
   if(data.quote&&data.quote!=undefined){
@@ -77,9 +80,8 @@ ipcRenderer.on(quoteroutes.createpresentation,(eve,data)=>{
     LOADresipresi();
   }
 });
-
+*/
 var tiersettings =[];//holds tier info
-
 
 
 var LOADresipresi=()=>{
@@ -295,6 +297,14 @@ var SETUPpresnav=()=>{
   document.getElementById(pnavdom.tier.left).addEventListener('click',CHANGEtier);
   document.getElementById(pnavdom.tier.right).addEventListener('click',CHANGEtier);
 }
+
+if(tquote){
+  console.log('QUOTE >',tquote);
+  localStorage.setItem(quotesls.quotetopresi,null)
+  asspath = path.join(auser.cuser.spdrive,apaths.deproot,apaths.assets.root);
+  LOADresipresi();
+}
+else{console.log('here');DropNote('tr','Quoute Could NOT Load','red',true);}
 
 module.exports={
 

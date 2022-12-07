@@ -40,8 +40,8 @@ var sumviews = new vcontrol.ViewGroup({
 
 
 var INITbuildsum=()=>{
-  for(let x=0;x<qbuild.systems.length;x++){
-    sumviews.ADDview(qbuild.systems[x].name,ADDsumsystem(x,qbuild.systems[x]));
+  for(let x=0;x<tquote.info.build.systems.length;x++){
+    sumviews.ADDview(tquote.info.build.systems[x].name,ADDsumsystem(x,tquote.info.build.systems[x]));
   }
 }
 var REFRESHsumsystem=(sysinfo,sysid)=>{
@@ -152,8 +152,8 @@ var GENsummods=(sysinfo, optnum)=>{
 var GENsumfinance=(sysinfo, sysnum, optnum)=>{
   let fincont = document.createElement('div');
   fincont.classList.add(bsdom.system.tier.finance.cont);
-  if(qprice!=undefined&&qprice.systems[sysnum]!=undefined){
-    let priceopts = qprice.systems[sysnum].tiers[optnum].priceops;
+  if(tquote.info.pricing!=undefined&&tquote.info.pricing.systems[sysnum]!=undefined){
+    let priceopts = tquote.info.pricing.systems[sysnum].tiers[optnum].priceops;
 
     let syscont = fincont.appendChild(document.createElement('div'));
     syscont.classList.add(bsdom.system.tier.finance.system);
@@ -219,20 +219,20 @@ var GENsumdisc=(sysinfo,sysnum,optnum)=>{
   discont.classList.add(bsdom.system.tier.disc);
   if(sysinfo.discounts!=undefined){
     discont.appendChild(document.createElement('div'));
-    discont.lastChild.innerText = 'Inst: ' + qbuild.systems[sysnum].discounts[0].tiers[optnum];
+    discont.lastChild.innerText = 'Inst: ' + tquote.info.build.systems[sysnum].discounts[0].tiers[optnum];
     discont.appendChild(document.createElement('div'));
-    discont.lastChild.innerText = 'Manf: ' + qbuild.systems[sysnum].discounts[1].tiers[optnum];
+    discont.lastChild.innerText = 'Manf: ' + tquote.info.build.systems[sysnum].discounts[1].tiers[optnum];
     discont.appendChild(document.createElement('div'));
-    discont.lastChild.innerText = 'Spec: ' + qbuild.systems[sysnum].discounts[2].tiers[optnum];
+    discont.lastChild.innerText = 'Spec: ' + tquote.info.build.systems[sysnum].discounts[2].tiers[optnum];
   }
 
   discont.appendChild(document.createElement('div'));
   try{
-    discont.lastChild.innerText = `Ameren (${qbuild.systems[sysnum].tiers[optnum].size.seer}): ${qbuild.systems[sysnum].tiers[optnum].size.rebateelec != ''?qbuild.systems[sysnum].tiers[optnum].size.rebateelec:0}`;
+    discont.lastChild.innerText = `Ameren (${tquote.info.build.systems[sysnum].tiers[optnum].size.seer}): ${tquote.info.build.systems[sysnum].tiers[optnum].size.rebateelec != ''?tquote.info.build.systems[sysnum].tiers[optnum].size.rebateelec:0}`;
 
 
   discont.appendChild(document.createElement('div'));
-  discont.lastChild.innerText = `Spire: ${qbuild.systems[sysnum].tiers[optnum].size.rebategas!=undefined?qbuild.systems[sysnum].tiers[optnum].size.rebategas:0}`;
+  discont.lastChild.innerText = `Spire: ${tquote.info.build.systems[sysnum].tiers[optnum].size.rebategas!=undefined?tquote.info.build.systems[sysnum].tiers[optnum].size.rebategas:0}`;
 }catch{}
   return discont;
 }

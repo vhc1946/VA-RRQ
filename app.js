@@ -459,6 +459,7 @@ ipcMain.on(quoteroutes.createpresentation,(eve,data)=>{
     eve.sender.send(quoteroutes.createpresentation,{msg:'',quote:quotepresi,user:au.auser});
     //quotepresi = null; //reset quotepresi
   }else{eve.sender.send(quoteroutes.createpresentation,{msg:'',quote:null,user:au.auser});}
+  quotepresi=null;
 });
 /////////////////////////////////////////////////////////////////////////
 
