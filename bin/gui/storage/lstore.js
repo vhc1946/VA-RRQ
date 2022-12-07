@@ -9,7 +9,8 @@ var usersls = {
 var quotesls = {
   userquotes: 'rrq-userquotes',
   lastquote:'rrq-lastquote',
-  quotetoload:'rrq-quotetoload'
+  quotetoload:'rrq-quotetoload',
+  quotetopresi:'rrq-quotetopresi'
 }
 module.exports = {
   usersls,

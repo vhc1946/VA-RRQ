@@ -65,9 +65,13 @@ if(tquote.info.contracts==undefined){
   tquote.info.contracts = {};
 }
 
-var qbuild = tquote.info.build;
-var qkey = tquote.info.key; //point key to tquote
-var qprice = tquote.info.pricing;
+//var qbuild = tquote.info.build;
+//var qkey = tquote.info.key; //point key to tquote
+//var qprice = tquote.info.pricing;
+
+
+console.log(tquote)
+
 
 localStorage.setItem(quotesls.lastquote,JSON.stringify({id:tquote.id,name:tquote.name}));
 
@@ -82,7 +86,7 @@ ipcRenderer.send('GET-quotesettings','Initial');
 ipcRenderer.on('GET-quotesettings',(eve,data)=>{
   if(data){
     qsettings = data;
-    domtools.SETdatalistFROMobject(qkey.groups,'system-groups-list');
+    domtools.SETdatalistFROMobject(tquote.info.key.groups,'system-groups-list');
     sysbuild.InitSysBuild();
     custbuild.InitInfoBuild();
     sysbuild.modbuild.INITbuildmod();
@@ -123,8 +127,8 @@ let mactions={
     id:'refresh-key',
     src:'../bin/repo/assets/icons/dollar-thin.png',
     ondblclick:(ele)=>{
-      qprice.systems = pricer.GETsystemprices(qsettings,qbuild);
-      console.log(qprice);
+      tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
+      console.log(tquote.info.pricing);
     }
   }
 }
@@ -165,7 +169,7 @@ ipcRenderer.on(quoteroutes.refreshquotekey,(eve,data)=>{
   if(data.key && data.key!=undefined){
     DropNote('tr',data.msg,'green');
     tquote.info.key = data.key;//update tquote
-    qkey = tquote.info.key;//relink qkey
+    //qkey = tquote.info.key;//relink qkey
     console.log('QUOTE ',tquote);
   }else{DropNote('tr',data.msg,'red')}
 });
@@ -217,15 +221,16 @@ var sysbuild=require('../bin/gui/quoter/rrq-buildsys.js'); //Systems module
 
 document.getElementById(modbuild.moddom.cont).addEventListener('change',(ele)=>{ //change to Modifications
   modbuild.GETbuildmod(); //update Modifications
-  qprice.systems = pricer.GETsystemprices(qsettings,qbuild);
-  for(let x=0;x<qbuild.systems.length;x++){
-    sumbuild.REFRESHsumsystem(qbuild.systems[x],x);
+  tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
+  for(let x=0;x<tquote.info.build.systems.length;x++){
+    sumbuild.REFRESHsumsystem(tquote.info.build.systems[x],x);
   }
 });
 //  ACTIONS ////////////////////////////////////////////////////////////////////
 
 document.getElementById('rrq-create-presentation').addEventListener('click',(ele)=>{
   //ipcRenderer.send(quoteroutes.createpresentation,{quote:})
+  localStorage.setItem(quotesls.quotetopresi,JSON.stringify(tquote));
   ipcRenderer.send(navroutes.gotopresi,{quote:tquote});
 });
 
@@ -254,7 +259,7 @@ var TOGGLEsummary=()=>{
 ///////////////////////////////////////
 var SAVEquote = ()=>{
   custbuild.GETquoteinfo();
-  qbuild.systems = sysbuild.GETsystems();
+  tquote.info.build.systems = sysbuild.GETsystems();
   modbuild.GETbuildmod();
   localStorage.setItem(quotesls.quotetoload,JSON.stringify(tquote)); //save to localStorage (quotetoload for dev)
   ipcRenderer.send(quoteroutes.savequote,{quote:tquote});//send quote to main

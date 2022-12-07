@@ -128,9 +128,9 @@ var SetupSystemCard=(card,qsys=null)=>{
             SWAPdivorin(tiersize[y],false);
             for(let z=0,l=card.parentNode.children.length;z<l;z++){//refract the system tier change
               if(card.parentNode.children[z]===card){
-                qbuild.systems = GETsystems();
-                qprice.systems = pricer.GETsystemprices(qsettings,qbuild);
-                sumbuild.REFRESHsumsystem(qbuild.systems[z],z);  //y=sysid x=optid
+                tquote.info.build.systems = GETsystems();
+                tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
+                sumbuild.REFRESHsumsystem(tquote.info.build.systems[z],z);  //y=sysid x=optid
               }
             }
           }
@@ -147,14 +147,14 @@ var SetupSystemCard=(card,qsys=null)=>{
       group:card.getElementsByClassName(sbdom.system.info.group)[0].value,
       btucooling:Number(card.getElementsByClassName(sbdom.system.info.btucooling)[0].value)||null,
     }
-    if(qkey.groups[fltrs.group]){ //check for valid group
+    if(tquote.info.key.groups[fltrs.group]){ //check for valid group
       tierlist = card.getElementsByClassName(sbdom.system.tier.cont);
       for(let x=0;x<tierlist.length;x++){ //loop through tiers
         let syslist = [];
         let sizelist = [];
-        for(let y=0;y<qkey.groups[fltrs.group].systems.length;y++){ //find the systems tied to the tier
-          if(qsettings.tiers[x+1].code == qkey.groups[fltrs.group].systems[y].info.tierid || qkey.groups[fltrs.group].systems[y].info.tierid =='T0'){
-            syslist.push(qkey.groups[fltrs.group].systems[y]); //push systems that match the tier code
+        for(let y=0;y<tquote.info.key.groups[fltrs.group].systems.length;y++){ //find the systems tied to the tier
+          if(qsettings.tiers[x+1].code == tquote.info.key.groups[fltrs.group].systems[y].info.tierid || tquote.info.key.groups[fltrs.group].systems[y].info.tierid =='T0'){
+            syslist.push(tquote.info.key.groups[fltrs.group].systems[y]); //push systems that match the tier code
           }
         }
         card.getElementsByClassName(sbdom.system.tier.list)[0].children[x].getElementsByClassName(sbdom.system.tier.size.list)[0].innerHTML = ''; //clear size list
@@ -166,7 +166,7 @@ var SetupSystemCard=(card,qsys=null)=>{
           }
           topts = topts.concat(syslist[y].opts);
         }
-        topts.unshift(qkey.groups[fltrs.group].optheads);
+        topts.unshift(tquote.info.key.groups[fltrs.group].optheads);
         gentable.BUILDdistable(topts,card.getElementsByClassName(sbdom.system.tier.list)[0].children[x].getElementsByClassName(sbdom.system.tier.size.list)[0],true,sbdom.system.tier.size.row);
       }
     }else{DropNote('tr','Group Not found in Key','red',false)}
@@ -252,17 +252,17 @@ var GETsystems=()=>{
 // SETUP MODULE /////////////////////////////////////////////////////////////////
 
 var InitSysBuild=()=>{
-  for(let x=0;x<qbuild.systems.length;x++){
-    CreateSystemCard(qbuild.systems[x].name,qbuild.systems[x]);
+  for(let x=0;x<tquote.info.build.systems.length;x++){
+    CreateSystemCard(tquote.info.build.systems[x].name,tquote.info.build.systems[x]);
   }
 }
 
 // modules
 
 var CHECKforsystemname=(name)=>{
-  if(qbuild.systems!=undefined){
-    for(let x=0;x<qbuild.systems.length;x++){
-      if(qbuild.systems[x].name==name){return true}
+  if(tquote.info.build.systems!=undefined){
+    for(let x=0;x<tquote.info.build.systems.length;x++){
+      if(tquote.info.build.systems[x].name==name){return true}
     }
   }
   return false;
@@ -275,11 +275,11 @@ document.getElementById(sbdom.add.button).addEventListener('click',(eve)=>{//add
   var sysname = document.getElementById(sbdom.add.name);
   if(sysname.value!=''&&!CHECKforsystemname(sysname.value)){ //OR make a current system name
     CreateSystemCard(sysname.value);
-    qbuild.systems = GETsystems();
-    qprice.systems = pricer.GETsystemprices(qsettings,qbuild);
+    tquote.info.build.systems = GETsystems();
+    tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
 
     modbuild.modviews.ADDview(sysname.value,modbuild.ADDmodsystem(sysname),false);
-    sumbuild.sumviews.ADDview(sysname.value,sumbuild.ADDsumsystem(qbuild.systems.length-1,qbuild.systems[qbuild.systems.length-1]),false);
+    sumbuild.sumviews.ADDview(sysname.value,sumbuild.ADDsumsystem(tquote.info.build.systems.length-1,tquote.info.build.systems[tquote.info.build.systems.length-1]),false);
   }else{DropNote('tr','Bad System Name','red')}
   sysname.value = '';
 });
@@ -308,10 +308,10 @@ var SELECTsystemsize = (ele)=>{
             if(currtier.parentNode.children[x]==currtier){ //find the index of the tier
               modbuild.UPDATEenhlist(sysinfo,y,x);
               modbuild.UPDATEdscntlist(sysinfo,y,x);
-              qbuild.systems = GETsystems();
-              qprice.systems = pricer.GETsystemprices(qsettings,qbuild);
+              tquote.info.build.systems = GETsystems();
+              tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
               modbuild.GETbuildmod();
-              sumbuild.REFRESHsumsystem(qbuild.systems[y],y);  //y=sysid x=optid
+              sumbuild.REFRESHsumsystem(tquote.info.build.systems[y],y);  //y=sysid x=optid
             }
           }
         }
@@ -333,10 +333,10 @@ document.getElementsByClassName('min-page-view')[0].getElementsByClassName(sbdom
     - sysid - system id
 */
 var FINDsystem = (grp,sysid)=>{
-  if(qkey.groups[grp]!=undefined){
-    for(let x=0;x<qkey.groups[grp].systems.length;x++){
-      if(qkey.groups[grp].systems[x].info.sysid == sysid){
-        return qkey.groups[grp].systems[x].info;
+  if(tquote.info.key.groups[grp]!=undefined){
+    for(let x=0;x<tquote.info.key.groups[grp].systems.length;x++){
+      if(tquote.info.key.groups[grp].systems[x].info.sysid == sysid){
+        return tquote.info.key.groups[grp].systems[x].info;
       }
     }
   }
@@ -357,10 +357,10 @@ var UPDATEsystemtier = (syscard)=>{
           if(currtier.parentNode.children[x]==currtier){ //find the index of the tier
             modbuild.UPDATEenhlist(sysinfo,y,x);
             modbuild.UPDATEdscntlist(sysinfo,y,x);
-            qbuild.systems = GETsystems();
-            qprice.systems = pricer.GETsystemprices(qsettings,qbuild);
+            tquote.info.build.systems = GETsystems();
+            tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
             modbuild.GETbuildmod();
-            sumbuild.REFRESHsumsystem(qbuild.systems[y],y);  //y=sysid x=optid
+            sumbuild.REFRESHsumsystem(tquote.info.build.systems[y],y);  //y=sysid x=optid
           }
         }
       }

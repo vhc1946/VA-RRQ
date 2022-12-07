@@ -104,13 +104,14 @@ var modviews = new vcontrol.ViewGroup({
   cont:document.getElementById(moddom.cont),
   type:'mtl'
 })
+console.log('BUILD',tquote);
 
 var INITbuildmod=()=>{
-  modlist = new ObjList([...qkey.accessories]); //copy the accessories array
+  modlist = new ObjList([...tquote.info.key.accessories]); //copy the accessories array
   modlisthead = modlist.GETlist().shift();
 
-  for(let x=0;x<qbuild.systems.length;x++){
-    modviews.ADDview(qbuild.systems[x].name,ADDmodsystem(qbuild.systems[x].name,qbuild.systems[x]));
+  for(let x=0;x<tquote.info.build.systems.length;x++){
+    modviews.ADDview(tquote.info.build.systems[x].name,ADDmodsystem(tquote.info.build.systems[x].name,tquote.info.build.systems[x]));
   }
 }
 
@@ -118,24 +119,24 @@ var GETbuildmod=()=>{
   let cont = document.getElementById('build-mod-views').getElementsByClassName('build-mod-system');
   for(let x=0;x<cont.length;x++){ //loop through systems
     let list = cont[x].getElementsByClassName(moddom.views.mods.enh.selects)[0].children;
-    qbuild.systems[x].enhancments=[];
+    tquote.info.build.systems[x].enhancments=[];
     //enhancements
     for(let y=1;y<list.length;y++){
-      qbuild.systems[x].enhancments.push(GETselectline(list[y]));
+      tquote.info.build.systems[x].enhancments.push(GETselectline(list[y]));
     }
     //additions
     list = cont[x].getElementsByClassName(moddom.views.mods.adds.selects)[0].children;
-    qbuild.systems[x].additions=[];
+    tquote.info.build.systems[x].additions=[];
     for(let y=1;y<list.length;y++){
-      qbuild.systems[x].additions.push(GETselectline(list[y]));
+      tquote.info.build.systems[x].additions.push(GETselectline(list[y]));
     }
     //iaq
     //Discounts
     list = cont[x].getElementsByClassName(moddom.views.dscnts.list)[0].children;
     console.log(list);
-    qbuild.systems[x].discounts=[];
+    tquote.info.build.systems[x].discounts=[];
     for(let y=0;y<list.length;y++){
-      qbuild.systems[x].discounts.push(GETdscntline(list[y]));
+      tquote.info.build.systems[x].discounts.push(GETdscntline(list[y]));
     }
   }
 }
@@ -189,7 +190,7 @@ var SETaddblock=(block,sys=undefined)=>{
   }
   titleele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
   titleele.appendChild(document.createElement('div'));
-  titleele.lastChild.innerText = qkey.accessories[0]['price_sale']; //Title value for dedection price
+  titleele.lastChild.innerText = tquote.info.key.accessories[0]['price_sale']; //Title value for dedection price
 
   SETenhlist(block,modlist.TRIMlist({}),sys);
   SETaddlist(block,sys);
