@@ -460,7 +460,6 @@ document.getElementById(wpdscnts.multisys.id).addEventListener('click',(ele)=>{
   UPDATEwpdscnts(GETwpdscntinfo('multisys'),toadd);
   document.getElementById(moddom.cont).dispatchEvent(new Event('change'));
 });
-
 document.getElementById(wpdscnts.frndsfam.id).addEventListener('click',(ele)=>{
   let toadd=false;
   if(ele.target.classList.contains('vg-checkbox-checked')){ele.target.classList.remove('vg-checkbox-checked');}
