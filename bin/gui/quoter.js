@@ -140,8 +140,16 @@ let qactions={
     }
   }
 }
+var closeeve=()=>{
+  if(window.confirm('Please save before closing! \nPress "Okay" to close the quote.\nPress "Cancel" to go back and save.')){
+    window.close();
+  }else{
 
-Titlebar.SETUPtitlebar(qactions,mactions);
+  }
+}
+
+
+Titlebar.SETUPtitlebar(qactions,mactions,closeeve);
 
 
 // WORKING VARIABLES //
