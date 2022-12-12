@@ -10,6 +10,7 @@ var {auser} = require('../bin/appuser.js'); //initialize the app user object
 var {quotesls}=require('../bin/gui/storage/lstore.js');
 var {quoteroutes}=require('../bin/routes.js');
 
+var SignaturePad = require('signature_pad');
 
 var qsettings=null;
 
@@ -62,6 +63,7 @@ Titlebar.SETUPtitlebar(qactions);
 
 
 var apaths=require('../app/paths.json');
+
 //var tquote=null; //to hold quote
 var tquote = JSON.parse(localStorage.getItem(quotesls.quotetopresi));
 var cons=auser;
@@ -133,11 +135,7 @@ var LOADresipresi=()=>{
 
       // Home Comfort //////////////
       document.getElementsByClassName('rrq-pres-comfort-cooling')[i].src = diricon + '/comfort-cooling_'+(sysbuild.tiers[i].info['feat_comfort_cooling'])+'.png';
-      document.getElementsByClassName('rrq-pres-comfortfeels-cooling')[i].src = diricon + '/comfort-coolingfeels_'+(sysbuild.tiers[i].info['feat_comfort_coolingfeels'])+'.png';
-
       document.getElementsByClassName('rrq-pres-comfort-heating')[i].src = diricon + '/comfort-heating_'+(sysbuild.tiers[i].info['feat_comfort_heating'])+'.png';
-      document.getElementsByClassName('rrq-pres-comfortfeel-heating')[i].src = diricon + '/comfort-heatingfeels_'+(sysbuild.tiers[i].info['feat_comfort_heatingfeels'])+'.png';
-
       document.getElementsByClassName('rrq-pres-comfort-soundslike')[i].src = diricon + '/comfort-soundslike_'+(sysbuild.tiers[i].info['feat_comfort_soundslike'])+'.png';
       document.getElementsByClassName('rrq-pres-comfort-filters')[i].src = diricon + '/comfort-filters_'+(sysbuild.tiers[i].info['feat_comfort_filters'])+'.png';
 
@@ -304,8 +302,48 @@ if(tquote){
   asspath = path.join(auser.cuser.spdrive,apaths.deproot,apaths.assets.root);
   LOADresipresi();
 }
-else{console.log('here');DropNote('tr','Quoute Could NOT Load','red',true);}
+else{DropNote('tr','Quoute Could NOT Load','red',true);}
 
-module.exports={
 
+// Signature Testing ////////////////////////////////////////////////////////
+
+var canvas = document.getElementById('estimator-sig');
+
+// Adjust canvas coordinate space taking into account pixel ratio,
+// to make it look crisp on mobile devices.
+// This also causes canvas to be cleared.
+function resizeCanvas() {
+    // When zoomed out to less than 100%, for some very strange reason,
+    // some browsers report devicePixelRatio as less than 1
+    // and only part of the canvas is cleared then.
+    
+    var ratio =  Math.max(window.devicePixelRatio || 1, 1);
+    canvas.width = canvas.offsetWidth * ratio;
+    canvas.height = canvas.offsetHeight * ratio;
+    canvas.getContext("2d").scale(ratio, ratio);
 }
+
+window.onresize = resizeCanvas;
+resizeCanvas();
+
+var signaturePad = new SignaturePad(canvas, {
+  backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
+});
+
+document.getElementById('save-sig').addEventListener('click', function () {
+  if (signaturePad.isEmpty()) {
+    return alert("Please provide a signature first.");
+  }
+  let data = signaturePad.toDataURL('image/png');
+  console.log(data);
+});
+
+document.getElementById('clear-sig').addEventListener('click', function () {
+  signaturePad.clear();
+});
+
+document.getElementById('draw-sig').addEventListener('click', function () {
+  var ctx = canvas.getContext('2d');
+  console.log(ctx.globalCompositeOperation);
+  ctx.globalCompositeOperation = 'source-over'; // default value
+});
