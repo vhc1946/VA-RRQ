@@ -10,8 +10,6 @@ var {auser} = require('../bin/appuser.js'); //initialize the app user object
 var {quotesls}=require('../bin/gui/storage/lstore.js');
 var {quoteroutes}=require('../bin/routes.js');
 
-var SignaturePad = require('signature_pad');
-
 var qsettings=null;
 
 
@@ -36,6 +34,25 @@ var pnavdom = {
     up:'sys-up',
     down:'sys-down',
     tag:'sys-name'
+  }
+}
+
+var presdom={
+  cont:'rrq-multi-presentation',
+  header:'rrq-presi-header',
+  footer:'rrq-page-footer',
+  sections:{
+    header:'rrq-multi-cont-header',
+    exp:'rrq-multi-cont-exp',
+    comfort:'rrq-multi-cont-comfort',
+    value:'rrq-multi-cont-value',
+    headerprint:'rrq-multi-cont-headerprint',
+    impact:'rrq-multi-cont-impact',
+    enhance:'rrq-multi-cont-enhance',
+    adds:'rrq-multi-cont-adds',
+    finance:'rrq-multi-cont-finance',
+    discount:'rrq-multi-cont-discount',
+    partials:'rrq-multi-cont-partials'
   }
 }
 
@@ -118,16 +135,9 @@ var LOADresipresi=()=>{
 
   for(let i=0;i<sysbuild.tiers.length;i++){
     if(sysbuild.tiers[i].size){
-
-      $(document.getElementsByClassName('rrq-multi-cont-header')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
-      $(document.getElementsByClassName('rrq-multi-cont-exp')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
-      $(document.getElementsByClassName('rrq-multi-cont-comfort')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
-      $(document.getElementsByClassName('rrq-multi-cont-value')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
-      $(document.getElementsByClassName('rrq-multi-cont-impact')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
-      $(document.getElementsByClassName('rrq-multi-cont-enhance')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
-      $(document.getElementsByClassName('rrq-multi-cont-adds')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
-      $(document.getElementsByClassName('rrq-multi-cont-finance')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
-      $(document.getElementsByClassName('rrq-multi-cont-discount')[0].getElementsByClassName('rrq-multi-tier')[i]).show()
+      for(let key in presdom.sections){   // Shows sections of all tiers
+        document.getElementsByClassName(`rrq-multi-cont-${key}`)[0].getElementsByClassName('rrq-multi-tier')[i].style.backgroundColor = '';
+      }
 
       // User Experience ///////////
 
@@ -151,7 +161,6 @@ var LOADresipresi=()=>{
       document.getElementsByClassName('rrq-impact-trees')[i].innerText = sysbuild.tiers[i].info['feat_impact_trees'] + ' Trees';
 
       ///////////////////////////////
-
 
       // Enhancements /////////////////////////////////////
       document.getElementsByClassName('rrq-multi-tier-enhance')[i].innerHTML = '';
@@ -177,8 +186,6 @@ var LOADresipresi=()=>{
           }
         }
       }
-
-
 
       //  Rebates / Discounts ////////////////////////////
       let disc = document.createElement('div');
@@ -208,8 +215,6 @@ var LOADresipresi=()=>{
       document.getElementsByClassName("rrq-multi-tier-discount")[i].innerHTML = "";
       document.getElementsByClassName("rrq-multi-tier-discount")[i].appendChild(disc);
 
-
-
       // Investment /////////////////////////////////////
       document.getElementsByClassName('fin-uf-price')[i].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[0].opts.sysprice.price);
       document.getElementsByClassName('fin-promo-price')[i].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.sysprice.price);
@@ -226,15 +231,11 @@ var LOADresipresi=()=>{
       document.getElementsByClassName('rrq-part-promomo')[i].childNodes[2].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.outprice.monthly);
       document.getElementsByClassName('rrq-part-promomo')[i].childNodes[3].innerText = Math.trunc(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.inprice.monthly);
     }else{
-      $(document.getElementsByClassName('rrq-multi-cont-header')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
-      $(document.getElementsByClassName('rrq-multi-cont-exp')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
-      $(document.getElementsByClassName('rrq-multi-cont-comfort')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
-      $(document.getElementsByClassName('rrq-multi-cont-value')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
-      $(document.getElementsByClassName('rrq-multi-cont-impact')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
-      $(document.getElementsByClassName('rrq-multi-cont-enhance')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
-      $(document.getElementsByClassName('rrq-multi-cont-adds')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
-      $(document.getElementsByClassName('rrq-multi-cont-finance')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
-      $(document.getElementsByClassName('rrq-multi-cont-discount')[0].getElementsByClassName('rrq-multi-tier')[i]).hide()
+      for(let key in presdom.sections){   // Hides sections of empty tiers
+        let section = document.getElementsByClassName(`rrq-multi-cont-${key}`)[0].getElementsByClassName('rrq-multi-tier')[i];
+        section.style.backgroundColor = 'grey';
+        console.log(section.style);
+      }
     }
   }
 }
@@ -248,54 +249,6 @@ var CHANGEsys=(ele)=>{
   LOADresipresi();
 }
 
-var CHANGEtier=(ele)=>{
-  if(ele.target.id=='run-left'){
-    currtier--;
-  }else{currtier++}
-  if(currtier<0){currtier=tiersettings.length-1}
-  if(currtier==tiersettings.length){currtier=0}
-  LOADresipresi();
-}
-
-var SETUPpresnav=()=>{
-  let pcont = document.createElement('div');
-  pcont.classList.add('page-buttons');
-  pcont.appendChild(document.createElement('div'));
-  pcont.lastChild.innerText = "Left"
-  pcont.lastChild.id = pnavdom.tier.left;
-  pcont.appendChild(document.createElement('span'));
-  pcont.lastChild.innerText = 'TIERS';
-  pcont.lastChild.id = pnavdom.tier.tag;
-  pcont.appendChild(document.createElement('div'));
-  pcont.lastChild.innerText = 'Right';
-  pcont.lastChild.id = pnavdom.tier.right;
-
-  let scont = document.createElement('div');
-  scont.classList.add('system-controls');
-  scont.appendChild(document.createElement('div'));
-  scont.lastChild.id = pnavdom.system.up;
-  scont.lastChild.innerText = 'Up';
-  scont.appendChild(document.createElement('span'));
-  scont.lastChild.innerText = 'SYSTEMS';
-  scont.lastChild.id = pnavdom.system.tag;
-  scont.appendChild(document.createElement('div'));
-  scont.lastChild.id = pnavdom.system.down;
-  scont.lastChild.innerText = 'Down';
-
-
-
-  document.getElementById(Titlebar.tbdom.title).innerText = '';
-  document.getElementById(Titlebar.tbdom.title).appendChild(pcont);
-  document.getElementById(Titlebar.tbdom.title).appendChild(scont);
-  document.getElementById('test-area').appendChild(scont);
-
-  document.getElementById(pnavdom.system.up).addEventListener('click',CHANGEsys);
-  document.getElementById(pnavdom.system.down).addEventListener('click',CHANGEsys);
-
-  document.getElementById(pnavdom.tier.left).addEventListener('click',CHANGEtier);
-  document.getElementById(pnavdom.tier.right).addEventListener('click',CHANGEtier);
-}
-
 if(tquote){
   console.log('QUOTE >',tquote);
   localStorage.setItem(quotesls.quotetopresi,null)
@@ -303,47 +256,3 @@ if(tquote){
   LOADresipresi();
 }
 else{DropNote('tr','Quoute Could NOT Load','red',true);}
-
-
-// Signature Testing ////////////////////////////////////////////////////////
-
-var canvas = document.getElementById('estimator-sig');
-
-// Adjust canvas coordinate space taking into account pixel ratio,
-// to make it look crisp on mobile devices.
-// This also causes canvas to be cleared.
-function resizeCanvas() {
-    // When zoomed out to less than 100%, for some very strange reason,
-    // some browsers report devicePixelRatio as less than 1
-    // and only part of the canvas is cleared then.
-    
-    var ratio =  Math.max(window.devicePixelRatio || 1, 1);
-    canvas.width = canvas.offsetWidth * ratio;
-    canvas.height = canvas.offsetHeight * ratio;
-    canvas.getContext("2d").scale(ratio, ratio);
-}
-
-window.onresize = resizeCanvas;
-resizeCanvas();
-
-var signaturePad = new SignaturePad(canvas, {
-  backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
-});
-
-document.getElementById('save-sig').addEventListener('click', function () {
-  if (signaturePad.isEmpty()) {
-    return alert("Please provide a signature first.");
-  }
-  let data = signaturePad.toDataURL('image/png');
-  console.log(data);
-});
-
-document.getElementById('clear-sig').addEventListener('click', function () {
-  signaturePad.clear();
-});
-
-document.getElementById('draw-sig').addEventListener('click', function () {
-  var ctx = canvas.getContext('2d');
-  console.log(ctx.globalCompositeOperation);
-  ctx.globalCompositeOperation = 'source-over'; // default value
-});

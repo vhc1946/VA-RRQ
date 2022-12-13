@@ -245,27 +245,26 @@ body::-webkit-scrollbar{
     display: grid;
     grid-template-columns: repeat(5, 1fr);
 }
-
+.rrq-sig-area{
+    display: flex;
+}
 .rrq-signature-pad{
     height: 100px;
     width: 400px;
     background: lightgrey;
     border-radius: 10px;
 }
-.rrq-signature-buttons{
-    display: flex;
-    justify-content: flex-end;
-}
+
 
 
 /* PRINTING */
 #rrq-presi-header,
-.rrq-multi-cont-header-print{
+.rrq-multi-cont-headerprint{
    display:none;
 }
 @media print{
     #rrq-presi-header{display: grid;}
-    .rrq-multi-cont-header-print{
+    .rrq-multi-cont-headerprint{
         page-break-before: always;
         display:grid;}
 }
