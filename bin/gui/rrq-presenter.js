@@ -232,6 +232,22 @@ var LOADresipresi=()=>{
       document.getElementsByClassName('rrq-multi-tier-enhance')[i].innerHTML = '';
       document.getElementsByClassName('rrq-multi-tier-adds')[i].innerHTML = '';
       document.getElementsByClassName("rrq-multi-tier-discount")[i].innerHTML = "";
+
+      // Investment BRUTE FORCE, NEED TO CHANGE
+      document.getElementsByClassName('fin-uf-price')[i].innerText = "";
+      document.getElementsByClassName('fin-promo-price')[i].innerText = "";
+      document.getElementsByClassName('fin-promo-mo')[i].innerText = "";
+      document.getElementsByClassName('fin-low-mo')[i].innerText = "";
+
+      // Partials BRUTE FORCE, NEED TO CHANGE
+      document.getElementsByClassName('rrq-part-upfront')[i].childNodes[2].innerText = "";
+      document.getElementsByClassName('rrq-part-upfront')[i].childNodes[3].innerText = "";
+      document.getElementsByClassName('rrq-part-lowest')[i].childNodes[2].innerText = "";
+      document.getElementsByClassName('rrq-part-lowest')[i].childNodes[3].innerText = "";
+      document.getElementsByClassName('rrq-part-promo')[i].childNodes[2].innerText = "";
+      document.getElementsByClassName('rrq-part-promo')[i].childNodes[3].innerText = "";
+      document.getElementsByClassName('rrq-part-promomo')[i].childNodes[2].innerText = "";
+      document.getElementsByClassName('rrq-part-promomo')[i].childNodes[3].innerText = "";
     }
   }
 }
