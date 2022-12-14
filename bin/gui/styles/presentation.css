@@ -148,6 +148,7 @@ body::-webkit-scrollbar{
 }
 .rrq-pres-compare-icon{
     height: 60px;
+    width: 180px
 }
 
 
@@ -155,13 +156,15 @@ body::-webkit-scrollbar{
 .value-icon-box{
     text-align:center;
 }
-.value-icon{
+.rrq-icon-value{
     width: 75px;
 }
-
+.rrq-multi-tier-value{
+    text-align: center;
+}
 
 /* Impact */
-.rrq-impact-pic{
+.rrq-icon-impact{
     height:50px;
     width: 100%;
     padding: 5px;
@@ -226,9 +229,12 @@ body::-webkit-scrollbar{
 }
 .rrq-page-foot-title{
     text-align: center;
-    font-weight: bold;
+    width: 100%;
+    background-color: var(--BEE-blue);
+    color: var(--text-light);
 }
 .rrq-page-guarantees{
+    background-color: var(--background-light);
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     margin-right: 0px;
@@ -236,6 +242,10 @@ body::-webkit-scrollbar{
 }
 .rrq-page-guarantees>.rrq-page-foot-title{
     grid-column: 1 / 3;
+}
+.rrq-page-includes{
+    text-align: center;
+    background-color: var(--background-light);
 }
 .rrq-signature-cont{
     grid-column: 1 / 3;
