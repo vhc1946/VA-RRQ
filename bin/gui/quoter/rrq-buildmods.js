@@ -197,6 +197,7 @@ var SETaddblock=(block,sys=undefined)=>{
 
 
   SETdatalistSPC(modlist.list,{cat:'mod-add-cat-list'});
+  console.log(block);
   SETaccfilters(block);
 
   SETacclist(block,modlist.list); //exclude enhancements
@@ -209,18 +210,6 @@ var SETaddblock=(block,sys=undefined)=>{
     }else{
       DropNote('tr','Already on List','yellow');
     }
-    /*
-    let lrow = ele.target.parentNode;
-    if(lrow.classList.contains(moddom.views.mods.listrow) && lrow!=block.getElementsByClassName(moddom.views.mods.list)[0].children[0]){
-      lrow=ADDselectline(gentable.GETrowTOobject(lrow)); //get row to compare
-      console.log(lrow);
-      if(Dupcheck(block,lrow)){//check to see if item has been added
-        block.getElementsByClassName(moddom.views.mods.adds.selects)[0].appendChild(lrow);
-      }else{
-        DropNote('tr','Already on List','yellow');
-      }
-    }
-    */
 
     document.getElementById(moddom.cont).dispatchEvent(new Event('change')); //to refresh quote
   });
