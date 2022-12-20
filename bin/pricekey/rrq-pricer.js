@@ -5,7 +5,7 @@
     An array is returned and attached to the quote.info.pricing.systems object
 */
 var GETsystemprices=(qsets,qbuild)=>{
-  console.log('Pricing')
+  console.log('Pricing',qbuild);
   let sparr = [];
   for(let x=0;x<qbuild.systems.length;x++){
     let sobj = {
@@ -23,7 +23,7 @@ var GETsystemprices=(qsets,qbuild)=>{
         try{
           tobj.priceops.push(
             GETsizeprice(tobj,
-                         qbuild.systems[x].tiers[y].size,
+                         qbuild.systems[x].tiers[y],
                          qbuild.systems[x].discounts,
                          y,
                          qsets.finance[z])
@@ -34,7 +34,6 @@ var GETsystemprices=(qsets,qbuild)=>{
     }
     sparr.push(sobj);
   }
-  console.log(sparr);
   return sparr;
 }
 
@@ -48,7 +47,7 @@ var GETaddprice=(tnum,alist)=>{
   return aprice;
 }
 
-var GETdscntstotal=(tnum,dlist,price)=>{
+var GETdscntstotal=(tnum,dlist,price,rebate=0)=>{
   let dprice = 0;
   if(dlist!=undefined){
     for(let x=0;x<dlist.length;x++){
@@ -58,11 +57,13 @@ var GETdscntstotal=(tnum,dlist,price)=>{
       }
     }
   }
-  return dprice;
+  return dprice+rebate;
 }
 
+//bring in size info
+//bring in tier info
 var RUNpricecalc=(price,fincost,adds,disc=0)=>{
-  return price*(1+fincost)+adds-disc;
+  return (price)*(1+fincost)+adds-disc;
 }
 
 var GETmonthlyfin=(price,payment)=>{
@@ -73,28 +74,38 @@ var GETmonthlyfin=(price,payment)=>{
 }
 
 var GETsizeprice=(tinfo,size,discounts,tiernum,payment)=>{
-  console.log('Discounts',discounts);
   let tpobj = {
     payment:payment,
     opts:{
       sysprice:{
-        price:RUNpricecalc(size.pricebase,payment.cost,tinfo.addprice),
+        price:RUNpricecalc(size.size.pricebase,payment.cost,tinfo.addprice),
         monthly:0
       },
       inprice:{
-        price:RUNpricecalc(size.priceindoor,payment.cost,tinfo.addprice),
+        price:RUNpricecalc(size.size.priceindoor,payment.cost,tinfo.addprice),
         monthly:0
       },
       outprice:{
-        price:RUNpricecalc(size.priceoutdoor,payment.cost,tinfo.addprice),
+        price:RUNpricecalc(size.size.priceoutdoor,payment.cost,tinfo.addprice),
         monthly:0
       }
     }
   }
+  let partdisc = [];
+  for(let x=0;x<discounts.length;x++){ //exclude system discounts
+    if(discounts[x].ref!='discmfg'){partdisc.push(discounts[x])}
+  }
   for(let po in tpobj.opts){ //loop through to apply discounts
-    tpobj.opts[po].price=tpobj.opts[po].price-GETdscntstotal(tiernum,discounts,tpobj.opts[po].price);
+    tpobj.opts[po].price=tpobj.opts[po].price-GETdscntstotal(
+      tiernum,
+      po=='sysprice'?discounts:partdisc,
+      tpobj.opts[po].price,
+      po=='sysprice'?Number(size.size.rebateelec):0
+    );
     tpobj.opts[po].monthly=GETmonthlyfin(tpobj.opts[po].price,payment); //calculate monthly after discounts
   }
+  console.log('Size',size);
+  console.log('Price',tpobj);
   return tpobj;
 }
 
