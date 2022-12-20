@@ -138,6 +138,7 @@ var GETbuildmod=()=>{
     for(let y=0;y<list.length;y++){
       tquote.info.build.systems[x].discounts.push(GETdscntline(list[y]));
     }
+    console.log(tquote.info.build)
   }
 }
 

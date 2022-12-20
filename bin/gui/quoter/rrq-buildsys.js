@@ -128,6 +128,7 @@ var SetupSystemCard=(card,qsys=null)=>{
             SWAPdivorin(tiersize[y],false);
             for(let z=0,l=card.parentNode.children.length;z<l;z++){//refract the system tier change
               if(card.parentNode.children[z]===card){
+
                 tquote.info.build.systems = GETsystems();
                 tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
                 sumbuild.REFRESHsumsystem(tquote.info.build.systems[z],z);  //y=sysid x=optid
@@ -307,10 +308,14 @@ var SELECTsystemsize = (ele)=>{
           for(let x=0;x<currtier.parentNode.children.length;x++){
             if(currtier.parentNode.children[x]==currtier){ //find the index of the tier
               modbuild.UPDATEenhlist(sysinfo,y,x);
+
               modbuild.UPDATEdscntlist(sysinfo,y,x);
+              modbuild.GETbuildmod();
+
+              console.log('System Selection',tquote.info.build)
+
               tquote.info.build.systems = GETsystems();
               tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
-              modbuild.GETbuildmod();
               sumbuild.REFRESHsumsystem(tquote.info.build.systems[y],y);  //y=sysid x=optid
             }
           }

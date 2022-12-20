@@ -74,6 +74,7 @@ var GETmonthlyfin=(price,payment)=>{
 }
 
 var GETsizeprice=(tinfo,size,discounts,tiernum,payment)=>{
+
   let tpobj = {
     payment:payment,
     opts:{
@@ -92,8 +93,11 @@ var GETsizeprice=(tinfo,size,discounts,tiernum,payment)=>{
     }
   }
   let partdisc = [];
-  for(let x=0;x<discounts.length;x++){ //exclude system discounts
-    if(discounts[x].ref!='discmfg'){partdisc.push(discounts[x])}
+  console.log(discounts)
+  if(discounts){
+    for(let x=0;x<discounts.length;x++){
+      if(discounts[x].ref!='discmfg'){partdisc.push(discounts[x])}
+    }
   }
   for(let po in tpobj.opts){ //loop through to apply discounts
     tpobj.opts[po].price=tpobj.opts[po].price-GETdscntstotal(
