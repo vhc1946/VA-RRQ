@@ -310,11 +310,12 @@ var SELECTsystemsize = (ele)=>{
               modbuild.UPDATEenhlist(sysinfo,y,x);
 
               modbuild.UPDATEdscntlist(sysinfo,y,x);
+
+              tquote.info.build.systems = GETsystems();
               modbuild.GETbuildmod();
 
               console.log('System Selection',tquote.info.build)
 
-              tquote.info.build.systems = GETsystems();
               tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
               sumbuild.REFRESHsumsystem(tquote.info.build.systems[y],y);  //y=sysid x=optid
             }
