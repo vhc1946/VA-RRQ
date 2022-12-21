@@ -34,7 +34,7 @@ SMView.SETmenuitems(document.getElementById('quote-settings')); //sub menu
 
 //  ADMIN  //
 document.getElementById(adminform.admdom.cont).addEventListener('change',(ele)=>{
-  appsetings=objedit.GETedit(document.getElementById(adminform.admdom.cont));
+  appsettings=objedit.GETedit(document.getElementById(adminform.admdom.cont));
   console.log(appsettings);
 });
 /////////////////////////////
@@ -142,8 +142,5 @@ var SAVEsettings=()=>{
 ipcRenderer.on(settingsroutes.save,(eve,data)=>{
   console.log(data.msg, '-', data.data);
 });
-/*
-document.getElementById(Titlebar.tbdom.page.save).addEventListener('click',(ele)=>{
-  SAVEsettings();
-})
-*/
+
+document.getElementById('titlebar-win-close').addEventListener('click', (ele)=>{window.close();})
