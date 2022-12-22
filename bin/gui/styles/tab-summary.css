@@ -12,10 +12,20 @@
 }
 [class*='summary-tier-']{
     border-top: 1px solid black;
+    border-left: 1px solid black;
+}
+[class*='summary-tier-']>div{
+    padding-left: 5px;
+}
+.summary-tier-finance>div{
+    padding-left: 2px;
+}
+.tier-cont{
+    width: 22%;
 }
 .tier-equip-name{
-    font-size: 1.1em;
     font-weight: bold;
+    text-align: center;
     background-color: var(--background-base);
 }
 [class*='summary-finance-']{

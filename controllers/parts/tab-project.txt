@@ -11,12 +11,11 @@
 <div class="viewcontrol-port">
   <div class="viewcontrol-port-item" title="JOB">
     <div class="customer-edit-jinfo">
-        <div class="customer-header"><div>Job Info</div><div></div></div>
         <div style="display:none;">Quote Number</div><input id="q-info-id" style="display:none";/><!--Create searchable/drop list for optional autofill-->
         <div>Quote Name</div><input id="q-info-name"/>
     </div>
+    <hr>
     <div class="customer-edit-jaddress">
-        <div class="customer-header"><div>Job Address</div><div></div></div>
         <div>Street</div><input id="q-info-street"/>
         <div>Unit</div><input id="q-info-unit"/>
         <div>City</div><input id="q-info-city"/>
@@ -26,7 +25,6 @@
   </div>
   <div class="viewcontrol-port-item" title="CUSTOMER">
     <div class="customer-edit-cinfo">
-        <div class="customer-header"><div></div><div>Client Info</div></div>
         <div>Cust Code</div><input id="q-customer-id"/><!--Create searchable/drop list for optional autofill-->
         <div>First Name</div><input id="q-customer-cfname"/>
         <div>Last Name</div><input id="q-customer-clname"/>
@@ -35,12 +33,12 @@
     </div>
   </div>
   <div class="viewcontrol-port-item" title="TRACKING">
-    <div>Time of Day<input  type="search" list="track-timeofday-droplist"/></div>
-    <div>Source<input  type="search" list="track-source-droplist"/></div>
-    <div>Lead<input type="search" list="track-source-droplist"/></div>
-    <div>Quote Present Date<input type="date"/></div>
-    <div>Quote Present Via<input type="search" list="track-prsntvia-droplist"/></div>
-    <div>Book Price<input type="checkbox"/></div>
-    <div>Financed<input type="checkbox"/></div>
+    <div class="customer-edit-tracking">
+      <div>Time of Day</div><input  type="search" list="track-timeofday-droplist"/>
+      <div>Source</div><input type="search" list="track-source-droplist"/>
+      <div>Lead</div><input type="search" list="track-source-droplist"/>
+      <div>Presented Date</div><input type="date"/>
+      <div>Presented Via</div><input type="search" list="track-prsntvia-droplist"/>
+    </div>
   </div>
 </div>

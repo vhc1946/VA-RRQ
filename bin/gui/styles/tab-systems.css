@@ -73,6 +73,10 @@
     padding-left:3px;
     height: 24px;
 }
+.build-system-tier-size>div:nth-child(n+16),
+.build-system-tiers-headers>div:nth-child(n+16){
+    display:none
+}
 .build-system-tier-size>div>input{
     border-width: 0px;
 }
@@ -107,14 +111,6 @@
 }
 .build-system-tier-size-row>div:nth-child(n+9){
     text-align: right;
-}
-.build-system-tier-size-row>div:nth-child(n+13):before{
-    content: "$";
-    vertical-align: super;
-    font-size: .75em;
-}
-.build-system-tier-size-row>div:last-child:before{
-    content: none;
 }
 .build-system-tier-sizes{
     max-height: 400px;
