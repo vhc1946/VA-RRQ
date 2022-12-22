@@ -10,6 +10,7 @@ var {auser} = require('../bin/appuser.js'); //initialize the app user object
 var {quotesls}=require('../bin/gui/storage/lstore.js');
 var {quoteroutes}=require('../bin/routes.js');
 var apaths=require('../app/paths.json');
+const { DrawingPad } = require('../bin/repo/tools/box/drawing-pad.js');
 
 var qsettings=null;
 
@@ -40,6 +41,7 @@ var presdom={
   cont:'rrq-multi-presentation',
   header:'rrq-presi-header',
   footer:'rrq-page-footer',
+  signature:'rrq-signature',
   sections:{
     header:'rrq-multi-cont-header',
     exp:'rrq-multi-cont-exp',
@@ -84,6 +86,7 @@ var qactions={
 
 Titlebar.SETUPtitlebar(qactions);
 
+$(document.getElementById(Titlebar.tbdom.info.cont)).hide();
 ////////////////////
 
 var tquote = JSON.parse(localStorage.getItem(quotesls.quotetopresi));
@@ -102,7 +105,7 @@ var LOADresipresi=()=>{
 
   // Print Header /////////////////
 
-  document.getElementById('header-client-name').innerText = tquote.customer.name;
+  document.getElementById('header-client-name').innerText = tquote.customer.name.split(',')[1] + ' ' + tquote.customer.name.split(',')[0];
   document.getElementById('header-client-street').innerText = tquote.street;
   document.getElementById('header-client-longcity').innerText = tquote.city + ', ' + tquote.state + ' ' + tquote.zip;
   document.getElementById('header-client-system').innerText = tquote.info.build.systems[sysnum].name;
@@ -121,7 +124,6 @@ var LOADresipresi=()=>{
   document.getElementById('finance-main-icon').src = diricon + '/InvestmentTag-01.png';
   document.getElementById('discount-main-icon').src = diricon + '/CashBackIcon.png';
   document.getElementById('partial-main-icon').src = diricon + '/StepIcon_V2-01.png';
-
 
   for(let i=0;i<sysbuild.tiers.length;i++){
     if(sysbuild.tiers[i].size){
@@ -250,6 +252,8 @@ var LOADresipresi=()=>{
       document.getElementsByClassName('rrq-part-promomo')[i].childNodes[3].innerText = "";
     }
   }
+
+  var signature = new DrawingPad(document.getElementsByClassName(presdom.signature)[0]);
 }
 
 var CHANGEsys=(ele)=>{

@@ -198,7 +198,6 @@ var SETaddblock=(block,sys=undefined)=>{
 
 
   SETdatalistSPC(modlist.list,{cat:'mod-add-cat-list'});
-  console.log(block);
   SETaccfilters(block);
 
   SETacclist(block,modlist.list); //exclude enhancements
