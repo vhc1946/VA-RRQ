@@ -3,26 +3,13 @@
     An array is returned and attached to the quote.info.pricing.systems object
 */
 
-var dbldip={
-  carrier: false,
-  daikin: true,
-  payne: false,
-  other: false
-}
-
-
-
-
-
-
-
-
-
-
 
 var GETsystemprices=(qsets,qbuild)=>{
   console.log('Pricing',qbuild);
   console.log('qsets',qsets)
+  
+  let fintable = qsets.finance;
+
   let sparr = [];
   for(let x=0;x<qbuild.systems.length;x++){
     let sobj = {
@@ -36,14 +23,14 @@ var GETsystemprices=(qsets,qbuild)=>{
         iaqprice:0,
         priceops:[]
       }
-      for(let z=1;z<qsets.finance.length;z++){//loop through payment plans in order
+      for(let z=1;z<fintable.length;z++){//loop through payment plans in order
         try{
           tobj.priceops.push(
             GETsizeprice(tobj,
                          qbuild.systems[x].tiers[y],
                          qbuild.systems[x].discounts,
                          y,
-                         qsets.finance[z])
+                         fintable[z])
           );
         }catch{}
       }
@@ -82,8 +69,7 @@ var GETdscntstotal=(tnum,dlist,price,rebate=0)=>{
 var RUNpricecalc=(price,fincost,adds,disc=0)=>{
   price = Number(price);
   fincost = Number(fincost);
-  console.log(price,fincost,adds, disc)
-  return (price+adds-disc)/(1-fincost);
+  return ((price+adds)/(1-fincost))-disc;
 }
 
 var GETmonthlyfin=(price,payment)=>{
@@ -99,15 +85,15 @@ var GETsizeprice=(tinfo,size,discounts,tiernum,payment)=>{
     payment:payment,
     opts:{
       sysprice:{
-        price:size.size.pricebase,
+        price:RUNpricecalc(size.size.pricebase,payment.cost,tinfo.addprice),
         monthly:0
       },
       inprice:{
-        price:size.size.priceindoor,
+        price:RUNpricecalc(size.size.priceindoor,payment.cost,tinfo.addprice),
         monthly:0
       },
       outprice:{
-        price:size.size.priceoutdoor,
+        price:RUNpricecalc(size.size.priceoutdoor,payment.cost,tinfo.addprice),
         monthly:0
       }
     }
@@ -119,15 +105,15 @@ var GETsizeprice=(tinfo,size,discounts,tiernum,payment)=>{
     }
   }
   for(let po in tpobj.opts){ //loop through to apply discounts
-    tpobj.opts[po].price = RUNpricecalc(tpobj.opts[po].price,payment.cost,tinfo.addprice,GETdscntstotal(
+    tpobj.opts[po].price = tpobj.opts[po].price-GETdscntstotal(
       tiernum,
       po=='sysprice'?discounts:partdisc,
       tpobj.opts[po].price,
       po=='sysprice'?Number(size.size.rebateelec):0
-    ));
+    );
     tpobj.opts[po].monthly=GETmonthlyfin(tpobj.opts[po].price,payment); //calculate monthly after discounts
   }
-  //console.log('Size',size);
+  console.log('Size',size);
   console.log('Price',tpobj);
   return tpobj;
 }
