@@ -2,7 +2,7 @@
     <div class="multi-tier-nav">
       <div id="build-mod-adds-button" class="vg-subtab-selected">Additions</div>
       <div id="build-mod-iaq-button">IAQ Packages</div>
-      <div id="build-mod-dscnts-button">Discounts</div>
+      <div id="build-mod-dscnts-button">Discounts & Swaps</div>
     </div>
     <div class="build-dscnts-cont" style="display:none">
       <div class="discount-center">

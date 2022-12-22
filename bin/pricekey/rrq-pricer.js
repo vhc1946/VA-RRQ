@@ -32,14 +32,14 @@ var GETsystemprices=(qsets,qbuild)=>{
 
         priceops:[]
       }
-      for(let fl in tempfintable[y]){
+      for(let z=1;z<qsets.finance.length;z++){//loop through payment plans in order
         try{
           tobj.priceops.push(
             GETsizeprice(tobj,
                          qbuild.systems[x].tiers[y],
                          qbuild.systems[x].discounts,
                          y,
-                         tempfintable[y][fl])
+                         qsets.finance[z])
           );
         }catch{}
       }
@@ -80,6 +80,7 @@ var RUNpricecalc=(price,fincost,ab,mb,aa,ma)=>{
   fincost = Number(fincost);
   console.log(price,fincost,adds, disc)
   return (price+ab-mb)/(1-fincost)+aa-ma;
+  //return ((price+adds)/(1-fincost))-disc;
 }
 
 var GETmonthlyfin=(price,payment)=>{
@@ -95,15 +96,15 @@ var GETsizeprice=(tinfo,size,discounts,tiernum,payment)=>{
     payment:payment,
     opts:{
       sysprice:{
-        price:size.size.pricebase,
+        price:RUNpricecalc(size.size.pricebase,payment.cost,tinfo.addprice),
         monthly:0
       },
       inprice:{
-        price:size.size.priceindoor,
+        price:RUNpricecalc(size.size.priceindoor,payment.cost,tinfo.addprice),
         monthly:0
       },
       outprice:{
-        price:size.size.priceoutdoor,
+        price:RUNpricecalc(size.size.priceoutdoor,payment.cost,tinfo.addprice),
         monthly:0
       }
     }
@@ -115,15 +116,15 @@ var GETsizeprice=(tinfo,size,discounts,tiernum,payment)=>{
     }
   }
   for(let po in tpobj.opts){ //loop through to apply discounts
-    tpobj.opts[po].price = RUNpricecalc(tpobj.opts[po].price,payment.cost,tinfo.addprice,GETdscntstotal(
+    tpobj.opts[po].price = tpobj.opts[po].price-GETdscntstotal(
       tiernum,
       po=='sysprice'?discounts:partdisc,
       tpobj.opts[po].price,
       po=='sysprice'?Number(size.size.rebateelec):0
-    ));
+    );
     tpobj.opts[po].monthly=GETmonthlyfin(tpobj.opts[po].price,payment); //calculate monthly after discounts
   }
-  //console.log('Size',size);
+  console.log('Size',size);
   console.log('Price',tpobj);
   return tpobj;
 }

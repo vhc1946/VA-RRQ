@@ -10,34 +10,7 @@
     grid-template-columns: 100px 1fr;
     align-items: start;
     row-gap: 5px;
-}
-.customer-header{
-    grid-column: 1 / 3;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 0px;
-    font-size: 1.5em;
-    text-align: center;
-    height: 1.5em;
-    color: var(--text-light);
-    background-color: var(--BEE-blue);
-}
-.customer-edit-home{
-    grid-column: 1 / 3;
-}
-#q-customer-notes{
-    grid-column: 1 / 3;
-    resize: vertical;
-}
-[id*="copyb-"]{
-    width: 20px;
-    height: 20px;
-    filter: invert();
-}
-[id*="copyb-"]:hover{
-    cursor: pointer;
-    filter: none;
+    padding: 5px;
 }
 
 #proj-details-topper{

@@ -1,24 +1,24 @@
 /* Top Nav */
 .multi-tier-nav{
     display:flex;
-    border-bottom: 2px solid var(--background-dark);
-    margin: 15px 0px;
 }
 .multi-tier-nav>div{
     flex-grow:1;
     text-align:center;
-    font-size: 1.2em;
+    color: var(--text-light);
+    padding: 5px;
+    background-color: var(--background-dark);
 }
 .multi-tier-nav>div:hover{
     opacity: .7;
     cursor: pointer;
 }
-.vg-subtab-selected{
-    background-color: var(--background-dark);
-    color: var(--text-light);
-    border-radius: 5px 5px 0 0;
+.multi-tier-nav>.vg-subtab-selected{
+    background-color: var(--BEE-blue);
 }
-
+.multi-tier-nav>.vg-subtab-selected:hover{
+    opacity: 1;
+}
 /* Selected Item Table */
 .build-mod-add-line{
     display: grid;
