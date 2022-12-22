@@ -3,13 +3,17 @@
     An array is returned and attached to the quote.info.pricing.systems object
 */
 
+var dbldip={
+  carrier: false,
+  daikin: true,
+  payne: false,
+  other: false
+}
 
 var GETsystemprices=(qsets,qbuild)=>{
-  console.log('Pricing',qbuild);
-  console.log('qsets',qsets)
-  
-  let fintable = qsets.finance;
-
+  let tempfintable=require('./tempfintable.json');//read in temp json file here
+  console.log(tempfintable);
+  //tempfintable
   let sparr = [];
   for(let x=0;x<qbuild.systems.length;x++){
     let sobj = {
@@ -23,14 +27,14 @@ var GETsystemprices=(qsets,qbuild)=>{
         iaqprice:0,
         priceops:[]
       }
-      for(let z=1;z<fintable.length;z++){//loop through payment plans in order
+      for(let z=1;z<qsets.finance.length;z++){//loop through payment plans in order
         try{
           tobj.priceops.push(
             GETsizeprice(tobj,
                          qbuild.systems[x].tiers[y],
                          qbuild.systems[x].discounts,
                          y,
-                         fintable[z])
+                         qsets.finance[z])
           );
         }catch{}
       }
