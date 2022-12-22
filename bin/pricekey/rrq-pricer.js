@@ -10,17 +10,8 @@ var dbldip={
   other: false
 }
 
-
-
-
-
-
-
-
-
-
-
 var GETsystemprices=(qsets,qbuild)=>{
+
   console.log('Pricing',qbuild);
   console.log('qsets',qsets)
   let sparr = [];
