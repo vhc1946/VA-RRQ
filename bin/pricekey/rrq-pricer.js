@@ -23,8 +23,13 @@ var GETsystemprices=(qsets,qbuild)=>{
     for(let y=0;y<qbuild.systems[x].tiers.length;y++){//loop through available tiers
       let tobj = {
         cost:0,
-        addprice:GETaddprice(y,qbuild.systems[x].additions),
-        iaqprice:0,
+
+        addbefore:GETaddprice(y,qbuild.systems[x].additions),
+        minbefore:qbuild.system[x].info.rebateelec+qbuild.system[x].info.discmfg,
+
+        addafter:GETaddprice(y,qbuild.systems[x].additions),
+        minafter:0,
+
         priceops:[]
       }
       for(let fl in tempfintable[y]){
@@ -70,11 +75,11 @@ var GETdscntstotal=(tnum,dlist,price,rebate=0)=>{
 
 //bring in size info
 //bring in tier info
-var RUNpricecalc=(price,fincost,adds,disc=0)=>{
+var RUNpricecalc=(price,fincost,ab,mb,aa,ma)=>{
   price = Number(price);
   fincost = Number(fincost);
   console.log(price,fincost,adds, disc)
-  return (price+adds-disc)/(1-fincost);
+  return (price+ab-mb)/(1-fincost)+aa-ma;
 }
 
 var GETmonthlyfin=(price,payment)=>{
