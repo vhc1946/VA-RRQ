@@ -11,9 +11,9 @@ var dbldip={
 }
 
 var GETsystemprices=(qsets,qbuild)=>{
-
-  console.log('Pricing',qbuild);
-  console.log('qsets',qsets)
+  let tempfintable=require('./tempfintable.json');//read in temp json file here
+  console.log(tempfintable);
+  //tempfintable
   let sparr = [];
   for(let x=0;x<qbuild.systems.length;x++){
     let sobj = {
@@ -27,14 +27,14 @@ var GETsystemprices=(qsets,qbuild)=>{
         iaqprice:0,
         priceops:[]
       }
-      for(let z=1;z<qsets.finance.length;z++){//loop through payment plans in order
+      for(let fl in tempfintable[y]){
         try{
           tobj.priceops.push(
             GETsizeprice(tobj,
                          qbuild.systems[x].tiers[y],
                          qbuild.systems[x].discounts,
                          y,
-                         qsets.finance[z])
+                         tempfintable[y][fl])
           );
         }catch{}
       }
