@@ -77,7 +77,9 @@ var SETUPmodviewer=()=>{
       RESETmodviewer();
       let views = document.getElementsByClassName(moddom.views[n].cont);
       ele.target.classList.add(moddom.selected);
+      console.log(views);
       for(let x=0;x<views.length;x++){
+        
         $(views[x]).show();
       }
     });

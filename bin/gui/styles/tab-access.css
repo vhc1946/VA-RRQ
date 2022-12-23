@@ -19,6 +19,7 @@
 .multi-tier-nav>.vg-subtab-selected:hover{
     opacity: 1;
 }
+/* ////// ADDITIONS /////// */
 /* Selected Item Table */
 .build-mod-add-line{
     display: grid;
@@ -139,4 +140,17 @@ background-color:  rgb(244 162 162);
   color:var(--text-light);
   font-size: 1.15em;
   padding-left: 5px;
+}
+
+/* ////// DISCOUNTS /////// */
+.build-inner-cont{
+    height: 36px;
+}
+.build-inner-cont>.build-dscnts-cont{
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0px;
+}
+.build-inner-cont>.build-dscnts-cont>div{
+    display: flex;
 }

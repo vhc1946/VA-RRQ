@@ -1,7 +1,7 @@
 .summary-action-center{
     display: flex;
     justify-content: space-between;
-    margin-bottom: 5px;
+    margin: 20px 5px;
 }
 .discount-center>div{
     display: flex;
@@ -52,6 +52,7 @@
 
 
 .notice-text{
+    padding-left: 5px;
     font-style: italic;
 }
 
