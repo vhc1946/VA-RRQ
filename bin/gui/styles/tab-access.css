@@ -87,7 +87,7 @@ background-color:  rgb(244 162 162);
 .build-mod-add-tiers>div:hover,
 .build-mod-add-tiers>input:hover{
     cursor: pointer;
-    background-color: var(--hover-highlight);
+    /*background-color: var(--hover-highlight);*/
 }
 .mod-to-delete{
     background-image: linear-gradient(to right, rgba(0,0,0,0),rgba(0,0,0,0),var(--warning-highlight));
@@ -101,6 +101,8 @@ background-color:  rgb(244 162 162);
 .build-mod-add-filter-cont{
     display: flex;
 }
+
+
 
 /* Accessory Items Table */
 .build-mod-add-list{

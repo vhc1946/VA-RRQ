@@ -289,6 +289,8 @@ var ADDselectline=(aobj)=>{
   row.appendChild(document.createElement('div')); //create tiers container
   row.lastChild.classList.add(moddom.views.mods.selline.tiers);
   for(let x=1;x<qsettings.tiers.length;x++){
+    row.lastChild.appendChild(CREATEtogglebox(row));
+    /*
     row.lastChild.appendChild(document.createElement('input'));
     if(aobj.tiers!=undefined){
       row.lastChild.lastChild.value=aobj.tiers[x-1]!=undefined?aobj.tiers[x-1]:1;
@@ -299,6 +301,7 @@ var ADDselectline=(aobj)=>{
     if(aobj.qnty){//set type number
     }else{//set type check
     }
+    */
   }
 
   row.appendChild(document.createElement('div'));
@@ -315,6 +318,37 @@ var ADDselectline=(aobj)=>{
 
   return row;
 }
+
+var CREATEtogglebox=(cont)=>{
+  let togglebox = cont.lastChild.appendChild(document.createElement('div'));
+    togglebox.classList.add('vg-togglebox-center');
+    togglebox.appendChild(document.createElement('div'))
+    togglebox.lastChild.addEventListener('click',(ele)=>{
+      RESETtoggle(togglebox);
+      togglebox.classList.add('vg-togglebox-left')
+    });
+    togglebox.appendChild(document.createElement('div'));
+    togglebox.lastChild.addEventListener('click',(ele)=>{
+      RESETtoggle(togglebox);
+      togglebox.classList.add('vg-togglebox-center')
+    });
+    togglebox.appendChild(document.createElement('div'));
+    togglebox.lastChild.addEventListener('click',(ele)=>{
+      RESETtoggle(togglebox);
+      togglebox.classList.add('vg-togglebox-right')
+    });
+    
+  
+  return togglebox;
+}
+
+var RESETtoggle=(cont)=>{
+  let list = cont.classList;
+  for(let i=0;i<list.length;i++){
+    cont.classList.remove(list[i]);
+  }
+}
+
 
 var GETselectline=(aline)=>{
   let aobj = {};
