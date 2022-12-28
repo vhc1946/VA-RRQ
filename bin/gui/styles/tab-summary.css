@@ -1,7 +1,10 @@
 .summary-action-center{
     display: flex;
     justify-content: space-between;
-    margin-bottom: 5px;
+    margin: 20px 5px;
+}
+.summary-action-center>div:nth-child(2){
+    font-style: italic;
 }
 .discount-center>div{
     display: flex;
@@ -52,6 +55,7 @@
 
 
 .notice-text{
+    padding-left: 5px;
     font-style: italic;
 }
 

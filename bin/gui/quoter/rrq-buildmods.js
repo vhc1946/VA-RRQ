@@ -64,7 +64,8 @@ var moddom = {
         cont:'build-dscnts-titles',
         tiers:'build-dscnts-tiers'
       },
-      list:'build-dscnts-list'
+      list:'build-dscnts-list',
+      stable:'build-swap-table'
     }
   }
 }
@@ -78,7 +79,9 @@ var SETUPmodviewer=()=>{
       let views = document.getElementsByClassName(moddom.views[n].cont);
       ele.target.classList.add(moddom.selected);
       console.log(views);
+      console.log(views);
       for(let x=0;x<views.length;x++){
+        
         
         $(views[x]).show();
       }
@@ -191,6 +194,9 @@ var SETaddblock=(block,sys=undefined)=>{
     titleele.appendChild(document.createElement('div'));
     titleele.lastChild.innerText = qsettings.tiers[x].name;
   }
+  //titleele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
+  //titleele.appendChild(document.createElement('div'));
+  //titleele.lastChild.innerText = tquote.info.key.accessories[0]['price_sale']; //Title value for dedection price
   //titleele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
   //titleele.appendChild(document.createElement('div'));
   //titleele.lastChild.innerText = tquote.info.key.accessories[0]['price_sale']; //Title value for dedection price
@@ -314,6 +320,7 @@ var ADDselectline=(aobj,enhance)=>{
   row.lastChild.appendChild(document.createElement('input'));
   row.lastChild.lastChild.type='number';
   row.lastChild.lastChild.value = aobj['price_sale']!=undefined && aobj['price_sale']!=''?aobj['price_sale']:0;
+  $(row.lastChild.lastChild).hide();
 
   row.lastChild.appendChild(document.createElement('input'));
   row.lastChild.lastChild.type='number';
@@ -322,6 +329,35 @@ var ADDselectline=(aobj,enhance)=>{
 
   return row;
 }
+
+var CREATEtogglebox=(cont)=>{
+  let togglebox = cont.lastChild.appendChild(document.createElement('div'));
+    togglebox.classList.add('vg-togglebox-center');
+    togglebox.appendChild(document.createElement('div'))
+    togglebox.lastChild.addEventListener('click',(ele)=>{
+      RESETtoggle(togglebox);
+      togglebox.classList.add('vg-togglebox-left')
+    });
+    togglebox.appendChild(document.createElement('div'));
+    togglebox.lastChild.addEventListener('click',(ele)=>{
+      RESETtoggle(togglebox);
+      togglebox.classList.add('vg-togglebox-center')
+    });
+    togglebox.appendChild(document.createElement('div'));
+    togglebox.lastChild.addEventListener('click',(ele)=>{
+      RESETtoggle(togglebox);
+      togglebox.classList.add('vg-togglebox-right')
+    });
+  return togglebox;
+}
+
+var RESETtoggle=(cont)=>{
+  let list = cont.classList;
+  for(let i=0;i<list.length;i++){
+    cont.classList.remove(list[i]);
+  }
+}
+
 
 var CREATEtogglebox=(cont)=>{
   let togglebox = cont.lastChild.appendChild(document.createElement('div'));
@@ -526,7 +562,14 @@ var SETdscntblock=(block,sys=undefined)=>{
       list.appendChild(ADDdscntline(defd));
     }
   }
+  SETswaptable(block);
 }
+var SETswaptable=(block)=>{
+  let stable = block.getElementsByClassName(moddom.views.dscnts.stable)[0];
+  stable.appendChild(document.createElement('div'));
+  
+}
+
 
 var ADDdscntline=(dobj)=>{
   let row = document.createElement('div');

@@ -8,6 +8,7 @@ ul{
     margin-block-start: .5em;
     margin-block-end: .5em;
     padding-inline-start: 30px;
+    padding-right: 5px;
 }
 body{
     -ms-overflow-style: none;  /* IE and Edge */
@@ -131,13 +132,14 @@ body::-webkit-scrollbar{
     content: '';
     display: block;
     float: left;
-    height: 100px;
+    height: 80px;
 }
 
 .rrq-pres-std-icon img{
     float: right;
     clear: both;
-    height: 70px;
+    height: 80px;
+    padding: 5px;
 }
 
 /* Comfort */
@@ -155,16 +157,20 @@ body::-webkit-scrollbar{
 
 /* Value */
 .value-icon-box{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 5px;
     text-align:center;
+    font-weight: bold;
+}
+.value-icon-box>div{
+    align-self: center;
 }
 .rrq-icon-value{
     width: 75px;
 }
 .rrq-multi-tier-value{
     text-align: center;
-}
-.rrq-multi-tier-value>div:first-child{
-    font-weight: bold;
 }
 
 /* Impact */

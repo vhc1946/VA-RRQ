@@ -19,6 +19,7 @@
 .multi-tier-nav>.vg-subtab-selected:hover{
     opacity: 1;
 }
+/* ////// ADDITIONS /////// */
 /* Selected Item Table */
 .build-mod-add-line{
     display: grid;
@@ -33,7 +34,7 @@
     display: flex;
 }
 .build-mod-add-tiers>input, .build-mod-add-title-tiers>div{
-    width: 75px;
+    width: 77px;
     text-align: center;
     border: none;
     background-color: var(--background-light);
@@ -58,12 +59,6 @@
 .build-mod-add-title-prices>div{
     width: 100px;
 }
-.build-mod-add-title-prices>div:nth-child(1){
-    background-color: rgb(152 240 163);
-}
-.build-mod-add-title-prices>div:nth-child(2){
-background-color:  rgb(244 162 162);
-}
 .build-mod-add-prices>div, .build-mod-add-prices>input{
     width: 100px;
     text-align: center;
@@ -71,10 +66,14 @@ background-color:  rgb(244 162 162);
     border: none;
     background-color: #f4a2a2;
 }
-.build-mod-add-prices>div:nth-child(1), .build-mod-add-prices>input:nth-child(1){
+.build-mod-add-prices>div:nth-child(1),
+.build-mod-add-prices>input:nth-child(1),
+.build-mod-add-title-prices>div:nth-child(1){
     background-color: rgb(152 240 163);
 }
-.build-mod-add-prices>div:nth-child(2), .build-mod-add-prices>input:nth-child(2){
+.build-mod-add-prices>div:nth-child(2),
+.build-mod-add-prices>input:nth-child(2),
+.build-mod-add-title-prices>div:nth-child(2){
     background-color:  rgb(244 162 162);
 }
 .build-mod-add-prices>.build-mod-price-select{
@@ -86,7 +85,7 @@ background-color:  rgb(244 162 162);
 .build-mod-add-tiers>div:hover,
 .build-mod-add-tiers>input:hover{
     cursor: pointer;
-    background-color: var(--hover-highlight);
+    /*background-color: var(--hover-highlight);*/
 }
 .mod-to-delete{
     background-image: linear-gradient(to right, rgba(0,0,0,0),rgba(0,0,0,0),var(--warning-highlight));
@@ -100,6 +99,8 @@ background-color:  rgb(244 162 162);
 .build-mod-add-filter-cont{
     display: flex;
 }
+
+
 
 /* Accessory Items Table */
 .build-mod-add-list{
@@ -139,4 +140,17 @@ background-color:  rgb(244 162 162);
   color:var(--text-light);
   font-size: 1.15em;
   padding-left: 5px;
+}
+
+/* ////// DISCOUNTS /////// */
+.build-inner-cont{
+    height: 36px;
+}
+.build-inner-cont>.build-dscnts-cont{
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0px;
+}
+.build-inner-cont>.build-dscnts-cont>div{
+    display: flex;
 }
