@@ -79,7 +79,7 @@ var SETUPmodviewer=()=>{
       ele.target.classList.add(moddom.selected);
       console.log(views);
       for(let x=0;x<views.length;x++){
-        
+
         $(views[x]).show();
       }
     });
@@ -319,6 +319,17 @@ var ADDselectline=(aobj)=>{
   return row;
 }
 
+
+/////////////////////////////////////////////////////////////////////////////////
+/*
+
+*/
+let togglestates={
+  no:'vg-togglebox-left',
+  yes:'vg-togglebox-right',
+  neutral:'vg-togglebox-center'
+}
+
 var CREATEtogglebox=(cont)=>{
   let togglebox = cont.lastChild.appendChild(document.createElement('div'));
     togglebox.classList.add('vg-togglebox-center');
@@ -337,8 +348,8 @@ var CREATEtogglebox=(cont)=>{
       RESETtoggle(togglebox);
       togglebox.classList.add('vg-togglebox-right')
     });
-    
-  
+
+
   return togglebox;
 }
 
@@ -348,7 +359,7 @@ var RESETtoggle=(cont)=>{
     cont.classList.remove(list[i]);
   }
 }
-
+/////////////////////////////////////////////////////////////////////////////////
 
 var GETselectline=(aline)=>{
   let aobj = {};
