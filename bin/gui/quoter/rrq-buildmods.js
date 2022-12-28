@@ -64,7 +64,8 @@ var moddom = {
         cont:'build-dscnts-titles',
         tiers:'build-dscnts-tiers'
       },
-      list:'build-dscnts-list'
+      list:'build-dscnts-list',
+      stable:'build-swap-table'
     }
   }
 }
@@ -191,9 +192,9 @@ var SETaddblock=(block,sys=undefined)=>{
     titleele.appendChild(document.createElement('div'));
     titleele.lastChild.innerText = qsettings.tiers[x].name;
   }
-  titleele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
-  titleele.appendChild(document.createElement('div'));
-  titleele.lastChild.innerText = tquote.info.key.accessories[0]['price_sale']; //Title value for dedection price
+  //titleele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
+  //titleele.appendChild(document.createElement('div'));
+  //titleele.lastChild.innerText = tquote.info.key.accessories[0]['price_sale']; //Title value for dedection price
 
   SETenhlist(block,modlist.TRIMlist({}),sys);
   SETaddlist(block,sys);
@@ -310,6 +311,7 @@ var ADDselectline=(aobj)=>{
   row.lastChild.appendChild(document.createElement('input'));
   row.lastChild.lastChild.type='number';
   row.lastChild.lastChild.value = aobj['price_sale']!=undefined && aobj['price_sale']!=''?aobj['price_sale']:0;
+  $(row.lastChild.lastChild).hide();
 
   row.lastChild.appendChild(document.createElement('input'));
   row.lastChild.lastChild.type='number';
@@ -337,8 +339,6 @@ var CREATEtogglebox=(cont)=>{
       RESETtoggle(togglebox);
       togglebox.classList.add('vg-togglebox-right')
     });
-    
-  
   return togglebox;
 }
 
@@ -405,17 +405,8 @@ var SETaccfilters=(cont)=>{
 */
 var SETacclist=(cont,alist)=>{
   let list = cont.getElementsByClassName(moddom.views.mods.list)[0];
-  //list.innerHTML="";
-  //list.appendChild(gentable.SETrowFROMobject(modlisthead));
-  //list.lastChild.classList.add(moddom.views.mods.listrow);
   let tlist = [];
   gentable.BUILDtruetable(tlist.concat(modlisthead,alist),list,true,moddom.views.mods.listrow);
-
-  //for(let x=0;x<alist.length;x++){
-  //  list.appendChild(gentable.SETrowFROMobject(alist[x]));
-  //  list.lastChild.classList.add(moddom.views.mods.listrow);
-  //}
-
 }
 
 //setup up filter input
@@ -533,7 +524,14 @@ var SETdscntblock=(block,sys=undefined)=>{
       list.appendChild(ADDdscntline(defd));
     }
   }
+  SETswaptable(block);
 }
+var SETswaptable=(block)=>{
+  let stable = block.getElementsByClassName(moddom.views.dscnts.stable)[0];
+  stable.appendChild(document.createElement('div'));
+  
+}
+
 
 var ADDdscntline=(dobj)=>{
   let row = document.createElement('div');

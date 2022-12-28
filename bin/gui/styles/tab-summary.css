@@ -3,6 +3,9 @@
     justify-content: space-between;
     margin: 20px 5px;
 }
+.summary-action-center>div:nth-child(2){
+    font-style: italic;
+}
 .discount-center>div{
     display: flex;
 }
