@@ -12,8 +12,7 @@ var dbldip={
 
 var GETsystemprices=(qsets,qbuild)=>{
   let tempfintable=require('./tempfintable.json');//read in temp json file here
-  console.log(tempfintable);
-  //tempfintable
+
   let sparr = [];
   for(let x=0;x<qbuild.systems.length;x++){
     let sobj = {
@@ -21,43 +20,47 @@ var GETsystemprices=(qsets,qbuild)=>{
       tiers:[]
     }
     for(let y=0;y<qbuild.systems[x].tiers.length;y++){//loop through available tiers
-      let tobj = {
-        cost:0,
-
-        addbefore:GETaddprice(y,qbuild.systems[x].additions),
-        minbefore:qbuild.system[x].info.rebateelec+qbuild.system[x].info.discmfg,
-
-        addafter:GETaddprice(y,qbuild.systems[x].additions),
-        minafter:0,
-
-        priceops:[]
+      if(qbuild.systems[x].tiers[y].size != null){
+        let tobj = {
+          cost:0,
+          addbefore:GETaddprice(y,qbuild.systems[x].additions),
+          minbefore:0,
+          addafter:GETiaqprice(y,qbuild.systems[x].additions),
+          minafter:0,
+          priceops:[]
+        }
+        for(let z=1;z<qsets.finance.length;z++){//loop through payment plans in order
+          try{
+            tobj.priceops.push(
+              GETsizeprice(tobj,
+                          qbuild.systems[x].tiers[y],
+                          qbuild.systems[x].discounts,
+                          y,
+                          qsets.finance[z])
+            );
+          }catch{}
+        }
+        sobj.tiers.push(tobj);
       }
-      for(let z=1;z<qsets.finance.length;z++){//loop through payment plans in order
-        try{
-          tobj.priceops.push(
-            GETsizeprice(tobj,
-                         qbuild.systems[x].tiers[y],
-                         qbuild.systems[x].discounts,
-                         y,
-                         qsets.finance[z])
-          );
-        }catch{}
-      }
-      sobj.tiers.push(tobj);
+      sparr.push(sobj);
     }
-    sparr.push(sobj);
   }
   return sparr;
 }
 
 var GETaddprice=(tnum,alist)=>{
-  let aprice = 0;
+  let accprice = 0;  // Accessory items
   if(alist!=undefined){
     for(let x=0;x<alist.length;x++){
-      if(alist[x].tiers[tnum]>0){aprice+=(Number(alist[x]['price_sale'])*Number(alist[x].tiers[tnum]))}
+      if(alist[x].tiers[tnum]>0){
+        accprice+=(Number(alist[x]['price_sale'])*Number(alist[x].tiers[tnum]))
+      }
     }
   }
-  return aprice;
+  return accprice;
+}
+var GETiaqprice=(tnum,alist)=>{
+ return 0;
 }
 
 var GETdscntstotal=(tnum,dlist,price,rebate=0)=>{
@@ -73,14 +76,8 @@ var GETdscntstotal=(tnum,dlist,price,rebate=0)=>{
   return dprice+rebate;
 }
 
-//bring in size info
-//bring in tier info
-var RUNpricecalc=(price,fincost,ab,mb,aa,ma)=>{
-  price = Number(price);
-  fincost = Number(fincost);
-  console.log(price,fincost,adds, disc)
-  return (price+ab-mb)/(1-fincost)+aa-ma;
-  //return ((price+adds)/(1-fincost))-disc;
+var RUNpricecalc=(price,fincost,tinfo)=>{
+  return (price+tinfo.addbefore-tinfo.minbefore)/(1-fincost)+tinfo.addafter-tinfo.minafter;
 }
 
 var GETmonthlyfin=(price,payment)=>{
@@ -91,20 +88,20 @@ var GETmonthlyfin=(price,payment)=>{
 }
 
 var GETsizeprice=(tinfo,size,discounts,tiernum,payment)=>{
-
+console.log(tiernum, size.name, tinfo);
   let tpobj = {
     payment:payment,
     opts:{
       sysprice:{
-        price:RUNpricecalc(size.size.pricebase,payment.cost,tinfo.addprice),
+        price:size.size.pricebase,
         monthly:0
       },
       inprice:{
-        price:RUNpricecalc(size.size.priceindoor,payment.cost,tinfo.addprice),
+        price:size.size.priceindoor,
         monthly:0
       },
       outprice:{
-        price:RUNpricecalc(size.size.priceoutdoor,payment.cost,tinfo.addprice),
+        price:size.size.priceoutdoor,
         monthly:0
       }
     }
@@ -112,20 +109,27 @@ var GETsizeprice=(tinfo,size,discounts,tiernum,payment)=>{
   let partdisc = [];
   if(discounts){
     for(let x=0;x<discounts.length;x++){
-      if(discounts[x].ref!='discmfg'){partdisc.push(discounts[x])}
+      if(discounts[x].ref!='discmfg'){
+        if(discounts[x].ref!='discinst'){
+          partdisc.push(discounts[x] / 2);
+        }else{  
+          partdisc.push(discounts[x]);
+        }
+      }
     }
   }
   for(let po in tpobj.opts){ //loop through to apply discounts
-    tpobj.opts[po].price = tpobj.opts[po].price-GETdscntstotal(
+    tinfo.minbefore = GETdscntstotal(
       tiernum,
       po=='sysprice'?discounts:partdisc,
       tpobj.opts[po].price,
       po=='sysprice'?Number(size.size.rebateelec):0
     );
-    tpobj.opts[po].monthly=GETmonthlyfin(tpobj.opts[po].price,payment); //calculate monthly after discounts
+    tpobj.opts[po].price = RUNpricecalc(tpobj.opts[po].price,payment.cost,tinfo);
+    tpobj.opts[po].monthly = GETmonthlyfin(tpobj.opts[po].price,payment); //calculate monthly after discounts
   }
-  console.log('Size',size);
-  console.log('Price',tpobj);
+  //console.log('Size',size);
+  //console.log('Price',tpobj);
   return tpobj;
 }
 

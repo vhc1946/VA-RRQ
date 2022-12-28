@@ -77,7 +77,9 @@ var SETUPmodviewer=()=>{
       RESETmodviewer();
       let views = document.getElementsByClassName(moddom.views[n].cont);
       ele.target.classList.add(moddom.selected);
+      console.log(views);
       for(let x=0;x<views.length;x++){
+        
         $(views[x]).show();
       }
     });
@@ -138,7 +140,7 @@ var GETbuildmod=()=>{
     for(let y=0;y<list.length;y++){
       tquote.info.build.systems[x].discounts.push(GETdscntline(list[y]));
     }
-    console.log(tquote.info.build)
+    //console.log(tquote.info.build)
   }
 }
 
@@ -189,9 +191,9 @@ var SETaddblock=(block,sys=undefined)=>{
     titleele.appendChild(document.createElement('div'));
     titleele.lastChild.innerText = qsettings.tiers[x].name;
   }
-  titleele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
-  titleele.appendChild(document.createElement('div'));
-  titleele.lastChild.innerText = tquote.info.key.accessories[0]['price_sale']; //Title value for dedection price
+  //titleele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
+  //titleele.appendChild(document.createElement('div'));
+  //titleele.lastChild.innerText = tquote.info.key.accessories[0]['price_sale']; //Title value for dedection price
 
   SETenhlist(block,modlist.TRIMlist({}),sys);
   SETaddlist(block,sys);
@@ -255,7 +257,7 @@ var SETenhlist=(cont,list,sys=undefined)=>{
   }
   for(let x=start;x<list.length;x++){
     if(list[x].enhance!=''){
-      cont.getElementsByClassName(moddom.views.mods.enh.selects)[0].appendChild(ADDselectline(list[x]));
+      cont.getElementsByClassName(moddom.views.mods.enh.selects)[0].appendChild(ADDselectline(list[x],true));
     }
   }
 }
@@ -264,7 +266,7 @@ var SETenhlist=(cont,list,sys=undefined)=>{
 var SETaddlist=(cont,sys=undefined)=>{
   if(sys!=undefined && sys.additions!=undefined){
     for(let x=0;x<sys.additions.length;x++){
-      cont.getElementsByClassName(moddom.views.mods.adds.selects)[0].appendChild(ADDselectline(sys.additions[x]));
+      cont.getElementsByClassName(moddom.views.mods.adds.selects)[0].appendChild(ADDselectline(sys.additions[x],false));
     }
   }
 }
@@ -273,7 +275,7 @@ var SETaddlist=(cont,sys=undefined)=>{
     PASS:
     - aobj - object to load to line
 */
-var ADDselectline=(aobj)=>{
+var ADDselectline=(aobj,enhance)=>{
   let row = document.createElement('div');
   row.classList.add(moddom.views.mods.selline.cont);
 
@@ -286,18 +288,25 @@ var ADDselectline=(aobj)=>{
 
   row.appendChild(document.createElement('div')); //create tiers container
   row.lastChild.classList.add(moddom.views.mods.selline.tiers);
-  for(let x=1;x<qsettings.tiers.length;x++){
-    row.lastChild.appendChild(document.createElement('input'));
-    if(aobj.tiers!=undefined){
-      row.lastChild.lastChild.value=aobj.tiers[x-1]!=undefined?aobj.tiers[x-1]:1;
-    }else{
-      row.lastChild.lastChild.value=1;
+  if(enhance){
+    for(let x=1;x<qsettings.tiers.length;x++){
+      row.lastChild.appendChild(CREATEtogglebox(row));
     }
-    row.lastChild.lastChild.type='number';
-    if(aobj.qnty){//set type number
-    }else{//set type check
+  }else{
+    for(let x=1;x<qsettings.tiers.length;x++){
+      row.lastChild.appendChild(document.createElement('input'));
+      if(aobj.tiers!=undefined){
+        row.lastChild.lastChild.value=aobj.tiers[x-1]!=undefined?aobj.tiers[x-1]:1;
+      }else{
+        row.lastChild.lastChild.value=1;
+      }
+      row.lastChild.lastChild.type='number';
+      if(aobj.qnty){//set type number
+      }else{//set type check
+      }
     }
   }
+  
 
   row.appendChild(document.createElement('div'));
   row.lastChild.classList.add(moddom.views.mods.selline.prices);
@@ -313,6 +322,35 @@ var ADDselectline=(aobj)=>{
 
   return row;
 }
+
+var CREATEtogglebox=(cont)=>{
+  let togglebox = cont.lastChild.appendChild(document.createElement('div'));
+    togglebox.classList.add('vg-togglebox-center');
+    togglebox.appendChild(document.createElement('div'))
+    togglebox.lastChild.addEventListener('click',(ele)=>{
+      RESETtoggle(togglebox);
+      togglebox.classList.add('vg-togglebox-left')
+    });
+    togglebox.appendChild(document.createElement('div'));
+    togglebox.lastChild.addEventListener('click',(ele)=>{
+      RESETtoggle(togglebox);
+      togglebox.classList.add('vg-togglebox-center')
+    });
+    togglebox.appendChild(document.createElement('div'));
+    togglebox.lastChild.addEventListener('click',(ele)=>{
+      RESETtoggle(togglebox);
+      togglebox.classList.add('vg-togglebox-right')
+    });
+  return togglebox;
+}
+
+var RESETtoggle=(cont)=>{
+  let list = cont.classList;
+  for(let i=0;i<list.length;i++){
+    cont.classList.remove(list[i]);
+  }
+}
+
 
 var GETselectline=(aline)=>{
   let aobj = {};
@@ -369,17 +407,8 @@ var SETaccfilters=(cont)=>{
 */
 var SETacclist=(cont,alist)=>{
   let list = cont.getElementsByClassName(moddom.views.mods.list)[0];
-  //list.innerHTML="";
-  //list.appendChild(gentable.SETrowFROMobject(modlisthead));
-  //list.lastChild.classList.add(moddom.views.mods.listrow);
   let tlist = [];
   gentable.BUILDtruetable(tlist.concat(modlisthead,alist),list,true,moddom.views.mods.listrow);
-
-  //for(let x=0;x<alist.length;x++){
-  //  list.appendChild(gentable.SETrowFROMobject(alist[x]));
-  //  list.lastChild.classList.add(moddom.views.mods.listrow);
-  //}
-
 }
 
 //setup up filter input
