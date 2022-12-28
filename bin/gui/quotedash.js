@@ -391,14 +391,16 @@ var PREVIEWpricing=(quote,sysnum)=>{
   let spot = firstspot.appendChild(document.createElement('div'));
   spot.classList.add('preview-area-system');
   let system = quote.info.pricing.systems[sysnum];
-  for(let x=0;x<system.tiers.length;x++){
-    let optspot = spot.appendChild(document.createElement('div'));
-    optspot.classList.add('preview-area-option');
-    optspot.appendChild(document.createElement('div'));
-    optspot.lastChild.innerText = quote.info.build.systems[sysnum].tiers[x].name;
-    for(let y=0;y<system.tiers[x].priceops.length;y++){
+  if(system.tiers){
+    for(let x=0;x<system.tiers.length;x++){
+      let optspot = spot.appendChild(document.createElement('div'));
+      optspot.classList.add('preview-area-option');
       optspot.appendChild(document.createElement('div'));
-      optspot.lastChild.innerText = system.tiers[x].priceops[y].payment.title + ': ' + Math.trunc(system.tiers[x].priceops[y].opts.sysprice.price);
+      optspot.lastChild.innerText = system.tiers[x].name;
+      for(let y=0;y<system.tiers[x].priceops.length;y++){
+        optspot.appendChild(document.createElement('div'));
+        optspot.lastChild.innerText = system.tiers[x].priceops[y].payment.title + ': ' + Math.trunc(system.tiers[x].priceops[y].opts.sysprice.price);
+      }
     }
   }
   return firstspot;

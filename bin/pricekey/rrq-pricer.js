@@ -11,7 +11,7 @@ var dbldip={
 }
 
 var GETsystemprices=(qsets,qbuild)=>{
-  let tempfintable=require('./tempfintable.json');//read in temp json file here
+  //let tempfintable=require('./tempfintable.json');//read in temp json file here
 
   let sparr = [];
   for(let x=0;x<qbuild.systems.length;x++){
@@ -19,7 +19,7 @@ var GETsystemprices=(qsets,qbuild)=>{
       name:qbuild.systems[x].name,
       tiers:[]
     }
-    for(let y=0;y<qbuild.systems[x].tiers.length;y++){//loop through available tiers
+    for(let y=0;y<qbuild.systems[x].tiers.length;y++){  // loop through available tiers
       if(qbuild.systems[x].tiers[y].size != null){
         let tobj = {
           cost:0,
@@ -29,7 +29,7 @@ var GETsystemprices=(qsets,qbuild)=>{
           minafter:0,
           priceops:[]
         }
-        for(let z=1;z<qsets.finance.length;z++){//loop through payment plans in order
+        for(let z=1;z<qsets.finance.length;z++){  // loop through payment plans in order
           try{
             tobj.priceops.push(
               GETsizeprice(tobj,
@@ -49,15 +49,15 @@ var GETsystemprices=(qsets,qbuild)=>{
 }
 
 var GETaddprice=(tnum,alist)=>{
-  let accprice = 0;  // Accessory items
+  let addprice = 0;  // Accessory items
   if(alist!=undefined){
     for(let x=0;x<alist.length;x++){
       if(alist[x].tiers[tnum]>0){
-        accprice+=(Number(alist[x]['price_sale'])*Number(alist[x].tiers[tnum]))
+        addprice+=(Number(alist[x]['price_sale'])*Number(alist[x].tiers[tnum]))
       }
     }
   }
-  return accprice;
+  return addprice;
 }
 var GETiaqprice=(tnum,alist)=>{
  return 0;
@@ -77,7 +77,7 @@ var GETdscntstotal=(tnum,dlist,price,rebate=0)=>{
 }
 
 var RUNpricecalc=(price,fincost,tinfo)=>{
-  return (price+tinfo.addbefore-tinfo.minbefore)/(1-fincost)+tinfo.addafter-tinfo.minafter;
+  return (Number(price)+tinfo.addbefore-tinfo.minbefore)/(1-Number(fincost))+tinfo.addafter-tinfo.minafter;
 }
 
 var GETmonthlyfin=(price,payment)=>{
@@ -88,7 +88,6 @@ var GETmonthlyfin=(price,payment)=>{
 }
 
 var GETsizeprice=(tinfo,size,discounts,tiernum,payment)=>{
-console.log(tiernum, size.name, tinfo);
   let tpobj = {
     payment:payment,
     opts:{
@@ -110,10 +109,19 @@ console.log(tiernum, size.name, tinfo);
   if(discounts){
     for(let x=0;x<discounts.length;x++){
       if(discounts[x].ref!='discmfg'){
-        if(discounts[x].ref!='discinst'){
-          partdisc.push(discounts[x] / 2);
-        }else{  
+        if(discounts[x].ref!='discinstnt'){  // Cut Instant discount in half for partial
           partdisc.push(discounts[x]);
+        }else{  
+          partdisc.push({
+            name:discounts[x].name,
+            ref:discounts[x].ref,
+            tiers:{
+              0:discounts[x].tiers[0]/2,
+              1:discounts[x].tiers[1]/2,
+              2:discounts[x].tiers[2]/2,
+              3:discounts[x].tiers[3]/2
+            }
+          });
         }
       }
     }
@@ -129,7 +137,7 @@ console.log(tiernum, size.name, tinfo);
     tpobj.opts[po].monthly = GETmonthlyfin(tpobj.opts[po].price,payment); //calculate monthly after discounts
   }
   //console.log('Size',size);
-  //console.log('Price',tpobj);
+  console.log('Price',tpobj);
   return tpobj;
 }
 

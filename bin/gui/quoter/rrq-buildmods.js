@@ -138,12 +138,10 @@ var GETbuildmod=()=>{
     //iaq
     //Discounts
     list = cont[x].getElementsByClassName(moddom.views.dscnts.list)[0].children;
-    console.log(list);
     tquote.info.build.systems[x].discounts=[];
     for(let y=0;y<list.length;y++){
       tquote.info.build.systems[x].discounts.push(GETdscntline(list[y]));
     }
-    //console.log(tquote.info.build)
   }
 }
 
@@ -320,8 +318,7 @@ var ADDselectline=(aobj,enhance)=>{
   row.lastChild.appendChild(document.createElement('input'));
   row.lastChild.lastChild.type='number';
   row.lastChild.lastChild.value = aobj['price_sale']!=undefined && aobj['price_sale']!=''?aobj['price_sale']:0;
-  $(row.lastChild.lastChild).hide();
-
+  
   row.lastChild.appendChild(document.createElement('input'));
   row.lastChild.lastChild.type='number';
   row.lastChild.lastChild.value = aobj['price-deduct']!=undefined && aobj['price-deduct']!=''?aobj['price-deduct']:0;
