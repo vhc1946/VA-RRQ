@@ -48,7 +48,7 @@ var GETaddprice=(tnum,alist,iaq=false)=>{
         }else{
           iaqprice+=(Number(alist[x]['price_sale'])*Number(alist[x].tiers[tnum]));
         }
-
+      }
     }
   }
   if(iaq==false){
@@ -62,8 +62,9 @@ var GETdscntstotal=(tnum,dlist,price,rebate=0)=>{
   let dprice = 0;
   if(dlist!=undefined){
     for(let x=0;x<dlist.length;x++){
-      if(Number(dlist[x].tiers[tnum])>=1){dprice+=Number(dlist[x].tiers[tnum])}
-      else{
+      if(Number(dlist[x].tiers[tnum])>=1){
+        dprice+=Number(dlist[x].tiers[tnum])
+      }else{
         dprice+=(price*Number(dlist[x].tiers[tnum]));
       }
     }
@@ -118,6 +119,9 @@ var GETsizeprice=(tinfo,size,discounts,tiernum,payment)=>{
             }
           });
         }
+      }else{
+        let mfgdisc = discounts[x];
+        console.log(mfgdisc);
       }
     }
   }
@@ -133,11 +137,19 @@ var GETsizeprice=(tinfo,size,discounts,tiernum,payment)=>{
       FINDfinance(size.info.sysid,payment),
       tinfo
     );
+
+    let promofin = RUNpricecalc(tpobj.opts[po].price);
+    let promoreb = RUNpricecalc(tpobj.opts[po].price);
     tpobj.opts[po].monthly = GETmonthlyfin(tpobj.opts[po].price,payment); //calculate monthly after discounts
   }
   //console.log('Size',size);
   //console.log('Price',tpobj);
   return tpobj;
+}
+
+var doubledip = {
+  carrier: false,
+  daikin: true
 }
 
 var FINDfinance=(sysid,payment)=>{
