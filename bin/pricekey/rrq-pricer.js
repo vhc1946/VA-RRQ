@@ -1,3 +1,28 @@
+/* RRQ Pricing formulas
+
+  GETsystemprices is the only public method and requires the programs quote
+  settings and the quote build. The result will be an array holding system
+  price options:[
+    ...,
+
+    {
+      name:'',
+      tiers:[
+        {
+          cost:0,
+          addbefore:0,
+          minbefore:0,
+          addafter:0,
+          minafter:0,
+          priceops:[]
+        }
+      ]
+    }
+  ]
+
+*/
+
+
 /* GET all the system price
     Takes the qbuild and creates pricing for each system
     An array is returned and attached to the quote.info.pricing.systems object
@@ -12,7 +37,6 @@ var dbldip={
 
 var GETsystemprices=(qsets,qbuild)=>{
   //let tempfintable=require('./tempfintable.json');//read in temp json file here
-
   let sparr = [];
   for(let x=0;x<qbuild.systems.length;x++){
     let sobj = {
@@ -111,7 +135,7 @@ var GETsizeprice=(tinfo,size,discounts,tiernum,payment)=>{
       if(discounts[x].ref!='discmfg'){
         if(discounts[x].ref!='discinstnt'){  // Cut Instant discount in half for partial
           partdisc.push(discounts[x]);
-        }else{  
+        }else{
           partdisc.push({
             name:discounts[x].name,
             ref:discounts[x].ref,
