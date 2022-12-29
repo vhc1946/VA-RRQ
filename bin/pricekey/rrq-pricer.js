@@ -13,7 +13,6 @@ var GETsystemprices=(qsets,qbuild)=>{
       tiers:[]
     }
     for(let y=0;y<qbuild.systems[x].tiers.length;y++){  // loop through available tiers
-
       let tobj = {
         cost:0,
         addbefore:GETaddprice(y,qbuild.systems[x].additions),
@@ -32,12 +31,11 @@ var GETsystemprices=(qsets,qbuild)=>{
                         qsets.finance[z])
           );
         }catch{}
-        sobj.tiers.push(tobj);
       }
-      sparr.push(sobj);
+      sobj.tiers.push(tobj);
     }
+    sparr.push(sobj);
   }
-  console.log(sparr);
   return sparr;
 }
 

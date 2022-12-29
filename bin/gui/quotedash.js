@@ -357,7 +357,7 @@ ipcRenderer.on(quoteroutes.sellquote,(eve,data)=>{
 
 var POPpreview=(quote)=>{
   let preview = new vcontrol.ViewGroup({create:false,cont:document.getElementById('preview-area-systems'),type:'mtl'});
-  console.log(quote);
+
   document.getElementById('preview-quote-id').innerText = quote.id;
   document.getElementById(predom.client.name).innerText = quote.customer.name;
   document.getElementById(predom.client.jaddy).innerText = quote.street;
@@ -367,11 +367,7 @@ var POPpreview=(quote)=>{
   document.getElementById(predom.created).innerText = quote.opendate.split('T')[0];
   document.getElementById(predom.saved).innerText = quote.lastdate.split('T')[0];
 
-
-  let menutemp = document.getElementById('preview-area-systems').getElementsByClassName(vcontrol.vcdom.menu.cont)[0];
   preview.CLEARview();
-  //$(preview.menu).removeClass();
-  //menutemp.classList.add(vcontrol.vcdom.menu.cont);
 
   if(quote.info.pricing!=undefined&&quote.info.pricing.systems!=undefined){
     for(let x=0;x<quote.info.pricing.systems.length;x++){
@@ -391,7 +387,6 @@ var PREVIEWpricing=(quote,sysnum)=>{
   let spot = firstspot.appendChild(document.createElement('div'));
   spot.classList.add('preview-area-system');
   let system = quote.info.pricing.systems[sysnum];
-  //if(system.tiers){
     for(let x=0;x<system.tiers.length;x++){
       let optspot = spot.appendChild(document.createElement('div'));
       optspot.classList.add('preview-area-option');
@@ -402,7 +397,6 @@ var PREVIEWpricing=(quote,sysnum)=>{
         optspot.lastChild.innerText = system.tiers[x].priceops[y].payment.title + ': ' + Math.trunc(system.tiers[x].priceops[y].opts.sysprice.price);
       }
     }
-  //}
   return firstspot;
 }
 
