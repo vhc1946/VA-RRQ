@@ -15,7 +15,8 @@
           addafter:0,
           minafter:0,
           priceops:[]
-        }
+        },
+        ...
       ]
     },
 
@@ -31,14 +32,18 @@
 */
 
 var dbldip={
-  carrier: false,
-  daikin: true,
-  payne: false,
-  other: false
+  CARRIER: false,
+  DAIKEN: true,
+  PAYNE: false
 }
 
+/*
+  qsets {
+    fintiers:{},
+    finopts:[]
+  }
+*/
 var GETsystemprices=(qsets,qbuild)=>{
-  //let tempfintable=require('./tempfintable.json');//read in temp json file here
   let sparr = [];
   for(let x=0;x<qbuild.systems.length;x++){
     let sobj = {
@@ -49,20 +54,21 @@ var GETsystemprices=(qsets,qbuild)=>{
       if(qbuild.systems[x].tiers[y].size != null){
         let tobj = {
           cost:0,
-          addbefore:GETaddprice(y,qbuild.systems[x].additions),
+          addbefore:GETaddprice(y,qbuild.systems[x].additions) + SWAPadjust(),
           minbefore:0,
           addafter:GETiaqprice(y,qbuild.systems[x].additions),
           minafter:0,
           priceops:[]
         }
-        for(let z=1;z<qsets.finance.length;z++){  // loop through payment plans in order
+        for(let ft in qsets.fintiers){
+          let flevel = GETfincost(price,qsets.fintiers[ft],qbuild.systems[x],tobj);
           try{
             tobj.priceops.push(
               GETsizeprice(tobj,
                           qbuild.systems[x].tiers[y],
-                          qbuild.systems[x].discounts,
+                          qbuild.systems[x],
                           y,
-                          qsets.finance[z])
+                          flevel)
             );
           }catch{}
         }
@@ -74,6 +80,10 @@ var GETsystemprices=(qsets,qbuild)=>{
   return sparr;
 }
 
+var SWAPadjust=()=>{
+
+  return 0;
+}
 var GETaddprice=(tnum,alist)=>{
   let addprice = 0;  // Accessory items
   if(alist!=undefined){
@@ -89,23 +99,61 @@ var GETiaqprice=(tnum,alist)=>{
  return 0;
 }
 
-var GETdscntstotal=(tnum,dlist,price,rebate=0)=>{
+var GETdscntstotal=(tnum,dlist,price,system)=>{
   let dprice = 0;
   if(dlist!=undefined){
     for(let x=0;x<dlist.length;x++){
+      console.log(dlist[x]);
       if(Number(dlist[x].tiers[tnum])>=1){dprice+=Number(dlist[x].tiers[tnum])}
       else{
         dprice+=(price*Number(dlist[x].tiers[tnum]));
       }
     }
   }
-  return dprice+rebate;
+  dprice = dprice-system.info.rebateelec+(system.info.discmfg<0?system.info.discmfg:0);
+  system.info.dscmfg=system.info.dscmfg<0?0:system.info.dscmfg;
+  return dprice;
 }
 
 var RUNpricecalc=(price,fincost,tinfo)=>{
   return (Number(price)+tinfo.addbefore-tinfo.minbefore)/(1-Number(fincost))+tinfo.addafter-tinfo.minafter;
 }
 
+var GETfincost=(price,qsets,system,pobj)=>{
+  let fgroup;
+  let mfg = qsets.mfg[system.info.mfg]?system.info.mfg:'DEFAULT';
+  fgroup = {
+    lender:qsets.mfg[mfg].lender,
+    term:qsets.term,
+    cost:,
+    rate:qsets.mfg[mfg].rate
+  }
+  //check if eligable for deal financing
+  if(true){fgroup.cost = qsets.mfg[mfg].std;}
+  else{
+    if(!dbldip[system.info.mfg]){
+      if(
+        RUNpricecalc(price,qsets.mfg[system.info.mfg].deal,tobj) >
+        RUNpricecalc(price,qsets.mfg[system.info.mfg].std,{
+          cost:0,
+          addbefore:tobj.addbefore,
+          minbefore:0,
+          addafter:tobj.addafter,
+          minafter:system.info.discmfg,
+          priceops:[]
+        })
+      ){fgroup.cost = qsets.mfg[mfg].std;}
+      else{
+        fgroup.cost = qsets.mfg[mfg].deal;
+        system.info.discmfg *= -1;
+      }
+    }else{
+      fgroup.cost = qsets.mfg[mfg].std;
+    }
+
+  }
+  return fgroup;
+}
 var GETmonthlyfin=(price,payment)=>{
   if(payment.rate&&payment.rate!=undefined){
     if(payment.rate>=1){return price/payment.rate;}
@@ -113,53 +161,57 @@ var GETmonthlyfin=(price,payment)=>{
   }else{return 0;}
 }
 
-var GETsizeprice=(tinfo,size,discounts,tiernum,payment)=>{
+var GETsizeprice=(tinfo,size,system,tiernum,payment)=>{
+
+  //have fin cost decided
   let tpobj = {
     payment:payment,
     opts:{
       sysprice:{
-        price:size.size.pricebase,
+        price:RUNpricecalc(size.size.pricebase,payment.cost,tinfo),
         monthly:0
       },
       inprice:{
-        price:size.size.priceindoor,
+        price:RUNpricecalc(size.size.priceindoor,payment.cost,tinfo),
         monthly:0
       },
       outprice:{
-        price:size.size.priceoutdoor,
+        price:RUNpricecalc(size.size..priceoutdoor,payment.cost,tinfo),
         monthly:0
       }
     }
   }
   let partdisc = [];
-  if(discounts){
-    for(let x=0;x<discounts.length;x++){
-      if(discounts[x].ref!='discmfg'){
-        if(discounts[x].ref!='discinstnt'){  // Cut Instant discount in half for partial
-          partdisc.push(discounts[x]);
+  if(system.discounts){
+    for(let x=0;x<system.discounts.length;x++){
+      if(system.discounts[x].ref!='discmfg'){
+        if(system.discounts[x].ref!='discinstnt'){  // Cut Instant discount in half for partial
+          partdisc.push(system.discounts[x]);
         }else{
           partdisc.push({
-            name:discounts[x].name,
-            ref:discounts[x].ref,
+            name:system.discounts[x].name,
+            ref:system.discounts[x].ref,
             tiers:{
-              0:discounts[x].tiers[0]/2,
-              1:discounts[x].tiers[1]/2,
-              2:discounts[x].tiers[2]/2,
-              3:discounts[x].tiers[3]/2
+              0:system.discounts[x].tiers[0]/2,
+              1:system.discounts[x].tiers[1]/2,
+              2:system.discounts[x].tiers[2]/2,
+              3:system.discounts[x].tiers[3]/2
             }
           });
         }
       }
     }
   }
+
   for(let po in tpobj.opts){ //loop through to apply discounts
-    tinfo.minbefore = GETdscntstotal(
+    tinfo.minbefore = 0;
+    tinfo.opts[po].price -= GETdscntstotal(
       tiernum,
-      po=='sysprice'?discounts:partdisc,
+      po=='sysprice'?system.discounts:partdisc,
       tpobj.opts[po].price,
-      po=='sysprice'?Number(size.size.rebateelec):0
+      po=='sysprice'?Number(size.size.rebateelec):0,
+      system
     );
-    tpobj.opts[po].price = RUNpricecalc(tpobj.opts[po].price,payment.cost,tinfo);
     tpobj.opts[po].monthly = GETmonthlyfin(tpobj.opts[po].price,payment); //calculate monthly after discounts
   }
   //console.log('Size',size);
