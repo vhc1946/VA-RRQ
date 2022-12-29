@@ -3,13 +3,6 @@
     An array is returned and attached to the quote.info.pricing.systems object
 */
 
-var dbldip={
-  carrier: false,
-  daikin: true,
-  payne: false,
-  other: false
-}
-
 var GETsystemprices=(qsets,qbuild)=>{
   //let tempfintable=require('./tempfintable.json');//read in temp json file here
 
@@ -45,6 +38,7 @@ var GETsystemprices=(qsets,qbuild)=>{
       sparr.push(sobj);
     }
   }
+  console.log(sparr);
   return sparr;
 }
 
