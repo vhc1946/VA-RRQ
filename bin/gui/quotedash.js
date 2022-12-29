@@ -357,7 +357,7 @@ ipcRenderer.on(quoteroutes.sellquote,(eve,data)=>{
 
 var POPpreview=(quote)=>{
   let preview = new vcontrol.ViewGroup({create:false,cont:document.getElementById('preview-area-systems'),type:'mtl'});
-
+  console.log(quote);
   document.getElementById('preview-quote-id').innerText = quote.id;
   document.getElementById(predom.client.name).innerText = quote.customer.name;
   document.getElementById(predom.client.jaddy).innerText = quote.street;
