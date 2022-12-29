@@ -13,26 +13,25 @@ var GETsystemprices=(qsets,qbuild)=>{
       tiers:[]
     }
     for(let y=0;y<qbuild.systems[x].tiers.length;y++){  // loop through available tiers
-      if(qbuild.systems[x].tiers[y].size != null){
-        let tobj = {
-          cost:0,
-          addbefore:GETaddprice(y,qbuild.systems[x].additions),
-          minbefore:0,
-          addafter:GETiaqprice(y,qbuild.systems[x].additions),
-          minafter:0,
-          priceops:[]
-        }
-        for(let z=1;z<qsets.finance.length;z++){  // loop through payment plans in order
-          try{
-            tobj.priceops.push(
-              GETsizeprice(tobj,
-                          qbuild.systems[x].tiers[y],
-                          qbuild.systems[x].discounts,
-                          y,
-                          qsets.finance[z])
-            );
-          }catch{}
-        }
+
+      let tobj = {
+        cost:0,
+        addbefore:GETaddprice(y,qbuild.systems[x].additions),
+        minbefore:0,
+        addafter:GETiaqprice(y,qbuild.systems[x].additions),
+        minafter:0,
+        priceops:[]
+      }
+      for(let z=1;z<qsets.finance.length;z++){  // loop through payment plans in order
+        try{
+          tobj.priceops.push(
+            GETsizeprice(tobj,
+                        qbuild.systems[x].tiers[y],
+                        qbuild.systems[x].discounts,
+                        y,
+                        qsets.finance[z])
+          );
+        }catch{}
         sobj.tiers.push(tobj);
       }
       sparr.push(sobj);
