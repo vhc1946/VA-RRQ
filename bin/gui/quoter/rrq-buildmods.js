@@ -276,7 +276,6 @@ var SETaddlist=(cont,sys=undefined)=>{
     - aobj - object to load to line
 */
 var ADDselectline=(aobj,enhance)=>{
-  console.log(aobj);
   let row = document.createElement('div');
   row.classList.add(moddom.views.mods.selline.cont);
 
@@ -369,7 +368,6 @@ var RESETtoggle=(cont)=>{
 /////////////////////////////////////////////////////////////////////////////////
 
 var GETselectline=(aline)=>{
-  console.log(aline);
   let aobj = {};
   aobj.name = aline.children[0].innerText;
   aobj.notes = aline.children[0].title;

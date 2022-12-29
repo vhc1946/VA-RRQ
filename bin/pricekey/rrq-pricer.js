@@ -33,7 +33,7 @@
 
 var dbldip={
   CARRIER: false,
-  DAIKEN: true,
+  DAIKIN: true,
   PAYNE: false
 }
 
@@ -51,18 +51,23 @@ var GETsystemprices=(qsets,qbuild)=>{
       tiers:[]
     }
     for(let y=0;y<qbuild.systems[x].tiers.length;y++){  // loop through available tiers
-      if(qbuild.systems[x].tiers[y].size != null){
         let tobj = {
           cost:0,
           addbefore:GETaddprice(y,qbuild.systems[x].additions) + SWAPadjust(),
           minbefore:0,
-          addafter:GETiaqprice(y,qbuild.systems[x].additions),
+          addafter:GETaddprice(y,qbuild.systems[x].additions),
           minafter:0,
           priceops:[]
         }
         for(let ft in qsets.fintiers){
-          let flevel = GETfincost(price,qsets.fintiers[ft],qbuild.systems[x],tobj);
-          try{
+          let flevel = GETfincost(
+            qbuild.systems[x].tiers[y].size.pricebase,
+            qsets.fintiers[ft],
+            qbuild.systems[x].tiers[y],
+            tobj,
+            qsets.fintiers[ft].title
+            );
+
             tobj.priceops.push(
               GETsizeprice(tobj,
                           qbuild.systems[x].tiers[y],
@@ -70,13 +75,13 @@ var GETsystemprices=(qsets,qbuild)=>{
                           y,
                           flevel)
             );
-          }catch{}
+          //}catch{}
         }
         sobj.tiers.push(tobj);
       }
       sparr.push(sobj);
-    }
   }
+  console.log(sparr);
   return sparr;
 }
 
@@ -98,18 +103,18 @@ var GETaddprice=(tnum,alist)=>{
 }
 
 var GETdscntstotal=(tnum,dlist,price,system)=>{
+  console.log(system);
   let dprice = 0;
   if(dlist!=undefined){
     for(let x=0;x<dlist.length;x++){
-      console.log(dlist[x]);
       if(Number(dlist[x].tiers[tnum])>=1){dprice+=Number(dlist[x].tiers[tnum])}
       else{
         dprice+=(price*Number(dlist[x].tiers[tnum]));
       }
     }
   }
-  dprice = dprice-system.info.rebateelec+(system.info.discmfg<0?system.info.discmfg:0);
-  system.info.dscmfg=system.info.dscmfg<0?0:system.info.dscmfg;
+  dprice = dprice-system.size.rebateelec+(system.info.discmfg<0?system.info.discmfg:0);
+  system.info.discmfg = system.info.dscmfg<0?0:system.info.discmfg;
   return dprice;
 }
 
@@ -117,20 +122,21 @@ var RUNpricecalc=(price,fincost,tinfo)=>{
   return (Number(price)+tinfo.addbefore-tinfo.minbefore)/(1-Number(fincost))+tinfo.addafter-tinfo.minafter;
 }
 
-var GETfincost=(price,qsets,system,pobj)=>{
+var GETfincost=(price,qsets,system,tobj)=>{
   let fgroup;
-  let mfg = qsets.mfg[system.info.mfg]?system.info.mfg:'DEFAULT';
+  let mfg = (qsets.mfg[system.info.mfg.toUpperCase()]?system.info.mfg:'DEFAULT').toUpperCase();
   fgroup = {
+    title:qsets.title,
     lender:qsets.mfg[mfg].lender,
     term:qsets.term,
     cost:0,
     rate:qsets.mfg[mfg].rate
   };
   //check if eligable for deal financing
-  if(!dbldip[system.info.mfg]){
+  if(!dbldip[mfg]){
     if(
-      RUNpricecalc(price,qsets.mfg[system.info.mfg].deal,tobj) >
-      RUNpricecalc(price,qsets.mfg[system.info.mfg].std,{
+      RUNpricecalc(price,qsets.mfg[mfg].deal,tobj) >
+      RUNpricecalc(price,qsets.mfg[mfg].std,{
         cost:0,
         addbefore:tobj.addbefore,
         minbefore:0,
@@ -160,6 +166,7 @@ var GETsizeprice=(tinfo,size,system,tiernum,payment)=>{
   //have fin cost decided
   let tpobj = {
     payment:payment,
+    title:payment.title,
     opts:{
       sysprice:{
         price:RUNpricecalc(size.size.pricebase,payment.cost,tinfo),
@@ -199,12 +206,11 @@ var GETsizeprice=(tinfo,size,system,tiernum,payment)=>{
 
   for(let po in tpobj.opts){ //loop through to apply discounts
     tinfo.minbefore = 0;
-    tinfo.opts[po].price -= GETdscntstotal(
+    tpobj.opts[po].price -= GETdscntstotal(
       tiernum,
       po=='sysprice'?system.discounts:partdisc,
       tpobj.opts[po].price,
-      po=='sysprice'?Number(size.size.rebateelec):0,
-      system
+      size
     );
     tpobj.opts[po].monthly = GETmonthlyfin(tpobj.opts[po].price,payment); //calculate monthly after discounts
   }
