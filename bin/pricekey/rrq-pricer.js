@@ -84,6 +84,7 @@ var SWAPadjust=()=>{
 
   return 0;
 }
+
 var GETaddprice=(tnum,alist)=>{
   let addprice = 0;  // Accessory items
   if(alist!=undefined){
@@ -94,9 +95,6 @@ var GETaddprice=(tnum,alist)=>{
     }
   }
   return addprice;
-}
-var GETiaqprice=(tnum,alist)=>{
- return 0;
 }
 
 var GETdscntstotal=(tnum,dlist,price,system)=>{
@@ -125,32 +123,28 @@ var GETfincost=(price,qsets,system,pobj)=>{
   fgroup = {
     lender:qsets.mfg[mfg].lender,
     term:qsets.term,
-    cost:,
+    cost:0,
     rate:qsets.mfg[mfg].rate
-  }
+  };
   //check if eligable for deal financing
-  if(true){fgroup.cost = qsets.mfg[mfg].std;}
-  else{
-    if(!dbldip[system.info.mfg]){
-      if(
-        RUNpricecalc(price,qsets.mfg[system.info.mfg].deal,tobj) >
-        RUNpricecalc(price,qsets.mfg[system.info.mfg].std,{
-          cost:0,
-          addbefore:tobj.addbefore,
-          minbefore:0,
-          addafter:tobj.addafter,
-          minafter:system.info.discmfg,
-          priceops:[]
-        })
-      ){fgroup.cost = qsets.mfg[mfg].std;}
-      else{
-        fgroup.cost = qsets.mfg[mfg].deal;
-        system.info.discmfg *= -1;
-      }
-    }else{
-      fgroup.cost = qsets.mfg[mfg].std;
+  if(!dbldip[system.info.mfg]){
+    if(
+      RUNpricecalc(price,qsets.mfg[system.info.mfg].deal,tobj) >
+      RUNpricecalc(price,qsets.mfg[system.info.mfg].std,{
+        cost:0,
+        addbefore:tobj.addbefore,
+        minbefore:0,
+        addafter:tobj.addafter,
+        minafter:system.info.discmfg,
+        priceops:[]
+      })
+    ){fgroup.cost = qsets.mfg[mfg].std;}
+    else{
+      fgroup.cost = qsets.mfg[mfg].deal;
+      system.info.discmfg *= -1;
     }
-
+  }else{
+    fgroup.cost = qsets.mfg[mfg].deal;
   }
   return fgroup;
 }
@@ -176,7 +170,7 @@ var GETsizeprice=(tinfo,size,system,tiernum,payment)=>{
         monthly:0
       },
       outprice:{
-        price:RUNpricecalc(size.size..priceoutdoor,payment.cost,tinfo),
+        price:RUNpricecalc(size.size.priceoutdoor,payment.cost,tinfo),
         monthly:0
       }
     }

@@ -7,17 +7,21 @@
         "PAYNE":{"lender":"ENT-4583","std":0.03,"deal":0.03,"rate":0},
         "DEFAULT":{"lender":"ENT-4583","std":0.03,"deal":0.03,"rate":0}
         }
-    }
+    },
     "promo":{"title":"Promo","term":36,"desc":"",
       "mfg":{
         "DAIKEN":{"lender":"ENT-4583","std":0.08,"deal":0.08,"rate":0},
-        "CARRIER":{"lender":"ENT-4583","std":0.13,"deal":0.13,"rate":0}
+        "CARRIER":{"lender":"ENT-4583","std":0.13,"deal":0.13,"rate":0},
+        "PAYNE":{"lender":"ENT-4583","std":0.03,"deal":0.03,"rate":0},
+        "DEFAULT":{"lender":"ENT-4583","std":0.03,"deal":0.03,"rate":0}
         }
     },
-    "flex":{"title":"Lowest Payment","term":120,"desc":"",,
+    "flex":{"title":"Lowest Payment","term":120,"desc":"",
       "mfg":{
         "DAIKEN":{"lender":"ENT-4583","std":0.04,"deal":0.04,"rate":0},
-        "CARRIER":{"lender":"ENT-4583","std":0.04,"deal":0.04,"rate":0}
+        "CARRIER":{"lender":"ENT-4583","std":0.04,"deal":0.04,"rate":0},
+        "PAYNE":{"lender":"ENT-4583","std":0.03,"deal":0.03,"rate":0},
+        "DEFAULT":{"lender":"ENT-4583","std":0.03,"deal":0.03,"rate":0}
         }
       }
   }
