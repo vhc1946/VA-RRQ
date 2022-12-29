@@ -4,8 +4,6 @@
 */
 
 var GETsystemprices=(qsets,qbuild)=>{
-  //let tempfintable=require('./tempfintable.json');//read in temp json file here
-
   let sparr = [];
   for(let x=0;x<qbuild.systems.length;x++){
     let sobj = {
@@ -17,7 +15,7 @@ var GETsystemprices=(qsets,qbuild)=>{
         cost:0,
         addbefore:GETaddprice(y,qbuild.systems[x].additions),
         minbefore:0,
-        addafter:GETiaqprice(y,qbuild.systems[x].additions),
+        addafter:GETaddprice(y,qbuild.systems[x].additions,true),
         minafter:0,
         priceops:[]
       }
@@ -39,19 +37,25 @@ var GETsystemprices=(qsets,qbuild)=>{
   return sparr;
 }
 
-var GETaddprice=(tnum,alist)=>{
+var GETaddprice=(tnum,alist,iaq=false)=>{
   let addprice = 0;  // Accessory items
+  let iaqprice = 0;  // IAQ items
   if(alist!=undefined){
     for(let x=0;x<alist.length;x++){
       if(alist[x].tiers[tnum]>0){
-        addprice+=(Number(alist[x]['price_sale'])*Number(alist[x].tiers[tnum]))
-      }
+        if(alist[x].cat != 'Indoor Air Quality'){
+          addprice+=(Number(alist[x]['price_sale'])*Number(alist[x].tiers[tnum]));
+        }else{
+          iaqprice+=(Number(alist[x]['price_sale'])*Number(alist[x].tiers[tnum]));
+        }
+
     }
   }
-  return addprice;
-}
-var GETiaqprice=(tnum,alist)=>{
- return 0;
+  if(iaq==false){
+    return addprice
+  }else{
+    return iaqprice;
+  }
 }
 
 var GETdscntstotal=(tnum,dlist,price,rebate=0)=>{
@@ -124,13 +128,26 @@ var GETsizeprice=(tinfo,size,discounts,tiernum,payment)=>{
       tpobj.opts[po].price,
       po=='sysprice'?Number(size.size.rebateelec):0
     );
-    tpobj.opts[po].price = RUNpricecalc(tpobj.opts[po].price,payment.cost,tinfo);
+    tpobj.opts[po].price = RUNpricecalc(
+      tpobj.opts[po].price,
+      FINDfinance(size.info.sysid,payment),
+      tinfo
+    );
     tpobj.opts[po].monthly = GETmonthlyfin(tpobj.opts[po].price,payment); //calculate monthly after discounts
   }
   //console.log('Size',size);
-  console.log('Price',tpobj);
+  //console.log('Price',tpobj);
   return tpobj;
 }
+
+var FINDfinance=(sysid,payment)=>{
+  if(sysid.substring(0,1) === 'D'){
+    return payment.dcost;
+  }else{
+    return payment.cost;
+  }
+}
+
 
 module.exports={
   GETsystemprices

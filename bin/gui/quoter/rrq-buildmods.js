@@ -191,13 +191,10 @@ var SETaddblock=(block,sys=undefined)=>{
     titleele.appendChild(document.createElement('div'));
     titleele.lastChild.innerText = qsettings.tiers[x].name;
   }
-  //titleele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
-  //titleele.appendChild(document.createElement('div'));
-  //titleele.lastChild.innerText = tquote.info.key.accessories[0]['price_sale']; //Title value for dedection price
-  //titleele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
-  //titleele.appendChild(document.createElement('div'));
-  //titleele.lastChild.innerText = tquote.info.key.accessories[0]['price_sale']; //Title value for dedection price
-
+  titleele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
+  titleele.appendChild(document.createElement('div'));
+  titleele.lastChild.innerText = tquote.info.key.accessories[0]['price_sale']; //Title value for dedection price
+ 
   SETenhlist(block,modlist.TRIMlist({}),sys);
   SETaddlist(block,sys);
 
@@ -279,6 +276,7 @@ var SETaddlist=(cont,sys=undefined)=>{
     - aobj - object to load to line
 */
 var ADDselectline=(aobj,enhance)=>{
+  console.log(aobj);
   let row = document.createElement('div');
   row.classList.add(moddom.views.mods.selline.cont);
 
@@ -287,6 +285,10 @@ var ADDselectline=(aobj,enhance)=>{
   row.lastChild.title = aobj.notes;
   row.appendChild(document.createElement('div'));
   row.lastChild.innerText = aobj.enhance;
+  $(row.lastChild).hide();
+  
+  row.appendChild(document.createElement('div'));
+  row.lastChild.innerText = aobj.cat;
   $(row.lastChild).hide();
 
   row.appendChild(document.createElement('div')); //create tiers container
@@ -309,8 +311,6 @@ var ADDselectline=(aobj,enhance)=>{
       }
     }
   }
-  
-
   row.appendChild(document.createElement('div'));
   row.lastChild.classList.add(moddom.views.mods.selline.prices);
 
@@ -366,77 +366,21 @@ var RESETtoggle=(cont)=>{
     cont.classList.remove(list[i]);
   }
 }
-
-
-var CREATEtogglebox=(cont)=>{
-  let togglebox = cont.lastChild.appendChild(document.createElement('div'));
-    togglebox.classList.add('vg-togglebox-center');
-    togglebox.appendChild(document.createElement('div'))
-    togglebox.lastChild.addEventListener('click',(ele)=>{
-      RESETtoggle(togglebox);
-      togglebox.classList.add('vg-togglebox-left')
-    });
-    togglebox.appendChild(document.createElement('div'));
-    togglebox.lastChild.addEventListener('click',(ele)=>{
-      RESETtoggle(togglebox);
-      togglebox.classList.add('vg-togglebox-center')
-    });
-    togglebox.appendChild(document.createElement('div'));
-    togglebox.lastChild.addEventListener('click',(ele)=>{
-      RESETtoggle(togglebox);
-      togglebox.classList.add('vg-togglebox-right')
-    });
-  return togglebox;
-}
-
-var RESETtoggle=(cont)=>{
-  let list = cont.classList;
-  for(let i=0;i<list.length;i++){
-    cont.classList.remove(list[i]);
-  }
-}
-
-
-var CREATEtogglebox=(cont)=>{
-  let togglebox = cont.lastChild.appendChild(document.createElement('div'));
-    togglebox.classList.add('vg-togglebox-center');
-    togglebox.appendChild(document.createElement('div'))
-    togglebox.lastChild.addEventListener('click',(ele)=>{
-      RESETtoggle(togglebox);
-      togglebox.classList.add('vg-togglebox-left')
-    });
-    togglebox.appendChild(document.createElement('div'));
-    togglebox.lastChild.addEventListener('click',(ele)=>{
-      RESETtoggle(togglebox);
-      togglebox.classList.add('vg-togglebox-center')
-    });
-    togglebox.appendChild(document.createElement('div'));
-    togglebox.lastChild.addEventListener('click',(ele)=>{
-      RESETtoggle(togglebox);
-      togglebox.classList.add('vg-togglebox-right')
-    });
-  return togglebox;
-}
-
-var RESETtoggle=(cont)=>{
-  let list = cont.classList;
-  for(let i=0;i<list.length;i++){
-    cont.classList.remove(list[i]);
-  }
-}
 /////////////////////////////////////////////////////////////////////////////////
 
 var GETselectline=(aline)=>{
+  console.log(aline);
   let aobj = {};
   aobj.name = aline.children[0].innerText;
   aobj.notes = aline.children[0].title;
   aobj.enhance = aline.children[1].innerText;
-  let ele = aline.children[2].children;
+  aobj.cat = aline.children[2].innerText;
+  let ele = aline.children[3].children;
   aobj.tiers=[];
   for(let x=0;x<ele.length;x++){
     aobj.tiers.push(ele[x].value);
   }
-  ele = aline.children[3].children;
+  ele = aline.children[4].children;
   aobj['price_sale']=ele[0].value;
   aobj['price-deduct']=ele[1].value;
 

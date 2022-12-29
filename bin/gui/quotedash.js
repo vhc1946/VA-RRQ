@@ -357,7 +357,6 @@ ipcRenderer.on(quoteroutes.sellquote,(eve,data)=>{
 
 var POPpreview=(quote)=>{
   let preview = new vcontrol.ViewGroup({create:false,cont:document.getElementById('preview-area-systems'),type:'mtl'});
-  console.log(quote);
   document.getElementById('preview-quote-id').innerText = quote.id;
   document.getElementById(predom.client.name).innerText = quote.customer.name;
   document.getElementById(predom.client.jaddy).innerText = quote.street;
@@ -391,7 +390,7 @@ var PREVIEWpricing=(quote,sysnum)=>{
       let optspot = spot.appendChild(document.createElement('div'));
       optspot.classList.add('preview-area-option');
       optspot.appendChild(document.createElement('div'));
-      optspot.lastChild.innerText = system.tiers[x].name;
+      optspot.lastChild.innerText = quote.info.build.systems[sysnum].tiers[x].name;
       for(let y=0;y<system.tiers[x].priceops.length;y++){
         optspot.appendChild(document.createElement('div'));
         optspot.lastChild.innerText = system.tiers[x].priceops[y].payment.title + ': ' + Math.trunc(system.tiers[x].priceops[y].opts.sysprice.price);
