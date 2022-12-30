@@ -341,22 +341,17 @@ var CREATEtogglebox=(cont)=>{
   let togglebox = cont.lastChild.appendChild(document.createElement('div'));
     togglebox.classList.add('vg-togglebox-center');
     togglebox.appendChild(document.createElement('div'))
-    togglebox.lastChild.addEventListener('click',(ele)=>{
-      RESETtoggle(togglebox);
-      togglebox.classList.add('vg-togglebox-left')
+    togglebox.addEventListener('click',(ele)=>{
+      if(ele.target===togglebox || ele.target.parentNode===togglebox){
+        let wide = togglebox.offsetWidth;
+        let press = ele.clientX-togglebox.getBoundingClientRect().x;
+        let parts = wide/3;
+        console.log(parts)
+        if(press<parts){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-left');}
+        else if(press>(wide/2-parts/2) && press < (wide/2+parts/2)){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-center');}
+        else if(press>wide-parts){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-right');}
+      }else{console.log('bad click');}
     });
-    togglebox.appendChild(document.createElement('div'));
-    togglebox.lastChild.addEventListener('click',(ele)=>{
-      RESETtoggle(togglebox);
-      togglebox.classList.add('vg-togglebox-center')
-    });
-    togglebox.appendChild(document.createElement('div'));
-    togglebox.lastChild.addEventListener('click',(ele)=>{
-      RESETtoggle(togglebox);
-      togglebox.classList.add('vg-togglebox-right')
-    });
-
-
   return togglebox;
 }
 
