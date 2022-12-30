@@ -114,7 +114,11 @@ var INITbuildmod=()=>{
   modlisthead = modlist.GETlist().shift();
 
   for(let x=0;x<tquote.info.build.systems.length;x++){
-    modviews.ADDview(tquote.info.build.systems[x].name,ADDmodsystem(tquote.info.build.systems[x].name,tquote.info.build.systems[x]));
+    let view = modviews.ADDview(tquote.info.build.systems[x].name,ADDmodsystem(tquote.info.build.systems[x].name,tquote.info.build.systems[x]));
+    for(let y=0;y<tquote.info.build.systems[x].tiers.length;y++){
+      console.log(view);
+      UPDATEenhlist(tquote.info.build.systems[x].tiers[y].info,x,y,view);
+    }
   }
 }
 
@@ -152,6 +156,7 @@ var ADDmodsystem=(sname,sys=undefined)=>{
 
   $(modsys).show();
 
+  //SETenhlist(modsys.getElementsByClassName(moddom.views.mods.cont)[0])
   SETaddblock(modsys.getElementsByClassName(moddom.views.mods.cont)[0],sys);
   SETdscntblock(modsys.getElementsByClassName(moddom.views.dscnts.cont)[0],sys);//Setup Discount Block
 
@@ -323,8 +328,8 @@ var ADDselectline=(aobj)=>{
 
 
 /////////////////////////////////////////////////////////////////////////////////
-/*
-
+/* Toggle Checkbox
+  The toggle box needs to be moved into the repo
 */
 let togglestates={
   no:'vg-togglebox-left',
@@ -360,6 +365,7 @@ var RESETtoggle=(cont)=>{
   for(let i=0;i<list.length;i++){
     cont.classList.remove(list[i]);
   }
+  return cont;
 }
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -387,16 +393,16 @@ var GETselectline=(aline)=>{
     - tiernum - array index for tier
 
 */
-var UPDATEenhlist=(sysinfo,sysnum,tiernum)=>{
-  let syscont = document.getElementById(moddom.cont).getElementsByClassName(moddom.system.cont);
-  let enlist = syscont[sysnum].getElementsByClassName(moddom.views.mods.enh.selects)[0].children;
+var UPDATEenhlist=(sysinfo,sysnum,tiernum,cont=document)=>{
+  console.log(sysinfo);
+  console.log('First Update ',cont,cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[0].children);
+  let enlist = cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[0].children
   for(let x=1;x<enlist.length;x++){
     let val=0;
-    enlist[x].getElementsByClassName(moddom.views.mods.selline.tiers)[0].children[tiernum].classList.add(togglestates.neutral);
-    console.log('SYS INFO',sysinfo[enlist[x].children[1].innerText])
-    if(sysinfo[enlist[x].children[1].innerText]!=0){
-      enlist[x].getElementsByClassName(moddom.views.mods.selline.tiers)[0].children[tiernum].classList.add(togglestates.yes);
-    }
+    let encheck = RESETtoggle(enlist[x].getElementsByClassName(moddom.views.mods.selline.tiers)[0].children[tiernum]);
+    console.log(sysinfo[enlist[x].children[1].innerText]);
+    if(sysinfo[enlist[x].children[1].innerText]!=0){encheck.classList.add(togglestates.yes);}
+    else{encheck.classList.add(togglestates.neutral);}
   }
 }
 
