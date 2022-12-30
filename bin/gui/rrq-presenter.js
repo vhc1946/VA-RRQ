@@ -84,9 +84,17 @@ var qactions={
   }
 }
 
-Titlebar.SETUPtitlebar(qactions);
+var mactions={
+  clear:{
+    id:'clear-signature',
+    src:'../bin/repo/assets/icons/angle-up.png'
+  }
+}
+
+Titlebar.SETUPtitlebar(qactions,mactions);
 
 $(document.getElementById(Titlebar.tbdom.info.cont)).hide();
+$(document.getElementById(Titlebar.tbdom.page.settings)).hide();
 ////////////////////
 
 var tquote = JSON.parse(localStorage.getItem(quotesls.quotetopresi));
@@ -254,6 +262,10 @@ var LOADresipresi=()=>{
   }
 
   var signature = new DrawingPad(document.getElementsByClassName(presdom.signature)[0]);
+
+  document.getElementById('clear-signature').addEventListener('click', (ele)=>{
+    signature.ctx.clearRect(0,0,signature.ctx.canvas.width,signature.ctx.canvas.height);
+  });
 }
 
 var priceformat=(price)=>{
