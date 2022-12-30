@@ -90,7 +90,7 @@ $(document.getElementById(Titlebar.tbdom.info.cont)).hide();
 ////////////////////
 
 var tquote = JSON.parse(localStorage.getItem(quotesls.quotetopresi));
-var cons=auser;
+var cons=auser.config;
 var asspath=null;
 var currtier=0;
 var sysnum=0;
@@ -104,7 +104,7 @@ var LOADresipresi=()=>{
   let dirlogo = path.join(asspath,apaths.assets.logos);
 
   // Print Header /////////////////
-
+  console.log(auser);
   document.getElementById('header-client-name').innerText = tquote.customer.name.split(',')[1] + ' ' + tquote.customer.name.split(',')[0];
   document.getElementById('header-client-street').innerText = tquote.street;
   document.getElementById('header-client-longcity').innerText = tquote.city + ', ' + tquote.state + ' ' + tquote.zip;
