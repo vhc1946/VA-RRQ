@@ -104,7 +104,6 @@ var LOADresipresi=()=>{
   let dirlogo = path.join(asspath,apaths.assets.logos);
 
   // Print Header /////////////////
-  console.log(auser);
   document.getElementById('header-client-name').innerText = tquote.customer.name.split(',')[1] + ' ' + tquote.customer.name.split(',')[0];
   document.getElementById('header-client-street').innerText = tquote.street;
   document.getElementById('header-client-longcity').innerText = tquote.city + ', ' + tquote.state + ' ' + tquote.zip;
@@ -114,7 +113,6 @@ var LOADresipresi=()=>{
   document.getElementById('vogel-logo').src = dirlogo + '/Vogel Logo.png';
 
   // Set Section Icons /////////////////////
-
   document.getElementById('experience-main-icon').src = diricon + '/UserExperience.png';
   document.getElementById('comfort-main-icon').src = diricon + '/ComfortIcon.png';
   document.getElementById('value-main-icon').src = diricon + '/ValueIcon-01.png';

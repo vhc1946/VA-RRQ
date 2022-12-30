@@ -55,7 +55,7 @@ var GETsystemprices=(qsets,qbuild)=>{
           cost:0,
           addbefore:GETaddprice(y,qbuild.systems[x].additions) + SWAPadjust(),
           minbefore:0,
-          addafter:GETaddprice(y,qbuild.systems[x].additions),
+          addafter:GETaddprice(y,qbuild.systems[x].additions,true),
           minafter:0,
           priceops:[]
         }
@@ -90,16 +90,22 @@ var SWAPadjust=()=>{
   return 0;
 }
 
-var GETaddprice=(tnum,alist)=>{
+var GETaddprice=(tnum,alist,iaq=false)=>{
   let addprice = 0;  // Accessory items
+  let iaqprice = 0;  // IAQ items
+  console.log(alist);
   if(alist!=undefined){
     for(let x=0;x<alist.length;x++){
       if(alist[x].tiers[tnum]>0){
-        addprice+=(Number(alist[x]['price_sale'])*Number(alist[x].tiers[tnum]))
+        if(alist[x].cat != 'Indoor Air Quality'){
+          addprice+=(Number(alist[x]['price_sale'])*Number(alist[x].tiers[tnum]))
+        }else{
+          iaqprice+=(Number(alist[x]['price_sale'])*Number(alist[x].tiers[tnum]))
+        }
       }
     }
   }
-  return addprice;
+  return iaq==false?addprice:iaqprice;
 }
 
 var GETdscntstotal=(tnum,dlist,price,system)=>{
