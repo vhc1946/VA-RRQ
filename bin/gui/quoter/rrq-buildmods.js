@@ -79,7 +79,6 @@ var SETUPmodviewer=()=>{
       let views = document.getElementsByClassName(moddom.views[n].cont);
       ele.target.classList.add(moddom.selected);
       console.log(views);
-      console.log(views);
       for(let x=0;x<views.length;x++){
 
         $(views[x]).show();
@@ -115,7 +114,11 @@ var INITbuildmod=()=>{
   modlisthead = modlist.GETlist().shift();
 
   for(let x=0;x<tquote.info.build.systems.length;x++){
-    modviews.ADDview(tquote.info.build.systems[x].name,ADDmodsystem(tquote.info.build.systems[x].name,tquote.info.build.systems[x]));
+    let view = modviews.ADDview(tquote.info.build.systems[x].name,ADDmodsystem(tquote.info.build.systems[x].name,tquote.info.build.systems[x]));
+    for(let y=0;y<tquote.info.build.systems[x].tiers.length;y++){
+      console.log(view);
+      UPDATEenhlist(tquote.info.build.systems[x].tiers[y].info,x,y,view);
+    }
   }
 }
 
@@ -137,10 +140,12 @@ var GETbuildmod=()=>{
     //iaq
     //Discounts
     list = cont[x].getElementsByClassName(moddom.views.dscnts.list)[0].children;
+    console.log(list);
     tquote.info.build.systems[x].discounts=[];
     for(let y=0;y<list.length;y++){
       tquote.info.build.systems[x].discounts.push(GETdscntline(list[y]));
     }
+    console.log(tquote.info.build)
   }
 }
 
@@ -151,6 +156,7 @@ var ADDmodsystem=(sname,sys=undefined)=>{
 
   $(modsys).show();
 
+  //SETenhlist(modsys.getElementsByClassName(moddom.views.mods.cont)[0])
   SETaddblock(modsys.getElementsByClassName(moddom.views.mods.cont)[0],sys);
   SETdscntblock(modsys.getElementsByClassName(moddom.views.dscnts.cont)[0],sys);//Setup Discount Block
 
@@ -191,10 +197,10 @@ var SETaddblock=(block,sys=undefined)=>{
     titleele.appendChild(document.createElement('div'));
     titleele.lastChild.innerText = qsettings.tiers[x].name;
   }
-  titleele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
-  titleele.appendChild(document.createElement('div'));
-  titleele.lastChild.innerText = tquote.info.key.accessories[0]['price_sale']; //Title value for dedection price
- 
+  //titleele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
+  //titleele.appendChild(document.createElement('div'));
+  //titleele.lastChild.innerText = tquote.info.key.accessories[0]['price_sale']; //Title value for dedection price
+
   SETenhlist(block,modlist.TRIMlist({}),sys);
   SETaddlist(block,sys);
 
@@ -248,6 +254,133 @@ var SETaddblock=(block,sys=undefined)=>{
   });
 }
 
+/*Setup the additions for a system*/
+var SETaddlist=(cont,sys=undefined)=>{
+  if(sys!=undefined && sys.additions!=undefined){
+    for(let x=0;x<sys.additions.length;x++){
+      cont.getElementsByClassName(moddom.views.mods.adds.selects)[0].appendChild(ADDselectline(sys.additions[x]));
+    }
+  }
+}
+
+/* Adds a modification to ADDs and DEDs
+    PASS:
+    - aobj - object to load to line
+*/
+var ADDselectline=(aobj,enhance=false)=>{
+  let row = document.createElement('div');
+  row.classList.add(moddom.views.mods.selline.cont);
+
+  row.appendChild(document.createElement('div'));
+  row.lastChild.innerText = aobj.name || '',
+  row.lastChild.title = aobj.notes;
+  row.appendChild(document.createElement('div'));
+  row.lastChild.innerText = aobj.enhance;
+  $(row.lastChild).hide();
+
+  row.appendChild(document.createElement('div')); //create tiers container
+  row.lastChild.classList.add(moddom.views.mods.selline.tiers);
+  for(let x=1;x<qsettings.tiers.length;x++){
+    console.log(enhance);
+    if(enhance){
+      row.lastChild.appendChild(CREATEtogglebox(row,(ele)=>{document.getElementById(moddom.cont).dispatchEvent(new Event('change'));})); //to refersh the quote}));
+    }else{
+      row.lastChild.appendChild(document.createElement('input'));
+      if(aobj.tiers!=undefined){
+        row.lastChild.lastChild.value=aobj.tiers[x-1]!=undefined?aobj.tiers[x-1]:1;
+      }else{
+        row.lastChild.lastChild.value=1;
+      }
+      row.lastChild.lastChild.type='number';
+      if(aobj.qnty){//set type number
+      }else{//set type check
+      }
+    }
+  }
+
+  row.appendChild(document.createElement('div'));
+  row.lastChild.classList.add(moddom.views.mods.selline.prices);
+
+  row.lastChild.appendChild(document.createElement('input'));
+  row.lastChild.lastChild.type='number';
+  row.lastChild.lastChild.value = aobj['price_sale']!=undefined && aobj['price_sale']!=''?aobj['price_sale']:0;
+  $(row.lastChild.lastChild).hide();
+
+  row.lastChild.appendChild(document.createElement('input'));
+  row.lastChild.lastChild.type='number';
+  row.lastChild.lastChild.value = aobj['price-deduct']!=undefined && aobj['price-deduct']!=''?aobj['price-deduct']:0;
+  $(row.lastChild.lastChild).hide();
+
+  return row;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////
+/* Toggle Checkbox
+  The toggle box needs to be moved into the repo
+*/
+let togglestates={
+  no:'vg-togglebox-left',
+  yes:'vg-togglebox-right',
+  neutral:'vg-togglebox-center'
+}
+
+var CREATEtogglebox=(cont,changeeve=(ele)=>{})=>{
+  let togglebox = cont.lastChild.appendChild(document.createElement('div'));
+    togglebox.classList.add('vg-togglebox-center');
+    togglebox.appendChild(document.createElement('div'))
+    togglebox.addEventListener('click',(ele)=>{
+      if(ele.target===togglebox || ele.target.parentNode===togglebox){
+        let wide = togglebox.offsetWidth;
+        let press = ele.clientX-togglebox.getBoundingClientRect().x;
+        let parts = wide/3;
+        console.log(parts)
+        if(press<parts){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-left');}
+        else if(press>(wide/2-parts/2) && press < (wide/2+parts/2)){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-center');}
+        else if(press>wide-parts){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-right');}
+        changeeve(ele);
+      }else{console.log('bad click');}
+    });
+  return togglebox;
+}
+var GETtogglebox=(cont)=>{
+  if(cont.classList.contains(togglestates.yes)){return 1;}
+  else if(cont.classList.contains(togglestates.no)){return -1;}
+  else{return 0;}
+}
+var RESETtoggle=(cont)=>{
+  let list = cont.classList;
+  for(let i=0;i<list.length;i++){
+    cont.classList.remove(list[i]);
+  }
+  return cont;
+}
+/////////////////////////////////////////////////////////////////////////////////
+
+var GETselectline=(aline)=>{
+  let aobj = {};
+  aobj.name = aline.children[0].innerText;
+  aobj.notes = aline.children[0].title;
+  aobj.enhance = aline.children[1].innerText;
+  let ele = aline.children[2].children;
+  aobj.tiers=[];
+  if(aobj.enhance!=''){
+    console.log('IS Enhance',aobj);
+    for(let x=0;x<ele.length;x++){
+      aobj.tiers.push(GETtogglebox(ele[x]));
+    }
+  }else{
+    for(let x=0;x<ele.length;x++){
+      aobj.tiers.push(ele[x].value);
+    }
+  }
+  ele = aline.children[3].children;
+  aobj['price_sale']=ele[0].value;
+  aobj['price-deduct']=ele[1].value;
+  console.log('Object',aobj)
+  return aobj;
+}
+
 /*Setup the enhancements for a system*/
 var SETenhlist=(cont,list,sys=undefined)=>{
   let start=1;
@@ -261,130 +394,6 @@ var SETenhlist=(cont,list,sys=undefined)=>{
     }
   }
 }
-
-/*Setup the additions for a system*/
-var SETaddlist=(cont,sys=undefined)=>{
-  if(sys!=undefined && sys.additions!=undefined){
-    for(let x=0;x<sys.additions.length;x++){
-      cont.getElementsByClassName(moddom.views.mods.adds.selects)[0].appendChild(ADDselectline(sys.additions[x],false));
-    }
-  }
-}
-
-/* Adds a modification to ADDs and DEDs
-    PASS:
-    - aobj - object to load to line
-*/
-var ADDselectline=(aobj,enhance)=>{
-  let row = document.createElement('div');
-  row.classList.add(moddom.views.mods.selline.cont);
-
-  row.appendChild(document.createElement('div'));
-  row.lastChild.innerText = aobj.name || '',
-  row.lastChild.title = aobj.notes;
-  row.appendChild(document.createElement('div'));
-  row.lastChild.innerText = aobj.enhance;
-  $(row.lastChild).hide();
-  
-  row.appendChild(document.createElement('div'));
-  row.lastChild.innerText = aobj.cat;
-  $(row.lastChild).hide();
-
-  row.appendChild(document.createElement('div')); //create tiers container
-  row.lastChild.classList.add(moddom.views.mods.selline.tiers);
-  if(enhance){
-    for(let x=1;x<qsettings.tiers.length;x++){
-      row.lastChild.appendChild(CREATEtogglebox(row));
-    }
-  }else{
-    for(let x=1;x<qsettings.tiers.length;x++){
-      row.lastChild.appendChild(document.createElement('input'));
-      if(aobj.tiers!=undefined){
-        row.lastChild.lastChild.value=aobj.tiers[x-1]!=undefined?aobj.tiers[x-1]:1;
-      }else{
-        row.lastChild.lastChild.value=1;
-      }
-      row.lastChild.lastChild.type='number';
-      if(aobj.qnty){//set type number
-      }else{//set type check
-      }
-    }
-  }
-  row.appendChild(document.createElement('div'));
-  row.lastChild.classList.add(moddom.views.mods.selline.prices);
-
-  row.lastChild.appendChild(document.createElement('input'));
-  row.lastChild.lastChild.type='number';
-  row.lastChild.lastChild.value = aobj['price_sale']!=undefined && aobj['price_sale']!=''?aobj['price_sale']:0;
-  
-  row.lastChild.appendChild(document.createElement('input'));
-  row.lastChild.lastChild.type='number';
-  row.lastChild.lastChild.value = aobj['price-deduct']!=undefined && aobj['price-deduct']!=''?aobj['price-deduct']:0;
-  $(row.lastChild.lastChild).hide();
-
-  return row;
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////
-/*
-
-*/
-let togglestates={
-  no:'vg-togglebox-left',
-  yes:'vg-togglebox-right',
-  neutral:'vg-togglebox-center'
-}
-
-var CREATEtogglebox=(cont)=>{
-  let togglebox = cont.lastChild.appendChild(document.createElement('div'));
-    togglebox.classList.add('vg-togglebox-center');
-    togglebox.appendChild(document.createElement('div'))
-    togglebox.lastChild.addEventListener('click',(ele)=>{
-      RESETtoggle(togglebox);
-      togglebox.classList.add('vg-togglebox-left')
-    });
-    togglebox.appendChild(document.createElement('div'));
-    togglebox.lastChild.addEventListener('click',(ele)=>{
-      RESETtoggle(togglebox);
-      togglebox.classList.add('vg-togglebox-center')
-    });
-    togglebox.appendChild(document.createElement('div'));
-    togglebox.lastChild.addEventListener('click',(ele)=>{
-      RESETtoggle(togglebox);
-      togglebox.classList.add('vg-togglebox-right')
-    });
-
-
-  return togglebox;
-}
-
-var RESETtoggle=(cont)=>{
-  let list = cont.classList;
-  for(let i=0;i<list.length;i++){
-    cont.classList.remove(list[i]);
-  }
-}
-/////////////////////////////////////////////////////////////////////////////////
-
-var GETselectline=(aline)=>{
-  let aobj = {};
-  aobj.name = aline.children[0].innerText;
-  aobj.notes = aline.children[0].title;
-  aobj.enhance = aline.children[1].innerText;
-  aobj.cat = aline.children[2].innerText;
-  let ele = aline.children[3].children;
-  aobj.tiers=[];
-  for(let x=0;x<ele.length;x++){
-    aobj.tiers.push(ele[x].value);
-  }
-  ele = aline.children[4].children;
-  aobj['price_sale']=ele[0].value;
-  aobj['price-deduct']=ele[1].value;
-
-  return aobj;
-}
-
 /* UPDATE the enhance list
     PASS:
     - sysinfo - system info from key
@@ -392,13 +401,15 @@ var GETselectline=(aline)=>{
     - tiernum - array index for tier
 
 */
-var UPDATEenhlist=(sysinfo,sysnum,tiernum)=>{
-  let syscont = document.getElementById(moddom.cont).getElementsByClassName(moddom.system.cont);
-  let enlist = syscont[sysnum].getElementsByClassName(moddom.views.mods.enh.selects)[0].children;
+var UPDATEenhlist=(sysinfo,sysnum,tiernum,cont=document)=>{
+  console.log('First Update ',cont,cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[0].children);
+  let enlist = cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[0].children
   for(let x=1;x<enlist.length;x++){
     let val=0;
-    if(sysinfo[enlist[x].children[1].innerText]!=0){val=1;}
-    enlist[x].getElementsByClassName(moddom.views.mods.selline.tiers)[0].children[tiernum].value = val;
+    let encheck = RESETtoggle(enlist[x].getElementsByClassName(moddom.views.mods.selline.tiers)[0].children[tiernum]);
+    console.log(sysinfo[enlist[x].children[1].innerText]);
+    if(sysinfo[enlist[x].children[1].innerText]!=0){encheck.classList.add(togglestates.yes);}
+    else{encheck.classList.add(togglestates.neutral);}
   }
 }
 
