@@ -235,9 +235,6 @@ var GENsumdisc=(sysinfo,sysnum,optnum)=>{
   return discont;
 }
 
-
-
-
 module.exports={
   INITbuildsum,
   ADDsumsystem,
