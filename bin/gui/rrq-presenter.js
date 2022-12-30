@@ -181,10 +181,14 @@ var LOADresipresi=()=>{
       disc.classList.add('rrq-disc-applied');
       let discounts = tquote.info.build.systems[sysnum].discounts;
       for(let d=0;d<discounts.length;d++){
-        if(discounts[d].tiers[i]>0){
+        if(discounts[d].tiers[i]>1){
           disc.appendChild(document.createElement('div')).classList.add('rrq-disc-row');
           disc.lastChild.appendChild(document.createElement('div')).innerText = discounts[d].name;
           disc.lastChild.appendChild(document.createElement('div')).innerText = priceformat(discounts[d].tiers[i]);
+        }else if(discounts[d].tiers[i]>0){
+          disc.appendChild(document.createElement('div')).classList.add('rrq-disc-row');
+          disc.lastChild.appendChild(document.createElement('div')).innerText = discounts[d].name;
+          disc.lastChild.appendChild(document.createElement('div')).innerText = percentformat(discounts[d].tiers[i]);
         }
       }
       disc.appendChild(document.createElement('div')).classList.add('rrq-disc-row');
@@ -261,6 +265,11 @@ var priceformat=(price)=>{
     }).format(price);
   return fprice.split('.')[0];  
 
+}
+
+var percentformat=(price)=>{
+  let fprice = Number(price)*100;
+  return fprice + '%';
 }
 
 var CHANGEsys=(ele)=>{
