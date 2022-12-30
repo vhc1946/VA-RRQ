@@ -392,8 +392,11 @@ var UPDATEenhlist=(sysinfo,sysnum,tiernum)=>{
   let enlist = syscont[sysnum].getElementsByClassName(moddom.views.mods.enh.selects)[0].children;
   for(let x=1;x<enlist.length;x++){
     let val=0;
-    if(sysinfo[enlist[x].children[1].innerText]!=0){val=1;}
-    enlist[x].getElementsByClassName(moddom.views.mods.selline.tiers)[0].children[tiernum].value = val;
+    enlist[x].getElementsByClassName(moddom.views.mods.selline.tiers)[0].children[tiernum].classList.add(togglestates.neutral);
+    console.log('SYS INFO',sysinfo[enlist[x].children[1].innerText])
+    if(sysinfo[enlist[x].children[1].innerText]!=0){
+      enlist[x].getElementsByClassName(moddom.views.mods.selline.tiers)[0].children[tiernum].classList.add(togglestates.yes);
+    }
   }
 }
 
