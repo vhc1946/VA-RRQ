@@ -254,20 +254,6 @@ var SETaddblock=(block,sys=undefined)=>{
   });
 }
 
-/*Setup the enhancements for a system*/
-var SETenhlist=(cont,list,sys=undefined)=>{
-  let start=1;
-  if(sys!=undefined && sys.enhancments!=undefined && sys.enhancments.length>0){
-    start=0;
-    list=sys.enhancments;
-  }
-  for(let x=start;x<list.length;x++){
-    if(list[x].enhance!=''){
-      cont.getElementsByClassName(moddom.views.mods.enh.selects)[0].appendChild(ADDselectline(list[x]));
-    }
-  }
-}
-
 /*Setup the additions for a system*/
 var SETaddlist=(cont,sys=undefined)=>{
   if(sys!=undefined && sys.additions!=undefined){
@@ -295,7 +281,7 @@ var ADDselectline=(aobj)=>{
   row.appendChild(document.createElement('div')); //create tiers container
   row.lastChild.classList.add(moddom.views.mods.selline.tiers);
   for(let x=1;x<qsettings.tiers.length;x++){
-    row.lastChild.appendChild(CREATEtogglebox(row));
+    row.lastChild.appendChild(CREATEtogglebox(row,(ele)=>{document.getElementById(moddom.cont).dispatchEvent(new Event('change'));})); //to refersh the quote}));
     /*
     row.lastChild.appendChild(document.createElement('input'));
     if(aobj.tiers!=undefined){
@@ -337,7 +323,7 @@ let togglestates={
   neutral:'vg-togglebox-center'
 }
 
-var CREATEtogglebox=(cont)=>{
+var CREATEtogglebox=(cont,changeeve=(ele)=>{})=>{
   let togglebox = cont.lastChild.appendChild(document.createElement('div'));
     togglebox.classList.add('vg-togglebox-center');
     togglebox.appendChild(document.createElement('div'))
@@ -350,11 +336,16 @@ var CREATEtogglebox=(cont)=>{
         if(press<parts){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-left');}
         else if(press>(wide/2-parts/2) && press < (wide/2+parts/2)){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-center');}
         else if(press>wide-parts){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-right');}
+        changeeve(ele);
       }else{console.log('bad click');}
     });
   return togglebox;
 }
-
+var GETtogglebox=(cont)=>{
+  if(cont.classList.contains(togglestates.yes)){return 1;}
+  else if(cont.classList.contains(togglestates.no)){return -1;}
+  else{return 0;}
+}
 var RESETtoggle=(cont)=>{
   let list = cont.classList;
   for(let i=0;i<list.length;i++){
@@ -371,16 +362,36 @@ var GETselectline=(aline)=>{
   aobj.enhance = aline.children[1].innerText;
   let ele = aline.children[2].children;
   aobj.tiers=[];
-  for(let x=0;x<ele.length;x++){
-    aobj.tiers.push(ele[x].value);
+  if(aobj.enhance!=''){
+    console.log('IS Enhance',aobj);
+    for(let x=0;x<ele.length;x++){
+      aobj.tiers.push(GETtogglebox(ele[x]));
+    }
+  }else{
+    for(let x=0;x<ele.length;x++){
+      aobj.tiers.push(ele[x].value);
+    }
   }
   ele = aline.children[3].children;
   aobj['price_sale']=ele[0].value;
   aobj['price-deduct']=ele[1].value;
-
+  console.log('Object',aobj)
   return aobj;
 }
 
+/*Setup the enhancements for a system*/
+var SETenhlist=(cont,list,sys=undefined)=>{
+  let start=1;
+  if(sys!=undefined && sys.enhancments!=undefined && sys.enhancments.length>0){
+    start=0;
+    list=sys.enhancments;
+  }
+  for(let x=start;x<list.length;x++){
+    if(list[x].enhance!=''){
+      cont.getElementsByClassName(moddom.views.mods.enh.selects)[0].appendChild(ADDselectline(list[x]));
+    }
+  }
+}
 /* UPDATE the enhance list
     PASS:
     - sysinfo - system info from key
@@ -389,7 +400,6 @@ var GETselectline=(aline)=>{
 
 */
 var UPDATEenhlist=(sysinfo,sysnum,tiernum,cont=document)=>{
-  console.log(sysinfo);
   console.log('First Update ',cont,cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[0].children);
   let enlist = cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[0].children
   for(let x=1;x<enlist.length;x++){

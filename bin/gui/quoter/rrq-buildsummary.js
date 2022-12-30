@@ -122,11 +122,9 @@ var GENsumenhance=(sysinfo, optnum)=>{
     for(let x=0;x<sysinfo.enhancments.length;x++){
       enhancecont.appendChild(document.createElement('div'));
       enhancecont.lastChild.innerText = sysinfo.enhancments[x].name;
-      if(sysinfo.enhancments[x].tiers[optnum]>=1){
-        $(enhancecont.lastChild).css('color','green');
-      }else{
-        $(enhancecont.lastChild).css('color','red');
-      }
+      if(sysinfo.enhancments[x].tiers[optnum]>0){$(enhancecont.lastChild).css('color','green');}
+      else if(sysinfo.enhancments[x].tiers[optnum]<0){$(enhancecont.lastChild).css('color','red');}
+      else{$(enhancecont.lastChild).css('color','gray');}
     };
   }
   return enhancecont;
