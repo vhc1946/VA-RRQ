@@ -80,7 +80,7 @@ var SETUPmodviewer=()=>{
       ele.target.classList.add(moddom.selected);
       console.log(views);
       for(let x=0;x<views.length;x++){
-        
+
         $(views[x]).show();
       }
     });
@@ -114,7 +114,11 @@ var INITbuildmod=()=>{
   modlisthead = modlist.GETlist().shift();
 
   for(let x=0;x<tquote.info.build.systems.length;x++){
-    modviews.ADDview(tquote.info.build.systems[x].name,ADDmodsystem(tquote.info.build.systems[x].name,tquote.info.build.systems[x]));
+    let view = modviews.ADDview(tquote.info.build.systems[x].name,ADDmodsystem(tquote.info.build.systems[x].name,tquote.info.build.systems[x]));
+    for(let y=0;y<tquote.info.build.systems[x].tiers.length;y++){
+      console.log(view);
+      UPDATEenhlist(tquote.info.build.systems[x].tiers[y].info,x,y,view);
+    }
   }
 }
 
@@ -152,6 +156,7 @@ var ADDmodsystem=(sname,sys=undefined)=>{
 
   $(modsys).show();
 
+  //SETenhlist(modsys.getElementsByClassName(moddom.views.mods.cont)[0])
   SETaddblock(modsys.getElementsByClassName(moddom.views.mods.cont)[0],sys);
   SETdscntblock(modsys.getElementsByClassName(moddom.views.dscnts.cont)[0],sys);//Setup Discount Block
 
@@ -249,20 +254,6 @@ var SETaddblock=(block,sys=undefined)=>{
   });
 }
 
-/*Setup the enhancements for a system*/
-var SETenhlist=(cont,list,sys=undefined)=>{
-  let start=1;
-  if(sys!=undefined && sys.enhancments!=undefined && sys.enhancments.length>0){
-    start=0;
-    list=sys.enhancments;
-  }
-  for(let x=start;x<list.length;x++){
-    if(list[x].enhance!=''){
-      cont.getElementsByClassName(moddom.views.mods.enh.selects)[0].appendChild(ADDselectline(list[x]));
-    }
-  }
-}
-
 /*Setup the additions for a system*/
 var SETaddlist=(cont,sys=undefined)=>{
   if(sys!=undefined && sys.additions!=undefined){
@@ -290,7 +281,7 @@ var ADDselectline=(aobj)=>{
   row.appendChild(document.createElement('div')); //create tiers container
   row.lastChild.classList.add(moddom.views.mods.selline.tiers);
   for(let x=1;x<qsettings.tiers.length;x++){
-    row.lastChild.appendChild(CREATEtogglebox(row));
+    row.lastChild.appendChild(CREATEtogglebox(row,(ele)=>{document.getElementById(moddom.cont).dispatchEvent(new Event('change'));})); //to refersh the quote}));
     /*
     row.lastChild.appendChild(document.createElement('input'));
     if(aobj.tiers!=undefined){
@@ -321,34 +312,48 @@ var ADDselectline=(aobj)=>{
   return row;
 }
 
-var CREATEtogglebox=(cont)=>{
+
+/////////////////////////////////////////////////////////////////////////////////
+/* Toggle Checkbox
+  The toggle box needs to be moved into the repo
+*/
+let togglestates={
+  no:'vg-togglebox-left',
+  yes:'vg-togglebox-right',
+  neutral:'vg-togglebox-center'
+}
+
+var CREATEtogglebox=(cont,changeeve=(ele)=>{})=>{
   let togglebox = cont.lastChild.appendChild(document.createElement('div'));
     togglebox.classList.add('vg-togglebox-center');
     togglebox.appendChild(document.createElement('div'))
-    togglebox.lastChild.addEventListener('click',(ele)=>{
-      RESETtoggle(togglebox);
-      togglebox.classList.add('vg-togglebox-left')
-    });
-    togglebox.appendChild(document.createElement('div'));
-    togglebox.lastChild.addEventListener('click',(ele)=>{
-      RESETtoggle(togglebox);
-      togglebox.classList.add('vg-togglebox-center')
-    });
-    togglebox.appendChild(document.createElement('div'));
-    togglebox.lastChild.addEventListener('click',(ele)=>{
-      RESETtoggle(togglebox);
-      togglebox.classList.add('vg-togglebox-right')
+    togglebox.addEventListener('click',(ele)=>{
+      if(ele.target===togglebox || ele.target.parentNode===togglebox){
+        let wide = togglebox.offsetWidth;
+        let press = ele.clientX-togglebox.getBoundingClientRect().x;
+        let parts = wide/3;
+        console.log(parts)
+        if(press<parts){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-left');}
+        else if(press>(wide/2-parts/2) && press < (wide/2+parts/2)){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-center');}
+        else if(press>wide-parts){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-right');}
+        changeeve(ele);
+      }else{console.log('bad click');}
     });
   return togglebox;
 }
-
+var GETtogglebox=(cont)=>{
+  if(cont.classList.contains(togglestates.yes)){return 1;}
+  else if(cont.classList.contains(togglestates.no)){return -1;}
+  else{return 0;}
+}
 var RESETtoggle=(cont)=>{
   let list = cont.classList;
   for(let i=0;i<list.length;i++){
     cont.classList.remove(list[i]);
   }
+  return cont;
 }
-
+/////////////////////////////////////////////////////////////////////////////////
 
 var GETselectline=(aline)=>{
   let aobj = {};
@@ -357,16 +362,36 @@ var GETselectline=(aline)=>{
   aobj.enhance = aline.children[1].innerText;
   let ele = aline.children[2].children;
   aobj.tiers=[];
-  for(let x=0;x<ele.length;x++){
-    aobj.tiers.push(ele[x].value);
+  if(aobj.enhance!=''){
+    console.log('IS Enhance',aobj);
+    for(let x=0;x<ele.length;x++){
+      aobj.tiers.push(GETtogglebox(ele[x]));
+    }
+  }else{
+    for(let x=0;x<ele.length;x++){
+      aobj.tiers.push(ele[x].value);
+    }
   }
   ele = aline.children[3].children;
   aobj['price_sale']=ele[0].value;
   aobj['price-deduct']=ele[1].value;
-
+  console.log('Object',aobj)
   return aobj;
 }
 
+/*Setup the enhancements for a system*/
+var SETenhlist=(cont,list,sys=undefined)=>{
+  let start=1;
+  if(sys!=undefined && sys.enhancments!=undefined && sys.enhancments.length>0){
+    start=0;
+    list=sys.enhancments;
+  }
+  for(let x=start;x<list.length;x++){
+    if(list[x].enhance!=''){
+      cont.getElementsByClassName(moddom.views.mods.enh.selects)[0].appendChild(ADDselectline(list[x]));
+    }
+  }
+}
 /* UPDATE the enhance list
     PASS:
     - sysinfo - system info from key
@@ -374,13 +399,15 @@ var GETselectline=(aline)=>{
     - tiernum - array index for tier
 
 */
-var UPDATEenhlist=(sysinfo,sysnum,tiernum)=>{
-  let syscont = document.getElementById(moddom.cont).getElementsByClassName(moddom.system.cont);
-  let enlist = syscont[sysnum].getElementsByClassName(moddom.views.mods.enh.selects)[0].children;
+var UPDATEenhlist=(sysinfo,sysnum,tiernum,cont=document)=>{
+  console.log('First Update ',cont,cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[0].children);
+  let enlist = cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[0].children
   for(let x=1;x<enlist.length;x++){
     let val=0;
-    if(sysinfo[enlist[x].children[1].innerText]!=0){val=1;}
-    enlist[x].getElementsByClassName(moddom.views.mods.selline.tiers)[0].children[tiernum].value = val;
+    let encheck = RESETtoggle(enlist[x].getElementsByClassName(moddom.views.mods.selline.tiers)[0].children[tiernum]);
+    console.log(sysinfo[enlist[x].children[1].innerText]);
+    if(sysinfo[enlist[x].children[1].innerText]!=0){encheck.classList.add(togglestates.yes);}
+    else{encheck.classList.add(togglestates.neutral);}
   }
 }
 
@@ -529,7 +556,7 @@ var SETdscntblock=(block,sys=undefined)=>{
 var SETswaptable=(block)=>{
   let stable = block.getElementsByClassName(moddom.views.dscnts.stable)[0];
   stable.appendChild(document.createElement('div'));
-  
+
 }
 
 
