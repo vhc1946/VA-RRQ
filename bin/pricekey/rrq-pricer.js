@@ -117,7 +117,7 @@ var GETdscntstotal=(tnum,dlist,price,system)=>{
       }
     }
   }
-  dprice = dprice-system.size.rebateelec+(system.info.discmfg<0?system.info.discmfg:0);
+  dprice = dprice+Number(system.size.rebateelec)+(system.info.discmfg<0?system.info.discmfg:0);
   system.info.discmfg = system.info.dscmfg<0?0:system.info.discmfg;
   return dprice;
 }
