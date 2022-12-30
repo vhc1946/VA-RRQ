@@ -289,10 +289,10 @@
           },
           "flex":{"title":"Lowest Payment","term":120,"desc":"",
             "mfg":{
-              "DAIKIN":{"lender":"ENT-4583","std":0.04,"deal":0.04,"rate":0.150},
-              "CARRIER":{"lender":"ENT-4583","std":0.04,"deal":0.04,"rate":0.150},
-              "PAYNE":{"lender":"ENT-4583","std":0.04,"deal":0.04,"rate":0.150},
-              "DEFAULT":{"lender":"ENT-4583","std":0.04,"deal":0.04,"rate":0.150}
+              "DAIKIN":{"lender":"ENT-4583","std":0.04,"deal":0.04,"rate":0.0151},
+              "CARRIER":{"lender":"ENT-4583","std":0.04,"deal":0.04,"rate":0.0151},
+              "PAYNE":{"lender":"ENT-4583","std":0.04,"deal":0.04,"rate":0.0151},
+              "DEFAULT":{"lender":"ENT-4583","std":0.04,"deal":0.04,"rate":0.0151}
               }
             }
         },

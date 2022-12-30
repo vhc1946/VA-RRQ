@@ -81,7 +81,6 @@ var GETsystemprices=(qsets,qbuild)=>{
       }
       sparr.push(sobj);
   }
-  console.log(sparr);
   return sparr;
 }
 
@@ -93,7 +92,6 @@ var SWAPadjust=()=>{
 var GETaddprice=(tnum,alist,iaq=false)=>{
   let addprice = 0;  // Accessory items
   let iaqprice = 0;  // IAQ items
-  console.log(alist);
   if(alist!=undefined){
     for(let x=0;x<alist.length;x++){
       if(alist[x].tiers[tnum]>0){
@@ -109,7 +107,6 @@ var GETaddprice=(tnum,alist,iaq=false)=>{
 }
 
 var GETdscntstotal=(tnum,dlist,price,system)=>{
-  console.log(system);
   let dprice = 0;
   if(dlist!=undefined){
     for(let x=0;x<dlist.length;x++){
