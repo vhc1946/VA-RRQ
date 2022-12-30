@@ -60,22 +60,23 @@ var GETsystemprices=(qsets,qbuild)=>{
           priceops:[]
         }
         for(let ft in qsets.fintiers){
-          let flevel = GETfincost(
-            qbuild.systems[x].tiers[y].size.pricebase,
-            qsets.fintiers[ft],
-            qbuild.systems[x].tiers[y],
-            tobj,
-            qsets.fintiers[ft].title
-            );
+          if(qbuild.systems[x].tiers[y].size){
+            let flevel = GETfincost(
+              qbuild.systems[x].tiers[y].size.pricebase,
+              qsets.fintiers[ft],
+              qbuild.systems[x].tiers[y],
+              tobj,
+              qsets.fintiers[ft].title
+              );
 
-            tobj.priceops.push(
-              GETsizeprice(tobj,
-                          qbuild.systems[x].tiers[y],
-                          qbuild.systems[x],
-                          y,
-                          flevel)
-            );
-          //}catch{}
+              tobj.priceops.push(
+                GETsizeprice(tobj,
+                            qbuild.systems[x].tiers[y],
+                            qbuild.systems[x],
+                            y,
+                            flevel)
+              );
+          }
         }
         sobj.tiers.push(tobj);
       }
