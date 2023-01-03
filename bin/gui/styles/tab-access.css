@@ -30,36 +30,44 @@
     background-color: var(--background-dark);
 }
 
-.build-mod-add-tiers, #build-mod-add-title-tiers{
+.build-mod-add-tiers,
+#build-mod-add-title-tiers{
     display: flex;
 }
-.build-mod-add-tiers>input, .build-mod-add-title-tiers>div{
+.build-mod-add-tiers>input,
+.build-mod-add-title-tiers>div{
     width: 65px;
     text-align: center;
     border: none;
     background-color: var(--background-light);
 }
-.build-mod-add-tiers>input:nth-child(1), .build-mod-add-title-tiers>div:nth-child(1){
+.build-mod-add-tiers>input:nth-child(1),
+.build-mod-add-title-tiers>div:nth-child(1){
     background-color: var(--tier1);
 }
-.build-mod-add-tiers>input:nth-child(2), .build-mod-add-title-tiers>div:nth-child(2){
+.build-mod-add-tiers>input:nth-child(2),
+.build-mod-add-title-tiers>div:nth-child(2){
     background-color: var(--tier2);
 }
-.build-mod-add-tiers>input:nth-child(3), .build-mod-add-title-tiers>div:nth-child(3){
+.build-mod-add-tiers>input:nth-child(3),
+.build-mod-add-title-tiers>div:nth-child(3){
     background-color: var(--tier3);
 }
-.build-mod-add-tiers>input:nth-child(4), .build-mod-add-title-tiers>div:nth-child(4){
+.build-mod-add-tiers>input:nth-child(4),
+.build-mod-add-title-tiers>div:nth-child(4){
     background-color: var(--tier4);
 }
 
-.build-mod-add-prices, .build-mod-add-title-prices{
+.build-mod-add-prices,
+.build-mod-add-title-prices{
     display: flex;
     text-align: center;
 }
 .build-mod-add-title-prices>div{
     width: 100px;
 }
-.build-mod-add-prices>div, .build-mod-add-prices>input{
+.build-mod-add-prices>div,
+.build-mod-add-prices>input{
     width: 100px;
     text-align: center;
     border: 1px solid black;

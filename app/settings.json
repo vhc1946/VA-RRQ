@@ -1,370 +1,327 @@
 {
-  "dev": {
-      "on": false,
-      "page": "main.html"
-  },
-  "auth": "123",
-  "apicon": "http://localhost:8080/api/",
-  "name": "RRQ",
-  "dept": "350",
-  "users": {
-      "VOGCH": {
-          "group": "CONS",
-          "name": "Vogel, Christian",
-          "cell": "314-351-2533",
-          "email": "christianv@vogelheating.com"
-      },
-      "MURRY": {
-          "group": "CONS",
-          "name": "Ryan Murphy",
-          "cell": "314-351-2533",
-          "email": "ryanm@vogelheating.com"
-      },
-      "FLODA": {
-          "group": "CONS",
-          "name": "Flori, Dale",
-          "cell": "314-471-3820",
-          "email": "dalef@vogelheating.com"
-      },
-      "KREBR": {
-          "group": "CONS",
-          "name": "Kremmel, Brian",
-          "cell": "314-351-2533",
-          "email": "briank@vogelheating.com"
-      },
-      "VANJE": {
-          "group": "CONS",
-          "name": "VanBuskirk, Jeff",
-          "cell": "314-756-7651",
-          "email": "jeffv@vogelheating.com"
-      },
-      "WARKE": {
-          "group": "CONS",
-          "name": "Ware, Ken",
-          "cell": "314-713-6422",
-          "email": "kenw@vogelheating.com"
-      },
-      "FISER": {
-          "group": "CONS",
-          "name": "Fisaga, Erik",
-          "cell": "314-501-0687",
-          "email": "erikf@vogelheating.com"
-      },
-      "RODVA": {
-          "group": "CONS",
-          "name": "Rodriguez, Vanessa",
-          "cell": "314-208-7041",
-          "email": "vanessar@vogelheating.com"
-      },
-      "VOGGR": {
-          "group": "CONS",
-          "name": "Vogel, Grant",
-          "cell": "636-600-9511",
-          "email": "grantv@vogelheating.com"
-      }
-  },
-  "groups": {
-      "DEV": {
-          "main": "quotedash.html"
-      },
-      "CONS": {
-          "main": "quotedash.html"
-      },
-      "MAN": {
-          "main": "quotedash.html"
-      }
-  },
-  "quotesettings": {
-      "status": {
-          "O": "Open",
-          "S": "Submitted",
-          "I": "In Progress",
-          "C": "Closed"
-      },
-      "tiers": [
-          {
-              "code": "CODE",
-              "name": "NAME",
-              "color": "COLOR"
-          },
-          {
-              "code": "T1",
-              "name": "Complete",
-              "color": "#000000",
-              "featgroup": {
-                  "experience": {
-                      "title": "INGENIOUS",
-                      "pic": "",
-                      "feats": {
-                          "experience_operate": "6",
-                          "experience_remote": "6",
-                          "experience_access": "6"
-                      }
-                  },
-                  "comfort": {
-                      "title": "PRISTINE",
-                      "pic": "",
-                      "feats": {
-                          "comfort_cool": "6",
-                          "comfort_heat": "5",
-                          "comfort_sound": "5"
-                      }
-                  },
-                  "efficiency": {
-                      "title": "GLOBAL",
-                      "pic": "",
-                      "feats": {
-                          "efficiency_heat": "6",
-                          "efficiency_cool": "5"
-                      }
-                  }
-              }
-          },
-          {
-              "code": "T2",
-              "name": "Clever",
-              "color": "#000000",
-              "featgroup": {
-                  "experience": {
-                      "title": "INGENIOUS",
-                      "pic": "",
-                      "feats": {
-                          "experience_operate": "6",
-                          "experience_remote": "6",
-                          "experience_access": "6"
-                      }
-                  },
-                  "comfort": {
-                      "title": "PRISTINE",
-                      "pic": "",
-                      "feats": {
-                          "comfort_cool": "6",
-                          "comfort_heat": "5",
-                          "comfort_sound": "5"
-                      }
-                  },
-                  "efficiency": {
-                      "title": "GLOBAL",
-                      "pic": "",
-                      "feats": {
-                          "efficiency_heat": "6",
-                          "efficiency_cool": "5"
-                      }
-                  }
-              }
-          },
-          {
-              "code": "T3",
-              "name": "Constant",
-              "color": "#000000",
-              "featgroup": {
-                  "experience": {
-                      "title": "INGENIOUS",
-                      "pic": "",
-                      "feats": {
-                          "experience_operate": "6",
-                          "experience_remote": "6",
-                          "experience_access": "6"
-                      }
-                  },
-                  "comfort": {
-                      "title": "PRISTINE",
-                      "pic": "",
-                      "feats": {
-                          "comfort_cool": "6",
-                          "comfort_heat": "5",
-                          "comfort_sound": "5"
-                      }
-                  },
-                  "efficiency": {
-                      "title": "GLOBAL",
-                      "pic": "",
-                      "feats": {
-                          "efficiency_heat": "6",
-                          "efficiency_cool": "5"
-                      }
-                  }
-              }
-          },
-          {
-              "code": "T4",
-              "name": "Classic",
-              "color": "#000000",
-              "featgroup": {
-                  "experience": {
-                      "title": "INGENIOUS",
-                      "pic": "",
-                      "feats": {
-                          "experience_operate": "6",
-                          "experience_remote": "6",
-                          "experience_access": "6"
-                      }
-                  },
-                  "comfort": {
-                      "title": "PRISTINE",
-                      "pic": "",
-                      "feats": {
-                          "comfort_cool": "6",
-                          "comfort_heat": "5",
-                          "comfort_sound": "5"
-                      }
-                  },
-                  "efficiency": {
-                      "title": "GLOBAL",
-                      "pic": "",
-                      "feats": {
-                          "efficiency_heat": "6",
-                          "efficiency_cool": "5"
-                      }
-                  }
-              }
-          }
-      ],
-      "finance": [
-          {
-              "id": "Code",
-              "lender": "Lender",
-              "title": "Title",
-              "cost": "Carrier Cost",
-              "promo": "Carrier Promo",
-              "dcost": "Daikin Cost",
-              "dpromo": "Daikin Promo",
-              "term": "Term",
-              "rate": "Rate",
-              "desc": "Description"
-          },
-          {
-              "id": "01",
-              "lender": "Wells Fargo",
-              "title": "Upfront",
-              "cost": ".06",
-              "promo": ".03",
-              "dcost": ".06",
-              "dpromo": ".03",
-              "term": "12",
-              "rate": "12",
-              "desc": "12 Mo SaC w/pymnt"
-          },
-          {
-              "id": "02",
-              "lender": "Wells Fargo",
-              "title": "Promo",
-              "cost": ".13",
-              "promo": ".08",
-              "dcost": ".06",
-              "dpromo": ".03",
-              "term": "36",
-              "rate": "36",
-              "desc": "0% APR for 36 Mo"
-          },
-          {
-              "id": "03",
-              "lender": "Wells Fargo",
-              "title": "Lowest Payment",
-              "cost": ".06",
-              "promo": ".03",
-              "dcost": ".06",
-              "dpromo": ".03",
-              "term": "120",
-              "rate": ".0151",
-              "desc": "9.99% APR for 120 Mo"
-          }
-      ],
-      "fintiers":{
-          "upfront":{"title":"Up Front","term":12,"desc":"",
-            "mfg":{
-              "DAIKIN":{"lender":"ENT-4583","std":0.03,"deal":0.03,"rate":12},
-              "CARRIER":{"lender":"ENT-4583","std":0.03,"deal":0.03,"rate":12},
-              "PAYNE":{"lender":"ENT-4583","std":0.03,"deal":0.03,"rate":12},
-              "DEFAULT":{"lender":"ENT-4583","std":0.03,"deal":0.03,"rate":12}
-              }
-          },
-          "promo":{"title":"Promo","term":36,"desc":"",
-            "mfg":{
-              "DAIKIN":{"lender":"ENT-4583","std":0.08,"deal":0.08,"rate":36},
-              "CARRIER":{"lender":"ENT-4583","std":0.13,"deal":0.13,"rate":36},
-              "PAYNE":{"lender":"ENT-4583","std":0.13,"deal":0.13,"rate":36},
-              "DEFAULT":{"lender":"ENT-4583","std":0.13,"deal":0.13,"rate":36}
-              }
-          },
-          "flex":{"title":"Lowest Payment","term":120,"desc":"",
-            "mfg":{
-              "DAIKIN":{"lender":"ENT-4583","std":0.04,"deal":0.04,"rate":0.0151},
-              "CARRIER":{"lender":"ENT-4583","std":0.04,"deal":0.04,"rate":0.0151},
-              "PAYNE":{"lender":"ENT-4583","std":0.04,"deal":0.04,"rate":0.0151},
-              "DEFAULT":{"lender":"ENT-4583","std":0.04,"deal":0.04,"rate":0.0151}
-              }
-            }
+    "dev": {
+        "on": false,
+        "page": "main.html"
+    },
+    "auth": "123",
+    "apicon": "http://localhost:8080/api/",
+    "name": "RRQ",
+    "dept": "350",
+    "users": {
+        "VOGCH": {
+            "group": "CONS",
+            "name": "Christian Vogel",
+            "cell": "314-351-2533",
+            "email": "christianv@vogelheating.com"
         },
-      "roadmap": [
-          {
-              "order": "Order",
-              "question": "Question",
-              "type": "Type",
-              "links": "Links"
+        "MURRY": {
+            "group": "CONS",
+            "name": "Ryan Murphy",
+            "cell": "314-351-2533",
+            "email": "ryanm@vogelheating.com"
+        },
+        "FLODA": {
+            "group": "CONS",
+            "name": "Dale Flori",
+            "cell": "314-471-3820",
+            "email": "dalef@vogelheating.com"
+        },
+        "KREBR": {
+            "group": "CONS",
+            "name": "Brian Kremmel",
+            "cell": "314-351-2533",
+            "email": "briank@vogelheating.com"
+        },
+        "VANJE": {
+            "group": "CONS",
+            "name": "Jeff VanBuskirk",
+            "cell": "314-756-7651",
+            "email": "jeffv@vogelheating.com"
+        },
+        "WARKE": {
+            "group": "CONS",
+            "name": "Ken Ware",
+            "cell": "314-713-6422",
+            "email": "kenw@vogelheating.com"
+        },
+        "FISER": {
+            "group": "CONS",
+            "name": "Erik Fisaga",
+            "cell": "314-501-0687",
+            "email": "erikf@vogelheating.com"
+        },
+        "RODVA": {
+            "group": "CONS",
+            "name": "Vanessa Rodriguez",
+            "cell": "314-208-7041",
+            "email": "vanessar@vogelheating.com"
+        },
+        "VOGGR": {
+            "group": "CONS",
+            "name": "Grant Vogel",
+            "cell": "636-600-9511",
+            "email": "grantv@vogelheating.com"
+        },
+        "VOGGR": {
+            "group": "CONS",
+            "name": "Mason Klippel",
+            "cell": "314-351-2533",
+            "email": "masonk@vogelheating.com"
+        }
+    },
+    "groups": {
+        "DEV": {
+            "main": "quotedash.html"
+        },
+        "CONS": {
+            "main": "quotedash.html"
+        },
+        "MAN": {
+            "main": "quotedash.html"
+        }
+    },
+    "quotesettings": {
+        "status": {
+            "O": "Open",
+            "S": "Submitted",
+            "I": "In Progress",
+            "C": "Closed"
+        },
+        "tiers": [
+            {
+                "code": "CODE",
+                "name": "NAME",
+                "color": "COLOR"
+            },
+            {
+                "code": "T1",
+                "name": "Complete",
+                "color": "#000000",
+                "featgroup": {
+                    "experience": {
+                        "title": "INGENIOUS",
+                        "pic": "",
+                        "feats": {
+                            "experience_operate": "6",
+                            "experience_remote": "6",
+                            "experience_access": "6"
+                        }
+                    },
+                    "comfort": {
+                        "title": "PRISTINE",
+                        "pic": "",
+                        "feats": {
+                            "comfort_cool": "6",
+                            "comfort_heat": "5",
+                            "comfort_sound": "5"
+                        }
+                    },
+                    "efficiency": {
+                        "title": "GLOBAL",
+                        "pic": "",
+                        "feats": {
+                            "efficiency_heat": "6",
+                            "efficiency_cool": "5"
+                        }
+                    }
+                }
+            },
+            {
+                "code": "T2",
+                "name": "Clever",
+                "color": "#000000",
+                "featgroup": {
+                    "experience": {
+                        "title": "INGENIOUS",
+                        "pic": "",
+                        "feats": {
+                            "experience_operate": "6",
+                            "experience_remote": "6",
+                            "experience_access": "6"
+                        }
+                    },
+                    "comfort": {
+                        "title": "PRISTINE",
+                        "pic": "",
+                        "feats": {
+                            "comfort_cool": "6",
+                            "comfort_heat": "5",
+                            "comfort_sound": "5"
+                        }
+                    },
+                    "efficiency": {
+                        "title": "GLOBAL",
+                        "pic": "",
+                        "feats": {
+                            "efficiency_heat": "6",
+                            "efficiency_cool": "5"
+                        }
+                    }
+                }
+            },
+            {
+                "code": "T3",
+                "name": "Constant",
+                "color": "#000000",
+                "featgroup": {
+                    "experience": {
+                        "title": "INGENIOUS",
+                        "pic": "",
+                        "feats": {
+                            "experience_operate": "6",
+                            "experience_remote": "6",
+                            "experience_access": "6"
+                        }
+                    },
+                    "comfort": {
+                        "title": "PRISTINE",
+                        "pic": "",
+                        "feats": {
+                            "comfort_cool": "6",
+                            "comfort_heat": "5",
+                            "comfort_sound": "5"
+                        }
+                    },
+                    "efficiency": {
+                        "title": "GLOBAL",
+                        "pic": "",
+                        "feats": {
+                            "efficiency_heat": "6",
+                            "efficiency_cool": "5"
+                        }
+                    }
+                }
+            },
+            {
+                "code": "T4",
+                "name": "Classic",
+                "color": "#000000",
+                "featgroup": {
+                    "experience": {
+                        "title": "INGENIOUS",
+                        "pic": "",
+                        "feats": {
+                            "experience_operate": "6",
+                            "experience_remote": "6",
+                            "experience_access": "6"
+                        }
+                    },
+                    "comfort": {
+                        "title": "PRISTINE",
+                        "pic": "",
+                        "feats": {
+                            "comfort_cool": "6",
+                            "comfort_heat": "5",
+                            "comfort_sound": "5"
+                        }
+                    },
+                    "efficiency": {
+                        "title": "GLOBAL",
+                        "pic": "",
+                        "feats": {
+                            "efficiency_heat": "6",
+                            "efficiency_cool": "5"
+                        }
+                    }
+                }
+            }
+        ],
+        
+        "fintiers":{
+            "upfront":{"title":"Up Front","term":12,"desc":"",
+              "mfg":{
+                "DAIKIN":{"lender":"ENT-4583","std":0.06,"deal":0.04,"rate":12},
+                "CARRIER":{"lender":"ENT-4583","std":0.06,"deal":0.04,"rate":12},
+                "PAYNE":{"lender":"ENT-4583","std":0.06,"deal":0.04,"rate":12},
+                "DEFAULT":{"lender":"ENT-4583","std":0.06,"deal":0.04,"rate":12}
+                }
+            },
+            "promo":{"title":"Promo","term":36,"desc":"",
+              "mfg":{
+                "DAIKIN":{"lender":"ENT-4583","std":0.13,"deal":0.08,"rate":36},
+                "CARRIER":{"lender":"ENT-4583","std":0.13,"deal":0.08,"rate":36},
+                "PAYNE":{"lender":"ENT-4583","std":0.13,"deal":0.08,"rate":36},
+                "DEFAULT":{"lender":"ENT-4583","std":0.13,"deal":0.08,"rate":36}
+                }
+            },
+            "flex":{"title":"Lowest Payment","term":120,"desc":"",
+              "mfg":{
+                "DAIKIN":{"lender":"ENT-4583","std":0.06,"deal":0.04,"rate":0.0151},
+                "CARRIER":{"lender":"ENT-4583","std":0.06,"deal":0.04,"rate":0.0151},
+                "PAYNE":{"lender":"ENT-4583","std":0.06,"deal":0.04,"rate":0.0151},
+                "DEFAULT":{"lender":"ENT-4583","std":0.06,"deal":0.04, "rate":0.0151}
+                }
+              }
           },
-          {
-              "order": "Order",
-              "question": "Question",
-              "type": "",
-              "links": ""
-          },
-          {
-              "order": "Order",
-              "question": "Question",
-              "type": "",
-              "links": ""
-          },
-          {
-              "order": "Order",
-              "question": "Question",
-              "type": "",
-              "links": ""
-          }
-      ],
-      "discounts": [
-          {
-              "name": "Name",
-              "active": "Active",
-              "amount": "Amount",
-              "for": "For",
-              "desc": "Description"
-          },
-          {
-              "name": "Friends & Family",
-              "active": true,
-              "amount": "",
-              "for": "",
-              "desc": "J"
-          },
-          {
-              "name": "Flex",
-              "active": true,
-              "amount": "",
-              "for": "P",
-              "desc": ""
-          },
-          {
-              "name": "Multi System",
-              "active": true,
-              "amount": "",
-              "for": "J",
-              "desc": ""
-          },
-          {
-              "name": "No Remorse Discount",
-              "active": true,
-              "amount": "",
-              "for": "J",
-              "desc": ""
-          }
-      ],
-      "promotions": [
-          {
-              "finid": "Finance Id",
-              "syscodes": "System Codes",
-              "cost": "Cost"
-          }
-      ]
-  }
+        "roadmap": [
+            {
+                "order": "Order",
+                "question": "Question",
+                "type": "Type",
+                "links": "Links"
+            },
+            {
+                "order": "Order",
+                "question": "Question",
+                "type": "",
+                "links": ""
+            },
+            {
+                "order": "Order",
+                "question": "Question",
+                "type": "",
+                "links": ""
+            },
+            {
+                "order": "Order",
+                "question": "Question",
+                "type": "",
+                "links": ""
+            }
+        ],
+        "discounts": [
+            {
+                "name": "Name",
+                "active": "Active",
+                "amount": "Amount",
+                "for": "For",
+                "desc": "Description"
+            },
+            {
+                "name": "Friends & Family",
+                "active": true,
+                "amount": "",
+                "for": "",
+                "desc": "J"
+            },
+            {
+                "name": "Flex",
+                "active": true,
+                "amount": "",
+                "for": "P",
+                "desc": ""
+            },
+            {
+                "name": "Multi System",
+                "active": true,
+                "amount": "",
+                "for": "J",
+                "desc": ""
+            },
+            {
+                "name": "No Remorse Discount",
+                "active": true,
+                "amount": "",
+                "for": "J",
+                "desc": ""
+            }
+        ],
+        "promotions": [
+            {
+                "finid": "Finance Id",
+                "syscodes": "System Codes",
+                "cost": "Cost"
+            }
+        ]
+    }
 }

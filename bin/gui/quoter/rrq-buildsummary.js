@@ -214,7 +214,6 @@ var GENsumfinance=(sysinfo, sysnum, optnum)=>{
 var GENsumdisc=(sysinfo,sysnum,optnum)=>{
   let discont = document.createElement('div');
   let discounts = tquote.info.build.systems[sysnum].discounts;
-  console.log(discounts);
   discont.classList.add(bsdom.system.tier.disc);
   if(discounts!=undefined){
     for(let i=0;i<discounts.length;i++){
