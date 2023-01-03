@@ -79,7 +79,6 @@ var SETUPmodviewer=()=>{
       let views = document.getElementsByClassName(moddom.views[n].cont);
       ele.target.classList.add(moddom.selected);
       console.log(views);
-      console.log(views);
       for(let x=0;x<views.length;x++){
 
         $(views[x]).show();
@@ -140,10 +139,12 @@ var GETbuildmod=()=>{
     //iaq
     //Discounts
     list = cont[x].getElementsByClassName(moddom.views.dscnts.list)[0].children;
+    console.log(list);
     tquote.info.build.systems[x].discounts=[];
     for(let y=0;y<list.length;y++){
       tquote.info.build.systems[x].discounts.push(GETdscntline(list[y]));
     }
+    console.log(tquote.info.build)
   }
 }
 
@@ -195,10 +196,10 @@ var SETaddblock=(block,sys=undefined)=>{
     titleele.appendChild(document.createElement('div'));
     titleele.lastChild.innerText = qsettings.tiers[x].name;
   }
-  titleele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
-  titleele.appendChild(document.createElement('div'));
-  titleele.lastChild.innerText = tquote.info.key.accessories[0]['price_sale']; //Title value for dedection price
- 
+  //titleele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
+  //titleele.appendChild(document.createElement('div'));
+  //titleele.lastChild.innerText = tquote.info.key.accessories[0]['price_sale']; //Title value for dedection price
+
   SETenhlist(block,modlist.TRIMlist({}),sys);
   SETaddlist(block,sys);
 
@@ -252,25 +253,11 @@ var SETaddblock=(block,sys=undefined)=>{
   });
 }
 
-/*Setup the enhancements for a system*/
-var SETenhlist=(cont,list,sys=undefined)=>{
-  let start=1;
-  if(sys!=undefined && sys.enhancments!=undefined && sys.enhancments.length>0){
-    start=0;
-    list=sys.enhancments;
-  }
-  for(let x=start;x<list.length;x++){
-    if(list[x].enhance!=''){
-      cont.getElementsByClassName(moddom.views.mods.enh.selects)[0].appendChild(ADDselectline(list[x],true));
-    }
-  }
-}
-
 /*Setup the additions for a system*/
 var SETaddlist=(cont,sys=undefined)=>{
   if(sys!=undefined && sys.additions!=undefined){
     for(let x=0;x<sys.additions.length;x++){
-      cont.getElementsByClassName(moddom.views.mods.adds.selects)[0].appendChild(ADDselectline(sys.additions[x],false));
+      cont.getElementsByClassName(moddom.views.mods.adds.selects)[0].appendChild(ADDselectline(sys.additions[x]));
     }
   }
 }
@@ -279,7 +266,7 @@ var SETaddlist=(cont,sys=undefined)=>{
     PASS:
     - aobj - object to load to line
 */
-var ADDselectline=(aobj,enhance)=>{
+var ADDselectline=(aobj,enhance=false)=>{
   let row = document.createElement('div');
   row.classList.add(moddom.views.mods.selline.cont);
 
@@ -289,35 +276,35 @@ var ADDselectline=(aobj,enhance)=>{
   row.appendChild(document.createElement('div'));
   row.lastChild.innerText = aobj.enhance;
   $(row.lastChild).hide();
-  
-  row.appendChild(document.createElement('div'));
-  row.lastChild.innerText = aobj.cat;
-  $(row.lastChild).hide();
 
   row.appendChild(document.createElement('div')); //create tiers container
   row.lastChild.classList.add(moddom.views.mods.selline.tiers);
   for(let x=1;x<qsettings.tiers.length;x++){
-    row.lastChild.appendChild(CREATEtogglebox(row,(ele)=>{document.getElementById(moddom.cont).dispatchEvent(new Event('change'));})); //to refersh the quote}));
-    /*
-    row.lastChild.appendChild(document.createElement('input'));
-    if(aobj.tiers!=undefined){
-      row.lastChild.lastChild.value=aobj.tiers[x-1]!=undefined?aobj.tiers[x-1]:1;
+    console.log(enhance);
+    if(enhance){
+      row.lastChild.appendChild(CREATEtogglebox(row,(ele)=>{document.getElementById(moddom.cont).dispatchEvent(new Event('change'));})); //to refersh the quote}));
     }else{
-      row.lastChild.lastChild.value=1;
+      row.lastChild.appendChild(document.createElement('input'));
+      if(aobj.tiers!=undefined){
+        row.lastChild.lastChild.value=aobj.tiers[x-1]!=undefined?aobj.tiers[x-1]:1;
+      }else{
+        row.lastChild.lastChild.value=1;
+      }
+      row.lastChild.lastChild.type='number';
+      if(aobj.qnty){//set type number
+      }else{//set type check
+      }
     }
-    row.lastChild.lastChild.type='number';
-    if(aobj.qnty){//set type number
-    }else{//set type check
-    }
-    */
   }
+
   row.appendChild(document.createElement('div'));
   row.lastChild.classList.add(moddom.views.mods.selline.prices);
 
   row.lastChild.appendChild(document.createElement('input'));
   row.lastChild.lastChild.type='number';
   row.lastChild.lastChild.value = aobj['price_sale']!=undefined && aobj['price_sale']!=''?aobj['price_sale']:0;
-  
+  $(row.lastChild.lastChild).hide();
+
   row.lastChild.appendChild(document.createElement('input'));
   row.lastChild.lastChild.type='number';
   row.lastChild.lastChild.value = aobj['price-deduct']!=undefined && aobj['price-deduct']!=''?aobj['price-deduct']:0;
@@ -374,8 +361,7 @@ var GETselectline=(aline)=>{
   aobj.name = aline.children[0].innerText;
   aobj.notes = aline.children[0].title;
   aobj.enhance = aline.children[1].innerText;
-  aobj.cat = aline.children[2].innerText;
-  let ele = aline.children[3].children;
+  let ele = aline.children[2].children;
   aobj.tiers=[];
   if(aobj.enhance!=''){
     //console.log('IS Enhance',aobj);
@@ -403,7 +389,7 @@ var SETenhlist=(cont,list,sys=undefined)=>{
   }
   for(let x=start;x<list.length;x++){
     if(list[x].enhance!=''){
-      cont.getElementsByClassName(moddom.views.mods.enh.selects)[0].appendChild(ADDselectline(list[x]));
+      cont.getElementsByClassName(moddom.views.mods.enh.selects)[0].appendChild(ADDselectline(list[x],true));
     }
   }
 }
