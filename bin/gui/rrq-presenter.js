@@ -70,16 +70,19 @@ var qactions={
   part:{
     id:'partials-toggle',
     src:'../bin/repo/assets/icons/layers.png',
+    title: "Show/Hide Partials",
     onclick:(ele)=>{$(document.getElementsByClassName('rrq-multi-cont-partials')[0]).toggle();}
   },
   up:{
     id:pnavdom.system.up,
     src:'../bin/repo/assets/icons/angle-up.png',
+    title: 'Previous System',
     onclick:(ele)=>{CHANGEsys(ele);}
   },
   down:{
     id:pnavdom.system.down,
     src:'../bin/repo/assets/icons/angle-down.png',
+    title: 'Next System',
     onclick:(ele)=>{CHANGEsys(ele);}
   }
 }
@@ -87,7 +90,8 @@ var qactions={
 var mactions={
   clear:{
     id:'clear-signature',
-    src:'../bin/repo/assets/icons/angle-up.png'
+    src:'../bin/repo/assets/icons/document-signed.png',
+    title: "Clear Signature"
   }
 }
 
@@ -263,7 +267,7 @@ var LOADresipresi=()=>{
 
   var signature = new DrawingPad(document.getElementsByClassName(presdom.signature)[0]);
 
-  document.getElementById('clear-signature').addEventListener('click', (ele)=>{
+  document.getElementById('clear-signature').addEventListener('click', (ele)=>{  // Clear signature pad button
     signature.ctx.clearRect(0,0,signature.ctx.canvas.width,signature.ctx.canvas.height);
   });
 }

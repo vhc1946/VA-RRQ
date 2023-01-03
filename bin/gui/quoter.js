@@ -154,6 +154,7 @@ var closeeve=()=>{   // Event that fires when trying to close
 
 Titlebar.SETUPtitlebar(qactions,mactions,closeeve);
 $(document.getElementById(Titlebar.tbdom.info.cont)).hide();
+$(document.getElementById(Titlebar.tbdom.page.settings)).hide();
 
 // WORKING VARIABLES //
 var chckcreatecontract = true;
