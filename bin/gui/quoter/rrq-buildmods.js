@@ -296,7 +296,6 @@ var ADDselectline=(aobj,enhance=false)=>{
       }else{//set type check
       }
     }
-    */
   }
 
   row.appendChild(document.createElement('div'));
