@@ -34,7 +34,7 @@
     display: flex;
 }
 .build-mod-add-tiers>input, .build-mod-add-title-tiers>div{
-    width: 77px;
+    width: 65px;
     text-align: center;
     border: none;
     background-color: var(--background-light);

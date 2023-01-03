@@ -104,6 +104,7 @@ let mactions={
   delete:{
     id:'delete-quote',
     src:'../bin/repo/assets/icons/trash.png',
+    title: 'Delete Quote',
     ondblclick:(ele)=>{
       if(chckdeletequote){
         DropNote('tr','Deleting','green');
@@ -115,6 +116,7 @@ let mactions={
   refresh:{
     id:'refresh-quotekey',
     src:'../bin/repo/assets/icons/key.png',
+    title: 'Refresh Price Key',
     ondblclick:(ele)=>{
       if(chcknewkey){
         console.log('Refresh Key')
@@ -126,6 +128,7 @@ let mactions={
   pricer:{
     id:'refresh-key',
     src:'../bin/repo/assets/icons/dollar-thin.png',
+    title: 'Refresh Pricing',
     ondblclick:(ele)=>{
       tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
       console.log(tquote.info.pricing);
@@ -136,6 +139,7 @@ let qactions={
   save:{
     id:'save-quote',
     src:'../bin/repo/assets/icons/disk.png',
+    title: 'Save Quote',
     ondblclick:(ele)=>{
       if(chcksavequote){
         SAVEquote();

@@ -213,24 +213,24 @@ var GENsumfinance=(sysinfo, sysnum, optnum)=>{
 
 var GENsumdisc=(sysinfo,sysnum,optnum)=>{
   let discont = document.createElement('div');
+  let discounts = tquote.info.build.systems[sysnum].discounts;
+  console.log(discounts);
   discont.classList.add(bsdom.system.tier.disc);
-  if(sysinfo.discounts!=undefined){
-    discont.appendChild(document.createElement('div'));
-    discont.lastChild.innerText = 'Inst: ' + tquote.info.build.systems[sysnum].discounts[0].tiers[optnum];
-    discont.appendChild(document.createElement('div'));
-    discont.lastChild.innerText = 'Manf: ' + tquote.info.build.systems[sysnum].discounts[1].tiers[optnum];
-    discont.appendChild(document.createElement('div'));
-    discont.lastChild.innerText = 'Spec: ' + tquote.info.build.systems[sysnum].discounts[2].tiers[optnum];
+  if(discounts!=undefined){
+    for(let i=0;i<discounts.length;i++){
+      if(discounts[i].tiers[optnum]>0){
+        discont.appendChild(document.createElement('div'));
+        discont.lastChild.innerText = discounts[i].name + ': ' + discounts[i].tiers[optnum];
+      }
+    }
   }
-
-  discont.appendChild(document.createElement('div'));
-  try{
+  if(tquote.info.build.systems[sysnum].tiers[optnum].size){
+    discont.appendChild(document.createElement('div'));
     discont.lastChild.innerText = `Ameren (${tquote.info.build.systems[sysnum].tiers[optnum].size.seer}): ${tquote.info.build.systems[sysnum].tiers[optnum].size.rebateelec != ''?tquote.info.build.systems[sysnum].tiers[optnum].size.rebateelec:0}`;
-
-
-  discont.appendChild(document.createElement('div'));
-  discont.lastChild.innerText = `Spire: ${tquote.info.build.systems[sysnum].tiers[optnum].size.rebategas!=undefined?tquote.info.build.systems[sysnum].tiers[optnum].size.rebategas:0}`;
-}catch{}
+  
+    discont.appendChild(document.createElement('div'));
+    discont.lastChild.innerText = `Spire: ${tquote.info.build.systems[sysnum].tiers[optnum].size.rebategas!=''?tquote.info.build.systems[sysnum].tiers[optnum].size.rebategas:0}`;
+  }
   return discont;
 }
 
