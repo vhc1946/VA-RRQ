@@ -102,7 +102,7 @@ $(document.getElementById(Titlebar.tbdom.page.settings)).hide();
 ////////////////////
 
 var tquote = JSON.parse(localStorage.getItem(quotesls.quotetopresi));
-var cons=auser;
+var cons=auser.config;
 var asspath=null;
 var currtier=0;
 var sysnum=0;
@@ -116,7 +116,6 @@ var LOADresipresi=()=>{
   let dirlogo = path.join(asspath,apaths.assets.logos);
 
   // Print Header /////////////////
-
   document.getElementById('header-client-name').innerText = tquote.customer.name.split(',')[1] + ' ' + tquote.customer.name.split(',')[0];
   document.getElementById('header-client-street').innerText = tquote.street;
   document.getElementById('header-client-longcity').innerText = tquote.city + ', ' + tquote.state + ' ' + tquote.zip;
@@ -126,7 +125,6 @@ var LOADresipresi=()=>{
   document.getElementById('vogel-logo').src = dirlogo + '/Vogel Logo.png';
 
   // Set Section Icons /////////////////////
-
   document.getElementById('experience-main-icon').src = diricon + '/UserExperience.png';
   document.getElementById('comfort-main-icon').src = diricon + '/ComfortIcon.png';
   document.getElementById('value-main-icon').src = diricon + '/ValueIcon-01.png';
@@ -195,10 +193,14 @@ var LOADresipresi=()=>{
       disc.classList.add('rrq-disc-applied');
       let discounts = tquote.info.build.systems[sysnum].discounts;
       for(let d=0;d<discounts.length;d++){
-        if(discounts[d].tiers[i]>0){
+        if(discounts[d].tiers[i]>1){
           disc.appendChild(document.createElement('div')).classList.add('rrq-disc-row');
           disc.lastChild.appendChild(document.createElement('div')).innerText = discounts[d].name;
           disc.lastChild.appendChild(document.createElement('div')).innerText = priceformat(discounts[d].tiers[i]);
+        }else if(discounts[d].tiers[i]>0){
+          disc.appendChild(document.createElement('div')).classList.add('rrq-disc-row');
+          disc.lastChild.appendChild(document.createElement('div')).innerText = discounts[d].name;
+          disc.lastChild.appendChild(document.createElement('div')).innerText = percentformat(discounts[d].tiers[i]);
         }
       }
       disc.appendChild(document.createElement('div')).classList.add('rrq-disc-row');
@@ -279,6 +281,11 @@ var priceformat=(price)=>{
     }).format(price);
   return fprice.split('.')[0];  
 
+}
+
+var percentformat=(price)=>{
+  let fprice = Number(price)*100;
+  return fprice + '%';
 }
 
 var CHANGEsys=(ele)=>{

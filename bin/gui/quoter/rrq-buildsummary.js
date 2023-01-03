@@ -53,7 +53,6 @@ var REFRESHsumsystem=(sysinfo,sysid)=>{
 }
 
 var ADDsumsystem=(sysnum=null,sysinfo=null)=>{
-  console.log(sysnum,sysinfo)
   var newsys = document.createElement('div');
   newsys.classList.add(bsdom.system.port);
 
@@ -152,7 +151,7 @@ var GENsumfinance=(sysinfo, sysnum, optnum)=>{
   fincont.classList.add(bsdom.system.tier.finance.cont);
   if(tquote.info.pricing!=undefined&&tquote.info.pricing.systems[sysnum]!=undefined){
     let priceopts = tquote.info.pricing.systems[sysnum].tiers[optnum].priceops;
-
+    
     let syscont = fincont.appendChild(document.createElement('div'));
     syscont.classList.add(bsdom.system.tier.finance.system);
     syscont.appendChild(document.createElement('div'));
