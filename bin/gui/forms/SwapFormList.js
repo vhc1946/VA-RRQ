@@ -55,6 +55,8 @@ class SwapTable extends FormList{
 
         //Initialize vars
         this.list = list; //data from quote
+        this.quote = null;
+
         this.droplists={
           tiers:[
               {
@@ -190,6 +192,7 @@ class SwapTable extends FormList{
 
     REFRESHdroplists(build,cats=false){
       console.log(build);
+      this.quote = build;
       //get systems
       for(let x=0;x<build.info.build.systems.length;x++){
         this.droplists.systems.push({
@@ -223,10 +226,16 @@ class SwapTable extends FormList{
 
 
     GETswaptoitems(category){
-      return SwapToExample;
+      let varname;
+      for(let x=0;x<this.droplists.categories.length;x++){
+        if(category===this.droplists.categories[x].value){
+          return this.droplists.categories[x].list;
+        }
+      }
+      return [];
     }
     GETswapitem(system,tier,category){
-      return 'model number';
+      return this.quote.info.build.systems[system].tiers[tier].size[category];
     }
 
 }
