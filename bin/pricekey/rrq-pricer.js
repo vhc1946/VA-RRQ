@@ -109,6 +109,7 @@ var GETaddprice=(tnum,alist,iaq=false)=>{
 
 var GETdscntstotal=(tnum,dlist,price,system,manrebate)=>{
   let dprice = 0;
+  manrebate = Number(manrebate);
   if(dlist!=undefined){
     for(let x=0;x<dlist.length;x++){
       if(Number(dlist[x].tiers[tnum])>=1){dprice+=Number(dlist[x].tiers[tnum])}
@@ -117,8 +118,7 @@ var GETdscntstotal=(tnum,dlist,price,system,manrebate)=>{
       }
     }
   }
-  dprice = dprice + Number(system.size.rebateelec) - manrebate>0?0:manrebate;
-  
+  dprice = dprice + Number(system.size.rebateelec) - (manrebate>0?0:manrebate);
   return dprice;
 }
 
