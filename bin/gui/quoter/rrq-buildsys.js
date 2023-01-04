@@ -266,6 +266,7 @@ var GETsystems=()=>{
 
 var InitSysBuild=()=>{
   //setup swap table
+  swaptable.REFRESHdroplists(tquote,true);
   for(let x=0;x<tquote.info.build.systems.length;x++){
     CreateSystemCard(tquote.info.build.systems[x].name,tquote.info.build.systems[x]);
   }
