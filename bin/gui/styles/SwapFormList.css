@@ -94,3 +94,12 @@ select:hover {
 #delete-row:hover {
     background-color: var(--excluded-border);
 }
+
+/*Row item customizations*/
+.swapto {
+    width: 200px;
+}
+
+.row-options {
+    display: none;
+}

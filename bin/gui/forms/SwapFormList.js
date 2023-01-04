@@ -97,6 +97,9 @@ class SwapTable extends FormList{
         system:'swap-system-select',
         tier:'swap-tier-select',
         category:'swap-category-select'
+      },
+      options:{
+        row:'row-options'
       }
     }
     INITcontent(){return`
@@ -118,6 +121,7 @@ class SwapTable extends FormList{
         <div class = "${this.dom.values.swap}"></div>
         <select class = "${this.dom.values.swapto}"><select>
         <div class = "action-button" id = "delete-row">X</div>
+        <div class = "row-options"></div>
     `
 
     SETrow(item={}){
@@ -148,12 +152,12 @@ class SwapTable extends FormList{
                             FILLselect(elem, item[this.dom.values[v]]);
                         } else {
                           //has start value
-                          FILLselect(elem,this.GETswaptoitems(item.options.category));
+                          /*FILLselect(elem,this.GETswaptoitems(item.options.category));
                           for(let z=0;elem.children.length;x++){
                             if(elem.children[z].value===item[this.dom.values[v]]){elem.selectedIndex=z;}
-                          }
+                          }*/
                           //default to item.swapto
-                            elem.innerText = item[this.dom.values[v]]
+                          elem.innerText = item[this.dom.values[v]]
                         }
                     } else {
                         elem.innerText = '';//data[0][v]
@@ -173,11 +177,23 @@ class SwapTable extends FormList{
                 }
             }
         }
+        //Create and add options
+        let optionsdiv = row.getElementsByClassName(this.dom.options.row)[0]
+        console.log(optionsdiv)
+        if (item.options != false) {
+            for (let key in item.options) {
+                console.log(item.options[key], key)
+                let optdiv = document.createElement('div');
+                optdiv.id = item.options[key]
+                optdiv.innerText = key;
+                optionsdiv.appendChild(optdiv)
+            }
+        }
 
         return row;
     }
 
-    GETrow(){
+    GETrow(row){
       return item //{}
     }
 
@@ -226,6 +242,7 @@ class SwapTable extends FormList{
       return [];
     }
     GETswapitem(system,tier,category){
+        console.log(category)
       return this.quote.info.build.systems[system].tiers[tier].size[category];
     }
 
