@@ -118,7 +118,7 @@ var GETdscntstotal=(tnum,dlist,price,system,manrebate)=>{
       }
     }
   }
-  dprice = dprice + Number(system.size.rebateelec) + Number(manrebate);
+  dprice = dprice + Number(system.size.rebateelec) - manrebate>0?0:manrebate;
   
   return dprice;
 }
@@ -140,7 +140,6 @@ var GETfincost=(price,qsets,system,tobj,priceop)=>{
   //check if eligable for deal financing
   if(!dbldip[mfg]){
     let finprice = RUNpricecalc(price,qsets.mfg[mfg].deal,{
-
         addbefore:tobj.addbefore,
         minbefore:0,
         addafter:tobj.addafter,
@@ -148,7 +147,6 @@ var GETfincost=(price,qsets,system,tobj,priceop)=>{
         priceops:[]
       });
     let rebprice = RUNpricecalc(price,qsets.mfg[mfg].std,{
-
         addbefore:tobj.addbefore,
         minbefore:0,
         addafter:tobj.addafter,
@@ -158,17 +156,17 @@ var GETfincost=(price,qsets,system,tobj,priceop)=>{
     if(finprice>rebprice){
       fgroup.cost = qsets.mfg[mfg].std;
       fgroup.manrebate = system.info.discmfg;
-      console.log(system.name,'-',priceop, ': Rebate Used', fgroup);
+      //console.log(system.name,'-',priceop, ': Rebate Used', fgroup);
     }else{
       fgroup.cost = qsets.mfg[mfg].deal;
       fgroup.manrebate = 0;
-      console.log(system.name,'-',priceop, ': Fin Promo Used', fgroup);
+      //console.log(system.name,'-',priceop, ': Fin Promo Used', fgroup);
     }
     
   }else{
     fgroup.cost = qsets.mfg[mfg].deal;
     fgroup.manrebate = system.info.discmfg;
-    console.log(system.name,'-',priceop, ': Double Dipped!', fgroup);
+    //console.log(system.name,'-',priceop, ': Double Dipped!', fgroup);
   }
   return fgroup;
 }
