@@ -3,6 +3,7 @@ var {ipcRenderer}=require('electron');
 
 var RROOT='../bin/repo/';
 var Titlebar=require('../bin/repo/gui/js/modules/vg-titlebar.js');
+var floatv = require('../bin/repo/gui/js/modules/vg-floatviews.js');
 
 //layouts
 var {stdbook}=require('../bin/repo/gui/js/layouts/vg-stdbook.js');
@@ -145,6 +146,14 @@ let qactions={
         SAVEquote();
         chcksavequote=false;
       }else{DropNote('tr','...Currently Saving','yellow');}
+    }
+  },
+  swap:{
+    id:'swaptable-quote',
+    src:'../bin/repo/assets/icons/swapping',
+    title:'Swap Table',
+    ondblclick:(ele)=>{
+      floatv.SELECTview(document.getElementById('quote-popview'),'Swap Table');
     }
   }
 }
