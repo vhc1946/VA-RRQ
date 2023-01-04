@@ -65,10 +65,10 @@ class SwapTable extends FormList{
         }
 
         //Close button
-        this.closebutton = document.createElement('div')
-        this.closebutton.id = "vg-float-frame-close"
-        this.closebutton.className = "vg-float-frame-close"
-        this.closebutton.innerText = "X"
+        this.closebutton = document.createElement('div');
+        this.closebutton.id = "vg-float-frame-close";
+        this.closebutton.className = "vg-float-frame-close";
+        this.closebutton.innerText = "X";
         this.cont.parentElement.appendChild(this.closebutton);
         this.closebutton.addEventListener('click', (eve)=>{
             floatv.RESETframe(this.cont.parentElement.parentElement);
@@ -92,6 +92,11 @@ class SwapTable extends FormList{
         category:'category',
         swap:'swap',
         swapto:'swapto'
+      },
+      addrow:{
+        system:'swap-system-select',
+        tier:'swap-tier-select',
+        category:'swap-category-select'
       }
     }
     INITcontent(){return`
@@ -99,9 +104,9 @@ class SwapTable extends FormList{
 
     </div>
     <div class = 'fl-header' id="input-cont">
-        <select class = "bottom-select" id = "system-select"></select>
-        <select class = "bottom-select" id = "tier-select"></select>
-        <select class = "bottom-select" id = "category-select"></select>
+        <select class = "bottom-select" id = "swap-system-select"></select>
+        <select class = "bottom-select" id = "swap-tier-select"></select>
+        <select class = "bottom-select" id = "swap-category-select"></select>
         <div class = "action-button add-row">Add Input</div>
     </div>
     `};
@@ -119,6 +124,7 @@ class SwapTable extends FormList{
         let row = document.createElement('div');
         row.classList.add('form-row');
         row.innerHTML=this.rowcontent;
+
         let deletebutton = row.getElementsByClassName('action-button')[0]
         deletebutton.addEventListener('click', (eve)=>{
             //Delete row
@@ -138,19 +144,30 @@ class SwapTable extends FormList{
                     //Check and fill item table
                     if (item != {}) {
                         //Check type of input
-                        if (this.dom.values[v] == "swapto" && elem.tagName == "SELECT") {
+                        if (this.dom.values[v] == "swapto" && item[this.dom.values[v]].length!=undefined) {
                             FILLselect(elem, item[this.dom.values[v]]);
                         } else {
+                          //has start value
+                          FILLselect(elem,this.GETswaptoitems(item.options.category));
+                          for(let z=0;elem.children.length;x++){
+                            if(elem.children[z].value===item[this.dom.values[v]]){elem.selectedIndex=z;}
+                          }
+                          //default to item.swapto
                             elem.innerText = item[this.dom.values[v]]
                         }
                     } else {
-                        elem.innerText = data[0][v]
+                        elem.innerText = '';//data[0][v]
                     }
 
                     //Event listener for change of swapto dropdown
                     if (elem.className == "swapto") {
-                        elem.addEventListener('change', (eve)=>{
-                            console.log("Changed SwapTo Dropdown to", elem[elem.selectedIndex].text)
+                        elem.addEventListener('change', (ele)=>{
+                          //system.value
+                          //tier.value
+                          if(item.options){
+                            this.quote.info.build.systems[item.options.system].tiers[item.options.tier].size[item.options.category] = elem.value;
+                            console.log(this.quote.info.build.systems[item.options.system].tiers[item.options.tier].size);
+                          }
                         })
                     }
                 }
@@ -161,7 +178,7 @@ class SwapTable extends FormList{
     }
 
     GETrow(){
-
+      return item //{}
     }
 
     REFRESHdroplists(build,cats=false){
@@ -190,11 +207,11 @@ class SwapTable extends FormList{
       //updates this.droplists
       console.log(this.droplists);
       //FILL SYSTEMS
-      FILLselect(document.getElementById('system-select'), this.droplists.systems, true);
+      FILLselect(document.getElementById(this.dom.addrow.system), this.droplists.systems, true);
       //FILL TIERS
-      FILLselect(document.getElementById('tier-select'), this.droplists.tiers, true);
+      FILLselect(document.getElementById(this.dom.addrow.tier), this.droplists.tiers, true);
       //FILL CATEGORIES
-      FILLselect(document.getElementById('category-select'), this.droplists.categories);
+      FILLselect(document.getElementById(this.dom.addrow.category), this.droplists.categories);
 
     }
 
@@ -215,11 +232,11 @@ class SwapTable extends FormList{
     /*Creates a row element.*/
     CREATErow(){
         //Define select variables
-        let SystemSelectInput = document.getElementById('system-select');
+        let SystemSelectInput = document.getElementById(this.dom.addrow.system);
         let SystemSelection = SystemSelectInput[SystemSelectInput.selectedIndex];
-        let TierSelectInput = document.getElementById('tier-select');
+        let TierSelectInput = document.getElementById(this.dom.addrow.tier);
         let TierSelection = TierSelectInput[TierSelectInput.selectedIndex];
-        let CategorySelectInput = document.getElementById('category-select');
+        let CategorySelectInput = document.getElementById(this.dom.addrow.category);
         let CategorySelection = CategorySelectInput[CategorySelectInput.selectedIndex];
         //Create row only if values aren't left empty
         if (TierSelection.value == "" || SystemSelection.value == "" || CategorySelection.value == "") {
@@ -234,7 +251,8 @@ class SwapTable extends FormList{
                     TierSelection.value,
                     CategorySelection.value,
                 ),
-                swapto:this.GETswaptoitems(CategorySelection.value) //Here goes the list of options you want to swap to
+                swapto:this.GETswaptoitems(CategorySelection.value), //Here goes the list of options you want to swap to
+                options:{system:SystemSelection.value,tier:TierSelection.value,category:CategorySelection.value}
             }
             //Check for row, then add if not already added
             let RowCheck = document.getElementById("row-"+NewItem[this.dom.values.system]+"-"+NewItem[this.dom.values.tiers]+"-"+NewItem[this.dom.values.category])
@@ -246,7 +264,7 @@ class SwapTable extends FormList{
                 TierSelectInput.selectedIndex = 0;
             }
         }
-        
+
     }
 }
 

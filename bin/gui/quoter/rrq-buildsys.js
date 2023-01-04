@@ -267,6 +267,12 @@ var GETsystems=()=>{
 var InitSysBuild=()=>{
   //setup swap table
   swaptable.REFRESHdroplists(tquote,true);
+  swaptable.cont.addEventListener('change',(ele)=>{
+    tquote.info.build.swaps = swaptable.form;
+  })
+  document.getElementById(swaptable.dom.addrow.system).addEventListener('click',(ele)=>{
+    swaptable.REFRESHdroplists(tquote);
+  });
   for(let x=0;x<tquote.info.build.systems.length;x++){
     CreateSystemCard(tquote.info.build.systems[x].name,tquote.info.build.systems[x]);
   }
