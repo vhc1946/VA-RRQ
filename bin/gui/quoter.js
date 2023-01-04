@@ -69,9 +69,7 @@ if(tquote.info.contracts==undefined){
 //var qkey = tquote.info.key; //point key to tquote
 //var qprice = tquote.info.pricing;
 
-
 console.log(tquote)
-
 
 localStorage.setItem(quotesls.lastquote,JSON.stringify({id:tquote.id,name:tquote.name}));
 

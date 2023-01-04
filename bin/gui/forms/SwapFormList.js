@@ -2,7 +2,7 @@
 //import { wrdom, wotablerow, Categories, Tiers, Systems, SwapToExample } from "./Hardcodes.js"
 
 var {FormList} = require('../../repo/tools/box/vhc-formlist.js');
-
+var {FILLselect} = require('../../repo/gui/js/tools/vg-displaytools.js');
 //CHANGES MADE TO OTHER FILES: Added 'FILLselect' to vg-displaytools.js
 
 //TODO: Change system input to input, allow it to accept datalist
@@ -46,8 +46,7 @@ const SwapToExample = [
 class SwapTable extends FormList{
     constructor({
             cont,
-            list,
-            data={}
+            list=[]
         }){
         super({
           cont:cont,
@@ -55,7 +54,7 @@ class SwapTable extends FormList{
         });
 
         //Initialize vars
-        this.data = data; //data from quote
+        this.list = list; //data from quote
         this.droplists={
           tiers:[
               {
@@ -85,18 +84,10 @@ class SwapTable extends FormList{
           ]
         }
 
-        /*
-        //Create ListForm
-        this.form = new FormList({
-            cont: document.getElementById('table-cont')
-        })
-        */
-
         //Load already created data
-        this.LOADlist(this.list);
+        this.form = this.list;
 
         //Event listener for adding a new row
-
         this.cont.getElementsByClassName('add-row')[0].addEventListener('click', (eve)=>{
             //Grab inputs and create an item
             let SystemSelectInput = document.getElementById('system-select');
@@ -111,7 +102,7 @@ class SwapTable extends FormList{
                   TierSelectInput[TierSelectInput.selectedIndex].value,
                   CategorySelectInput[CategorySelectInput.selectedIndex].value,
                 ),
-                swapto:this.GETwaptoitems(CategorySelectInput[CategorySelectInput.selectedIndex].value) //Here goes the list of options you want to swap to
+                swapto:this.GETswaptoitems(CategorySelectInput[CategorySelectInput.selectedIndex].value) //Here goes the list of options you want to swap to
             }
 
             //Check for row, then add if not already added
@@ -153,10 +144,11 @@ class SwapTable extends FormList{
         <div class = "${this.dom.values.swap}"></div>
         <select class = "${this.dom.values.swapto}"><select>
     `
+
     SETrow(item={}){
         let row = document.createElement('div');
         row.classList.add('form-row');
-        row.innerHTML=rowcontent;
+        row.innerHTML=this.rowcontent;
 
         //Change ID of row to enable row check
         if (item!={}) {
@@ -197,11 +189,29 @@ class SwapTable extends FormList{
     }
 
     REFRESHdroplists(build,cats=false){
+      console.log(build);
       //get systems
-      if(cats){}//setup categories
+      for(let x=0;x<build.info.build.systems.length;x++){
+        this.droplists.systems.push({
+          text:build.info.build.systems[x].name,
+          value:x
+        });
+      }
+      if(cats){
+        for(let x=0;x<this.droplists.categories.length;x++){
+          for(let y=0;y<build.info.key.accessories.length;y++){
+            if(build.info.key.accessories[y].cat===this.droplists.categories[x].text && build.info.key.accessories[y].model!=''){
+              this.droplists.categories[x].list.push({
+                text:build.info.key.accessories[y].model,
+                value:build.info.key.accessories[y].model
+              });
+            }
+          }
+        }
+      }//setup categories
 
       //updates this.droplists
-
+      console.log(this.droplists);
       //FILL SYSTEMS
       FILLselect(document.getElementById('system-select'), this.droplists.systems);
       //FILL TIERS
@@ -210,6 +220,8 @@ class SwapTable extends FormList{
       FILLselect(document.getElementById('category-select'), this.droplists.categories);
 
     }
+
+
     GETswaptoitems(category){
       return SwapToExample;
     }
