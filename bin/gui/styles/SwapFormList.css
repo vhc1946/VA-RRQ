@@ -1,0 +1,96 @@
+/*Basic select styling*/
+select {
+    border: 0; 
+    padding: 7px 15px; 
+    border: 1px solid #ccc; 
+    position: relative; 
+    background-color: var(--card-base-light);
+
+    border-radius: 5px;
+    color: rgb(50,50,50);
+    font-size: small;
+    font-weight: 550;
+}
+
+select:hover {
+    background-color: #ccc;
+    color: rgb(25,25,25);
+}
+
+/*Specific container styling*/
+.fl-cont {
+    width: 90vw;
+    height:40vh;
+    background-color: var(--card-base-light);
+    border: 3px solid var(--vogel-blue);
+    filter: var(--drop-shadow);
+    overflow: hidden;
+}
+
+/*Top table container*/
+#table-cont {
+    display: grid;
+    background-color: rgb(245,245,245);
+    row-gap: 10px;
+    padding: 10px;
+    height: 32vh;
+    align-content: start;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    filter: drop-shadow(0px 2.5px 3px rgb(150,150,150));
+    overflow: auto;
+}
+
+/*Bottom Input Container*/
+#input-cont {
+    padding: 20px;
+    height: 7.5vh;
+    display: grid;
+    grid-template-columns: 20% 20% 40% 20%;
+    align-content: center;
+    background-color: var(--card-base-light);
+    overflow: hidden;
+}
+
+/*Styling for each table row*/
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid var(--vogel-blue);
+    align-items: center;
+}
+.form-row:hover {
+    background-color: rgb(220,220,220);
+    border-bottom: 0px;
+    border-radius: 5px;
+}
+
+/*Select styling for bottom select dropdowns.*/
+.bottom-select {
+    width: 160px;
+}
+
+.action-button {
+    width: 150px;
+    background-color: var(--BEE-mblue);
+    border-radius: 10px;
+    text-align: center;
+    color:var(--text-light);
+    font-weight: 600;
+    line-height: 40px;
+}
+
+.action-button:hover {
+    cursor: pointer;
+    background-color: var(--BEE-blue);
+}
+
+#delete-row {
+    width: 50px;
+    background-color: var(--vogel-red);
+}
+
+#delete-row:hover {
+    background-color: var(--excluded-border);
+}
