@@ -10,47 +10,13 @@ var {FormList} = require('../../repo/tools/box/vhc-formlist.js');
 //TODO: Notify user of system already added
 
 //TODO: extend FormList to utilize get/set .form (returns/accepts=[])
-const wrdom ={
-    cont:'container',
-    values:{
-      system:'system',
-      tiers: 'tiers',
-      category:'category',
-      swap:'swap',
-      swapto:'swapto'
-    }
-}
-
-const Tiers = [
-    {
-        text: 'Complete',
-        value: 'complete'
-    },
-    {
-        text: 'Clever',
-        value: 'clever'
-    },
-    {
-        text: 'Constant',
-        value: 'constant'
-    },
-    {
-        text: 'Classic',
-        value: 'classic'
-    }
-]
 
 const Categories = [
     {
-        text: "Thermostat",
-        value: "thermostat",
-        list: []
-    },
-    {
-        text: "Humidifier",
-        value: "humidifier",
-        list: []
-    },
+        text: "Controls",
+        value: "Controls",
+        list: [{},{},{}]
+    }
 ]
 
 const Systems = [
@@ -64,55 +30,6 @@ const Systems = [
     }
 ]
 
-const tempdata = [
-    {
-        system: "system0",
-        category: "hum",
-        swap: "hum 1",
-        swapto: "hum 2"
-    },
-    {
-        system: "system1",
-        category: "therm",
-        swap: "therm 1",
-        swapto: "therm2"
-    }
-]
-
-const mainoptions = {
-    system:{
-        options:[
-            {
-                text: "Outdoor",
-                value: "system1"
-            },
-            {
-                text: "Indoor",
-                value: "system2"
-            }
-        ]
-    },
-    categories:{
-        options:[
-            {
-                text:"Thermostat",
-                value:"therm"
-            },
-            {
-                text:"Humidifier",
-                value:"hum"
-            }
-        ]
-    }
-}
-
-const wotablerow=`
-    <div class = "${wrdom.values.system}"></div>
-    <div class = "${wrdom.values.tiers}"></div>
-    <div class = "${wrdom.values.category}"></div>
-    <div class = "${wrdom.values.swap}"></div>
-    <select class = "${wrdom.values.swapto}"><select>
-`
 
 const SwapToExample = [
     {
@@ -129,21 +46,44 @@ const SwapToExample = [
 class SwapTable extends FormList{
     constructor({
             cont,
-            list
+            list,
+            data={}
         }){
         super({
           cont:cont,
           list:list
         });
+
         //Initialize vars
         this.data = data; //data from quote
-        this.dom = wrdom;
-        this.rowform = wotablerow;
-
-        //Define systems, tiers, and categories
-        this.systems = Systems;
-        this.tiers = Tiers;
-        this.categories = Categories;
+        this.droplists={
+          tiers:[
+              {
+                  text: 'Complete',
+                  value: 0
+              },
+              {
+                  text: 'Clever',
+                  value: 1
+              },
+              {
+                  text: 'Constant',
+                  value: 2
+              },
+              {
+                  text: 'Classic',
+                  value: 3
+              }
+          ],
+          systems:[],
+          categories:[
+            {
+                text: "Controls",
+                value: "statmodel",
+                list: []
+            }
+          ]
+        }
 
         /*
         //Create ListForm
@@ -155,17 +95,8 @@ class SwapTable extends FormList{
         //Load already created data
         this.LOADlist(this.list);
 
-        //Fill all pre-made dropdowns
-
-        //FILL SYSTEMS
-        //FILLselect(document.getElementById('system-select'), this.systems);
-        //FILL TIERS
-        //FILLselect(document.getElementById('tier-select'), this.tiers);
-        //FILL CATEGORIES
-        //FILLselect(document.getElementById('category-select'), this.categories);
-
         //Event listener for adding a new row
-        console.log(this.cont);
+
         this.cont.getElementsByClassName('add-row')[0].addEventListener('click', (eve)=>{
             //Grab inputs and create an item
             let SystemSelectInput = document.getElementById('system-select');
@@ -175,18 +106,34 @@ class SwapTable extends FormList{
                 system:SystemSelectInput[SystemSelectInput.selectedIndex].text,
                 tiers:TierSelectInput[TierSelectInput.selectedIndex].text,
                 category:CategorySelectInput[CategorySelectInput.selectedIndex].text,
-                swap:"Thermostat 242", //Here goes the swap item
-                swapto:SwapToExample //Here goes the list of options you want to swap to
+                swap:this.GETswapitem(
+                  SystemSelectInput[SystemSelectInput.selectedIndex].value,
+                  TierSelectInput[TierSelectInput.selectedIndex].value,
+                  CategorySelectInput[CategorySelectInput.selectedIndex].value,
+                ),
+                swapto:this.GETwaptoitems(CategorySelectInput[CategorySelectInput.selectedIndex].value) //Here goes the list of options you want to swap to
             }
 
             //Check for row, then add if not already added
-            let RowCheck = document.getElementById("row-"+NewItem[wrdom.values.system]+"-"+NewItem[wrdom.values.tiers]+"-"+NewItem[wrdom.values.category])
+            let RowCheck = document.getElementById("row-"+NewItem[this.dom.values.system]+"-"+NewItem[this.dom.values.tiers]+"-"+NewItem[this.dom.values.category])
             if (!RowCheck) {
-                this.data.push(NewItem);
-                this.form.LOADlist(this.data);
+                this.list.push(NewItem);
+                this.ADDitem(NewItem);
             }
-        })
+        });
+
     };//END CONSTRUCTOR
+
+    dom = {
+      cont:'container',
+      values:{
+        system:'system',
+        tiers: 'tiers',
+        category:'category',
+        swap:'swap',
+        swapto:'swapto'
+      }
+    }
     INITcontent(){return`
     <div class='fl-list' id = 'table-cont'>
 
@@ -199,26 +146,34 @@ class SwapTable extends FormList{
     </div>
     `};
 
+    rowcontent=`
+        <div class = "${this.dom.values.system}"></div>
+        <div class = "${this.dom.values.tiers}"></div>
+        <div class = "${this.dom.values.category}"></div>
+        <div class = "${this.dom.values.swap}"></div>
+        <select class = "${this.dom.values.swapto}"><select>
+    `
     SETrow(item={}){
         let row = document.createElement('div');
         row.classList.add('form-row');
-        row.innerHTML=wotablerow;
+        row.innerHTML=rowcontent;
+
         //Change ID of row to enable row check
         if (item!={}) {
-            row.id = "row-"+item[wrdom.values.system]+"-"+item[wrdom.values.tiers]+"-"+item[wrdom.values.category];
+            row.id = "row-"+item[this.dom.values.system]+"-"+item[this.dom.values.tiers]+"-"+item[this.dom.values.category];
         }
         //Loop through class names in dom
-        for(let v in wrdom.values){
+        for(let v in this.dom.values){
             if(v) {
-                let elem = row.getElementsByClassName(wrdom.values[v])[0]; //Check if element exists in the table
+                let elem = row.getElementsByClassName(this.dom.values[v])[0]; //Check if element exists in the table
                 if (elem) {
                     //Check and fill item table
                     if (item != {}) {
                         //Check type of input
-                        if (wrdom.values[v] == "swapto" && elem.tagName == "SELECT") {
-                            FILLselect(elem, item[wrdom.values[v]]);
+                        if (this.dom.values[v] == "swapto" && elem.tagName == "SELECT") {
+                            FILLselect(elem, item[this.dom.values[v]]);
                         } else {
-                            elem.innerText = item[wrdom.values[v]]
+                            elem.innerText = item[this.dom.values[v]]
                         }
                     } else {
                         elem.innerText = data[0][v]
@@ -239,6 +194,27 @@ class SwapTable extends FormList{
 
     GETrow(){
 
+    }
+
+    REFRESHdroplists(build,cats=false){
+      //get systems
+      if(cats){}//setup categories
+
+      //updates this.droplists
+
+      //FILL SYSTEMS
+      FILLselect(document.getElementById('system-select'), this.droplists.systems);
+      //FILL TIERS
+      FILLselect(document.getElementById('tier-select'), this.droplists.tiers);
+      //FILL CATEGORIES
+      FILLselect(document.getElementById('category-select'), this.droplists.categories);
+
+    }
+    GETswaptoitems(category){
+      return SwapToExample;
+    }
+    GETswapitem(system,tier,category){
+      return 'model number';
     }
 
 }
