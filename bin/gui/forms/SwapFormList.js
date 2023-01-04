@@ -1,8 +1,6 @@
-//import { FILLselect, FINDparentele } from "../repo/tools/vg-displaytools.js"
-//import { wrdom, wotablerow, Categories, Tiers, Systems, SwapToExample } from "./Hardcodes.js"
-
 var {FormList} = require('../../repo/tools/box/vhc-formlist.js');
 var {FILLselect} = require('../../repo/gui/js/tools/vg-displaytools.js');
+var floatv = require('../../repo/gui/js/modules/vg-floatviews.js');
 //CHANGES MADE TO OTHER FILES: Added 'FILLselect' to vg-displaytools.js
 
 //TODO: Change system input to input, allow it to accept datalist
@@ -10,26 +8,6 @@ var {FILLselect} = require('../../repo/gui/js/tools/vg-displaytools.js');
 //TODO: Notify user of system already added
 
 //TODO: extend FormList to utilize get/set .form (returns/accepts=[])
-
-const Categories = [
-    {
-        text: "Controls",
-        value: "Controls",
-        list: [{},{},{}]
-    }
-]
-
-const Systems = [
-    {
-        text: "Indoor",
-        value: "sys1"
-    },
-    {
-        text: "Outdoor",
-        value: "sys2"
-    }
-]
-
 
 const SwapToExample = [
     {
@@ -84,33 +62,22 @@ class SwapTable extends FormList{
           ]
         }
 
+        //Close button
+        this.closebutton = document.createElement('div')
+        this.closebutton.id = "vg-float-frame-close"
+        this.closebutton.className = "vg-float-frame-close"
+        this.closebutton.innerText = "X"
+        this.cont.parentElement.appendChild(this.closebutton);
+        this.closebutton.addEventListener('click', (eve)=>{
+            floatv.RESETframe(this.cont.parentElement.parentElement);
+        })
+
         //Load already created data
         this.form = this.list;
 
         //Event listener for adding a new row
         this.cont.getElementsByClassName('add-row')[0].addEventListener('click', (eve)=>{
-            //Grab inputs and create an item
-            let SystemSelectInput = document.getElementById('system-select');
-            let TierSelectInput = document.getElementById('tier-select');
-            let CategorySelectInput = document.getElementById('category-select');
-            let NewItem = {
-                system:SystemSelectInput[SystemSelectInput.selectedIndex].text,
-                tiers:TierSelectInput[TierSelectInput.selectedIndex].text,
-                category:CategorySelectInput[CategorySelectInput.selectedIndex].text,
-                swap:this.GETswapitem(
-                  SystemSelectInput[SystemSelectInput.selectedIndex].value,
-                  TierSelectInput[TierSelectInput.selectedIndex].value,
-                  CategorySelectInput[CategorySelectInput.selectedIndex].value,
-                ),
-                swapto:this.GETswaptoitems(CategorySelectInput[CategorySelectInput.selectedIndex].value) //Here goes the list of options you want to swap to
-            }
-
-            //Check for row, then add if not already added
-            let RowCheck = document.getElementById("row-"+NewItem[this.dom.values.system]+"-"+NewItem[this.dom.values.tiers]+"-"+NewItem[this.dom.values.category])
-            if (!RowCheck) {
-                this.list.push(NewItem);
-                this.ADDitem(NewItem);
-            }
+            this.CREATErow();
         });
 
     };//END CONSTRUCTOR
@@ -143,12 +110,19 @@ class SwapTable extends FormList{
         <div class = "${this.dom.values.category}"></div>
         <div class = "${this.dom.values.swap}"></div>
         <select class = "${this.dom.values.swapto}"><select>
+        <div class = "action-button" id = "delete-row">X</div>
     `
 
     SETrow(item={}){
         let row = document.createElement('div');
         row.classList.add('form-row');
         row.innerHTML=this.rowcontent;
+        let deletebutton = row.getElementsByClassName('action-button')[0]
+        deletebutton.addEventListener('click', (eve)=>{
+            //Delete row
+            console.log("removing")
+            deletebutton.parentElement.remove();
+        })
 
         //Change ID of row to enable row check
         if (item!={}) {
@@ -213,9 +187,9 @@ class SwapTable extends FormList{
       //updates this.droplists
       console.log(this.droplists);
       //FILL SYSTEMS
-      FILLselect(document.getElementById('system-select'), this.droplists.systems);
+      FILLselect(document.getElementById('system-select'), this.droplists.systems, true);
       //FILL TIERS
-      FILLselect(document.getElementById('tier-select'), this.droplists.tiers);
+      FILLselect(document.getElementById('tier-select'), this.droplists.tiers, true);
       //FILL CATEGORIES
       FILLselect(document.getElementById('category-select'), this.droplists.categories);
 
@@ -229,6 +203,42 @@ class SwapTable extends FormList{
       return 'model number';
     }
 
+    /*Creates a row element.*/
+    CREATErow(){
+        //Define select variables
+        let SystemSelectInput = document.getElementById('system-select');
+        let SystemSelection = SystemSelectInput[SystemSelectInput.selectedIndex];
+        let TierSelectInput = document.getElementById('tier-select');
+        let TierSelection = TierSelectInput[TierSelectInput.selectedIndex];
+        let CategorySelectInput = document.getElementById('category-select');
+        let CategorySelection = CategorySelectInput[CategorySelectInput.selectedIndex];
+        //Create row only if values aren't left empty
+        if (TierSelection.value == "" || SystemSelection.value == "" || CategorySelection.value == "") {
+            console.log("Can't be blank!")
+        } else {
+            let NewItem = {
+                system:SystemSelection.text,
+                tiers:TierSelection.text,
+                category:CategorySelection.text,
+                swap:this.GETswapitem(
+                    SystemSelection.value,
+                    TierSelection.value,
+                    CategorySelection.value,
+                ),
+                swapto:this.GETswaptoitems(CategorySelection.value) //Here goes the list of options you want to swap to
+            }
+            //Check for row, then add if not already added
+            let RowCheck = document.getElementById("row-"+NewItem[this.dom.values.system]+"-"+NewItem[this.dom.values.tiers]+"-"+NewItem[this.dom.values.category])
+            if (!RowCheck) {
+                this.list.push(NewItem);
+                this.ADDitem(NewItem);
+                //Reset the categories
+                SystemSelectInput.selectedIndex = 0;
+                TierSelectInput.selectedIndex = 0;
+            }
+        }
+        
+    }
 }
 
 module.exports={
