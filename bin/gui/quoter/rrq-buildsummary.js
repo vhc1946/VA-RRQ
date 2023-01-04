@@ -151,9 +151,6 @@ var GENsumfinance=(sysinfo, sysnum, optnum)=>{
   fincont.classList.add(bsdom.system.tier.finance.cont);
   if(tquote.info.pricing!=undefined&&tquote.info.pricing.systems[sysnum]!=undefined){
     let priceopts = tquote.info.pricing.systems[sysnum].tiers[optnum].priceops;
-    
-    console.log(priceopts);
-    
     let syscont = fincont.appendChild(document.createElement('div'));
     syscont.classList.add(bsdom.system.tier.finance.system);
     syscont.appendChild(document.createElement('div'));
@@ -163,7 +160,6 @@ var GENsumfinance=(sysinfo, sysnum, optnum)=>{
       syscont.lastChild.innerText = priceopts[p].payment.title + ': ' + Math.trunc(priceopts[p].opts.sysprice.price);
       syscont.lastChild.title = "Manf Reb: " + priceopts[p].payment.manrebate;
       syscont.lastChild.addEventListener('dblclick',(ele)=>{
-        console.log('Creating Contract >');
         if(chckcreatecontract){
           DropNote('tr','Creating Contract','green');
           ipcRenderer.send(quoteroutes.createcontract,{quote:tquote,contract:finalc.CREATEfinal(tquote,sysnum,p,optnum,'SYS')});
@@ -184,7 +180,6 @@ var GENsumfinance=(sysinfo, sysnum, optnum)=>{
       incont.lastChild.innerText = priceopts[p].payment.title + ': ' + Math.trunc(priceopts[p].opts.inprice.price);
       incont.lastChild.title = "Manf Reb: 0";
       incont.lastChild.addEventListener('dblclick',(ele)=>{
-        console.log('Createing Contract >');
         if(chckcreatecontract){
           DropNote('tr','Creating Contract','green');
           ipcRenderer.send(quoteroutes.createcontract,{quote:tquote,contract:finalc.CREATEfinal(tquote,sysnum,p,optnum,'IN')});
@@ -202,7 +197,6 @@ var GENsumfinance=(sysinfo, sysnum, optnum)=>{
       outcont.lastChild.innerText = priceopts[p].payment.title + ': ' + Math.trunc(priceopts[p].opts.outprice.price);
       outcont.lastChild.title = "Manf Reb: 0";
       outcont.lastChild.addEventListener('dblclick',(ele)=>{
-        console.log('Createing Contract >');
         if(chckcreatecontract){
           DropNote('tr','Creating Contract','green');
           ipcRenderer.send(quoteroutes.createcontract,{quote:tquote,contract:finalc.CREATEfinal(tquote,sysnum,p,optnum,'OUT')});

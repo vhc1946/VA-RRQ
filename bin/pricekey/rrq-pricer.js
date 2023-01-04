@@ -66,8 +66,7 @@ var GETsystemprices=(qsets,qbuild)=>{
               qsets.fintiers[ft],
               qbuild.systems[x].tiers[y],
               tobj,
-              qsets.fintiers[ft].title,
-              ft
+              qsets.fintiers[ft].title
               );
 
               tobj.priceops.push(
@@ -127,7 +126,7 @@ var RUNpricecalc=(price,fincost,tinfo)=>{
   return (Number(price)+tinfo.addbefore-tinfo.minbefore)/(1-Number(fincost))+tinfo.addafter-tinfo.minafter;
 }
 
-var GETfincost=(price,qsets,system,tobj,priceop)=>{
+var GETfincost=(price,qsets,system,tobj)=>{
   let fgroup;
   let mfg = (qsets.mfg[system.info.mfg.toUpperCase()]?system.info.mfg:'DEFAULT').toUpperCase();
   fgroup = {
@@ -156,17 +155,14 @@ var GETfincost=(price,qsets,system,tobj,priceop)=>{
     if(finprice>rebprice){
       fgroup.cost = qsets.mfg[mfg].std;
       fgroup.manrebate = system.info.discmfg;
-      //console.log(system.name,'-',priceop, ': Rebate Used', fgroup);
     }else{
       fgroup.cost = qsets.mfg[mfg].deal;
       fgroup.manrebate = 0;
-      //console.log(system.name,'-',priceop, ': Fin Promo Used', fgroup);
     }
     
   }else{
     fgroup.cost = qsets.mfg[mfg].deal;
     fgroup.manrebate = system.info.discmfg;
-    //console.log(system.name,'-',priceop, ': Double Dipped!', fgroup);
   }
   return fgroup;
 }
