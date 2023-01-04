@@ -52,7 +52,7 @@ var GETsystemprices=(qsets,qbuild)=>{
     }
     for(let y=0;y<qbuild.systems[x].tiers.length;y++){  // loop through available tiers
         let tobj = {
-          cost:0,
+
           addbefore:GETaddprice(y,qbuild.systems[x].additions) + SWAPadjust(),
           minbefore:0,
           addafter:GETaddprice(y,qbuild.systems[x].additions,true),
@@ -66,7 +66,8 @@ var GETsystemprices=(qsets,qbuild)=>{
               qsets.fintiers[ft],
               qbuild.systems[x].tiers[y],
               tobj,
-              qsets.fintiers[ft].title
+              qsets.fintiers[ft].title,
+              ft
               );
 
               tobj.priceops.push(
@@ -107,7 +108,7 @@ var GETaddprice=(tnum,alist,iaq=false)=>{
   return iaq==false?addprice:iaqprice;
 }
 
-var GETdscntstotal=(tnum,dlist,price,system)=>{
+var GETdscntstotal=(tnum,dlist,price,system,manrebate)=>{
   let dprice = 0;
   if(dlist!=undefined){
     for(let x=0;x<dlist.length;x++){
@@ -117,8 +118,8 @@ var GETdscntstotal=(tnum,dlist,price,system)=>{
       }
     }
   }
-  dprice = dprice+Number(system.size.rebateelec)+(system.info.discmfg<0?system.info.discmfg:0);
-  system.info.discmfg = system.info.dscmfg<0?0:system.info.discmfg;
+  dprice = dprice + Number(system.size.rebateelec) + Number(manrebate);
+  
   return dprice;
 }
 
@@ -126,7 +127,7 @@ var RUNpricecalc=(price,fincost,tinfo)=>{
   return (Number(price)+tinfo.addbefore-tinfo.minbefore)/(1-Number(fincost))+tinfo.addafter-tinfo.minafter;
 }
 
-var GETfincost=(price,qsets,system,tobj)=>{
+var GETfincost=(price,qsets,system,tobj,priceop)=>{
   let fgroup;
   let mfg = (qsets.mfg[system.info.mfg.toUpperCase()]?system.info.mfg:'DEFAULT').toUpperCase();
   fgroup = {
@@ -138,23 +139,36 @@ var GETfincost=(price,qsets,system,tobj)=>{
   };
   //check if eligable for deal financing
   if(!dbldip[mfg]){
-    if(
-      RUNpricecalc(price,qsets.mfg[mfg].deal,tobj) >
-      RUNpricecalc(price,qsets.mfg[mfg].std,{
-        cost:0,
+    let finprice = RUNpricecalc(price,qsets.mfg[mfg].deal,{
+
+        addbefore:tobj.addbefore,
+        minbefore:0,
+        addafter:tobj.addafter,
+        minafter:0,
+        priceops:[]
+      });
+    let rebprice = RUNpricecalc(price,qsets.mfg[mfg].std,{
+
         addbefore:tobj.addbefore,
         minbefore:0,
         addafter:tobj.addafter,
         minafter:system.info.discmfg,
         priceops:[]
-      })
-    ){fgroup.cost = qsets.mfg[mfg].std;}
-    else{
+      });
+    if(finprice>rebprice){
+      fgroup.cost = qsets.mfg[mfg].std;
+      fgroup.manrebate = system.info.discmfg;
+      console.log(system.name,'-',priceop, ': Rebate Used', fgroup);
+    }else{
       fgroup.cost = qsets.mfg[mfg].deal;
-      system.info.discmfg *= -1;
+      fgroup.manrebate = 0;
+      console.log(system.name,'-',priceop, ': Fin Promo Used', fgroup);
     }
+    
   }else{
     fgroup.cost = qsets.mfg[mfg].deal;
+    fgroup.manrebate = system.info.discmfg;
+    console.log(system.name,'-',priceop, ': Double Dipped!', fgroup);
   }
   return fgroup;
 }
@@ -214,12 +228,13 @@ var GETsizeprice=(tinfo,size,system,tiernum,payment)=>{
       tiernum,
       po=='sysprice'?system.discounts:partdisc,
       tpobj.opts[po].price,
-      size
+      size,
+      payment.manrebate
     );
     tpobj.opts[po].monthly = GETmonthlyfin(tpobj.opts[po].price,payment); //calculate monthly after discounts
   }
   //console.log('Size',size);
-  console.log('Price',tpobj);
+  //console.log('Price',tpobj);
   return tpobj;
 }
 

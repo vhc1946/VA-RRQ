@@ -116,7 +116,6 @@ var INITbuildmod=()=>{
   for(let x=0;x<tquote.info.build.systems.length;x++){
     let view = modviews.ADDview(tquote.info.build.systems[x].name,ADDmodsystem(tquote.info.build.systems[x].name,tquote.info.build.systems[x]));
     for(let y=0;y<tquote.info.build.systems[x].tiers.length;y++){
-      console.log(view);
       UPDATEenhlist(tquote.info.build.systems[x].tiers[y].info,x,y,view);
     }
   }
@@ -365,7 +364,7 @@ var GETselectline=(aline)=>{
   let ele = aline.children[2].children;
   aobj.tiers=[];
   if(aobj.enhance!=''){
-    console.log('IS Enhance',aobj);
+    //console.log('IS Enhance',aobj);
     for(let x=0;x<ele.length;x++){
       aobj.tiers.push(GETtogglebox(ele[x]));
     }
@@ -377,7 +376,7 @@ var GETselectline=(aline)=>{
   ele = aline.children[3].children;
   aobj['price_sale']=ele[0].value;
   aobj['price-deduct']=ele[1].value;
-  console.log('Object',aobj)
+  //console.log('Object',aobj)
   return aobj;
 }
 
@@ -402,12 +401,12 @@ var SETenhlist=(cont,list,sys=undefined)=>{
 
 */
 var UPDATEenhlist=(sysinfo,sysnum,tiernum,cont=document)=>{
-  console.log('First Update ',cont,cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[0].children);
+  //console.log('First Update ',cont,cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[0].children);
   let enlist = cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[0].children
   for(let x=1;x<enlist.length;x++){
     let val=0;
     let encheck = RESETtoggle(enlist[x].getElementsByClassName(moddom.views.mods.selline.tiers)[0].children[tiernum]);
-    console.log(sysinfo[enlist[x].children[1].innerText]);
+    //console.log(sysinfo[enlist[x].children[1].innerText]);
     if(sysinfo[enlist[x].children[1].innerText]!=0){encheck.classList.add(togglestates.yes);}
     else{encheck.classList.add(togglestates.neutral);}
   }
