@@ -13,7 +13,7 @@
 */
 
 var {SWAPdivorin}=require('../../repo/gui/js/tools/vg-displaytools.js');
-
+var {SwapTable}=require('../forms/SwapFormList.js');
 var ADJUSTdependents=(view)=>{
 
   console.log('ADJUSTDING> ',view);
@@ -68,6 +68,18 @@ var sysviews = new vcontrol.ViewGroup({ //selection views
   cont:document.getElementById(sbdom.cont),
   type:'mtl',
   delEve:ADJUSTdependents
+});
+
+/*Swap Table
+  Declared in this file becuase it mostly deals with the system information. The
+  way the file is structured, swaptable can be used in the functions. When the
+  file is restructured it can be moved.
+
+  Table is loaded first in the InitSysBuild()
+
+*/
+var swaptable = new SwapTable({
+  cont:document.getElementById('quote-swaptable')
 });
 
 var CreateSystemCard=(sysname,sys=null)=>{
@@ -253,6 +265,7 @@ var GETsystems=()=>{
 // SETUP MODULE /////////////////////////////////////////////////////////////////
 
 var InitSysBuild=()=>{
+  //setup swap table
   for(let x=0;x<tquote.info.build.systems.length;x++){
     CreateSystemCard(tquote.info.build.systems[x].name,tquote.info.build.systems[x]);
   }

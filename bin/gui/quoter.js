@@ -20,7 +20,6 @@ var {quotesls}=require('../bin/gui/storage/lstore.js');
 var {quoteroutes,navroutes}=require('../bin/routes.js');
 
 var pricer = require('../bin/pricekey/rrq-pricer.js');
-
 var blddom={ //build dom
   cont:'vg-stdbook-pages',
   nav:{
@@ -150,9 +149,9 @@ let qactions={
   },
   swap:{
     id:'swaptable-quote',
-    src:'../bin/repo/assets/icons/swapping',
+    src:'../bin/repo/assets/icons/swaping.png',
     title:'Swap Table',
-    ondblclick:(ele)=>{
+    onclick:(ele)=>{
       floatv.SELECTview(document.getElementById('quote-popview'),'Swap Table');
     }
   }
