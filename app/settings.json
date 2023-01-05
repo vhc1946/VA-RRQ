@@ -50,6 +50,12 @@
             "cell": "314-501-0687",
             "email": "erikf@vogelheating.com"
         },
+        "KLIMA":{
+            "group":"CONS",
+            "name":"Mason Klippel",
+            "cell":"314-948-0546",
+            "email":"masonk@vogelheating.com"
+        },
         "RODVA": {
             "group": "CONS",
             "name": "Vanessa Rodriguez",
@@ -61,12 +67,6 @@
             "name": "Grant Vogel",
             "cell": "636-600-9511",
             "email": "grantv@vogelheating.com"
-        },
-        "VOGGR": {
-            "group": "CONS",
-            "name": "Mason Klippel",
-            "cell": "314-351-2533",
-            "email": "masonk@vogelheating.com"
         }
     },
     "groups": {
@@ -226,30 +226,34 @@
                 }
             }
         ],
-        
+        "dbldip": {
+            "CARRIER": false,
+            "DAIKIN": false,
+            "PAYNE": false
+        },
         "fintiers":{
             "upfront":{"title":"Up Front","term":12,"desc":"",
               "mfg":{
-                "DAIKIN":{"lender":"ENT-4583","std":0.06,"deal":0.04,"rate":12},
-                "CARRIER":{"lender":"ENT-4583","std":0.06,"deal":0.04,"rate":12},
-                "PAYNE":{"lender":"ENT-4583","std":0.06,"deal":0.04,"rate":12},
-                "DEFAULT":{"lender":"ENT-4583","std":0.06,"deal":0.04,"rate":12}
+                "DAIKIN":{"lender":"WELLS-1019","std":0.0475,"deal":0.4,"rate":12},
+                "CARRIER":{"lender":"WELLS-1019","std":0.0475,"deal":0.4,"rate":12},
+                "PAYNE":{"lender":"WELLS-1019","std":0.0475,"deal":0.4,"rate":12},
+                "DEFAULT":{"lender":"WELLS-1019","std":0.0475,"deal":0.4,"rate":12}
                 }
             },
             "promo":{"title":"Promo","term":36,"desc":"",
               "mfg":{
-                "DAIKIN":{"lender":"ENT-4583","std":0.13,"deal":0.08,"rate":36},
-                "CARRIER":{"lender":"ENT-4583","std":0.13,"deal":0.08,"rate":36},
-                "PAYNE":{"lender":"ENT-4583","std":0.13,"deal":0.08,"rate":36},
-                "DEFAULT":{"lender":"ENT-4583","std":0.13,"deal":0.08,"rate":36}
+                "DAIKIN":{"lender":"WELLS-4091","std":0.1354,"deal":0.0554,"rate":36},
+                "CARRIER":{"lender":"WELLS-4091","std":0.1347,"deal":0.0847,"rate":36},
+                "PAYNE":{"lender":"WELLS-4091","std":0.1347,"deal":0.0847,"rate":36},
+                "DEFAULT":{"lender":"WELLS-4091","std":0.1347,"deal":0.0847,"rate":36}
                 }
             },
             "flex":{"title":"Lowest Payment","term":120,"desc":"",
               "mfg":{
-                "DAIKIN":{"lender":"ENT-4583","std":0.06,"deal":0.04,"rate":0.0151},
-                "CARRIER":{"lender":"ENT-4583","std":0.06,"deal":0.04,"rate":0.0151},
-                "PAYNE":{"lender":"ENT-4583","std":0.06,"deal":0.04,"rate":0.0151},
-                "DEFAULT":{"lender":"ENT-4583","std":0.06,"deal":0.04, "rate":0.0151}
+                "DAIKIN":{"lender":"WELLS-3671","std":0.0475,"deal":0.4,"rate":0.0151},
+                "CARRIER":{"lender":"WELLS-3671","std":0.0475,"deal":0.4,"rate":0.0151},
+                "PAYNE":{"lender":"WELLS-3671","std":0.0475,"deal":0.40,"rate":0.0151},
+                "DEFAULT":{"lender":"WELLS-3671","std":0.0475,"deal":0.40, "rate":0.0151}
                 }
               }
           },

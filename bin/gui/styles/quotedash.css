@@ -7,6 +7,10 @@
   align-items: center;
   padding: 10px 0px;
 }
+#quote-tables-container>div>div>.viewcontrol-quick-actions{
+  flex-grow: 1;
+}
+
 
 /* TEMP HIDE FILTER*/
 #dash-container{

@@ -193,13 +193,9 @@ var SETaddblock=(block,sys=undefined)=>{
     titleele.appendChild(document.createElement('div'));
     titleele.lastChild.innerText = qsettings.tiers[x].name;
   }
-  //titleele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
-  //titleele.appendChild(document.createElement('div'));
-  //titleele.lastChild.innerText = tquote.info.key.accessories[0]['price_sale']; //Title value for dedection price
-
+  
   SETenhlist(block,modlist.TRIMlist({}),sys);
   SETaddlist(block,sys);
-
 
   SETdatalistSPC(modlist.list,{cat:'mod-add-cat-list'});
   SETaccfilters(block);
