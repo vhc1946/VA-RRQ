@@ -270,7 +270,8 @@ var InitSysBuild=()=>{
   swaptable.cont.addEventListener('change',(ele)=>{
     tquote.info.build.swaps = swaptable.form;
   })
-  document.getElementById(swaptable.dom.addrow.system).addEventListener('click',(ele)=>{
+  document.getElementById(swaptable.dom.actions.refresh).addEventListener('click',(ele)=>{
+    //Refreshes table on click of refresh button
     swaptable.REFRESHdroplists(tquote);
   });
   for(let x=0;x<tquote.info.build.systems.length;x++){

@@ -66,10 +66,10 @@ class SwapTable extends FormList{
 
         //Close button
         this.closebutton = document.createElement('div');
-        this.closebutton.id = "vg-float-frame-close";
+        this.closebutton.id = "swapform-close";
         this.closebutton.className = "vg-float-frame-close";
         this.closebutton.innerText = "X";
-        this.cont.parentElement.appendChild(this.closebutton);
+        this.cont.parentElement.prepend(this.closebutton);
         this.closebutton.addEventListener('click', (eve)=>{
             floatv.RESETframe(this.cont.parentElement.parentElement);
         })
@@ -100,6 +100,10 @@ class SwapTable extends FormList{
       },
       options:{
         row:'row-options'
+      },
+      actions:{
+        add:'add-row',
+        refresh:'refresh-row'
       }
     }
     INITcontent(){return`
@@ -107,10 +111,11 @@ class SwapTable extends FormList{
 
     </div>
     <div class = 'fl-header' id="input-cont">
-        <select class = "bottom-select" id = "swap-system-select"></select>
-        <select class = "bottom-select" id = "swap-tier-select"></select>
-        <select class = "bottom-select" id = "swap-category-select"></select>
-        <div class = "action-button add-row">Add Input</div>
+      <div class = "action-button" id = "refresh-row"><img class = "img-icon" src = "../bin/repo/assets/icons/refresh-icon.png"></img></div>
+      <select class = "bottom-select" id = "swap-system-select"></select>
+      <select class = "bottom-select" id = "swap-tier-select"></select>
+      <select class = "bottom-select" id = "swap-category-select"></select>
+      <div class = "action-button add-row" id = "add-row">Add Input</div>
     </div>
     `};
 
@@ -128,11 +133,10 @@ class SwapTable extends FormList{
         let row = document.createElement('div');
         row.classList.add('form-row');
         row.innerHTML=this.rowcontent;
-
+        console.log("Item:::::", item)
         let deletebutton = row.getElementsByClassName('action-button')[0]
         deletebutton.addEventListener('click', (eve)=>{
             //Delete row
-            console.log("removing")
             deletebutton.parentElement.remove();
         })
 
@@ -150,6 +154,7 @@ class SwapTable extends FormList{
                         //Check type of input
                         if (this.dom.values[v] == "swapto" && item[this.dom.values[v]].length!=undefined) {
                             FILLselect(elem, item[this.dom.values[v]]);
+                            //Check for selected and switch to
                         } else {
                           //has start value
                           /*FILLselect(elem,this.GETswaptoitems(item.options.category));
@@ -170,7 +175,7 @@ class SwapTable extends FormList{
                           //tier.value
                           if(item.options){
                             this.quote.info.build.systems[item.options.system].tiers[item.options.tier].size[item.options.category] = elem.value;
-                            console.log(this.quote.info.build.systems[item.options.system].tiers[item.options.tier].size);
+                            //console.log(this.quote.info.build.systems[item.options.system].tiers[item.options.tier].size);
                           }
                         })
                     }
@@ -179,28 +184,57 @@ class SwapTable extends FormList{
         }
         //Create and add options
         let optionsdiv = row.getElementsByClassName(this.dom.options.row)[0]
-        console.log(optionsdiv)
         if (item.options != false) {
             for (let key in item.options) {
-                console.log(item.options[key], key)
                 let optdiv = document.createElement('div');
-                optdiv.id = item.options[key]
-                optdiv.innerText = key;
+                optdiv.className = key;
+                optdiv.innerText = item.options[key];
                 optionsdiv.appendChild(optdiv)
             }
         }
-
         return row;
     }
 
+    /*Takes an HTML row object and returns an item.*/
     GETrow(row){
+      let item = {};
+      //Loop through each child
+      for (const child of row.children) {
+        if (child.className == "row-options") {
+          //For options, recreate the options table
+          item.options = {};
+          for (const grandChild of child.children) {
+            item.options[grandChild.className] = grandChild.innerText;
+          }
+        } else if (child.tagName == "SELECT")  {
+          //Create selected item
+          item[child.className+"selected"] = child[child.selectedIndex].value;
+          //Recreate options array
+          let options = []
+          for (const stepChild of child.children) {
+            let option = {};
+            option.text = stepChild.innerText;
+            option.value = stepChild.value;
+            options.push(option)
+          }
+          item[child.className] = options;
+        } else if (child.className == "action-button") {
+          //Do nothing!
+        } else {
+          item[child.className] = child.innerText;
+        }
+      }
+
+      console.log(item)
+
       return item //{}
     }
 
     REFRESHdroplists(build,cats=false){
-      console.log(build);
+      //console.log(build);
       this.quote = build;
       //get systems
+      this.droplists.systems = []
       for(let x=0;x<build.info.build.systems.length;x++){
         this.droplists.systems.push({
           text:build.info.build.systems[x].name,
@@ -221,7 +255,6 @@ class SwapTable extends FormList{
       }//setup categories
 
       //updates this.droplists
-      console.log(this.droplists);
       //FILL SYSTEMS
       FILLselect(document.getElementById(this.dom.addrow.system), this.droplists.systems, true);
       //FILL TIERS
@@ -242,7 +275,7 @@ class SwapTable extends FormList{
       return [];
     }
     GETswapitem(system,tier,category){
-        console.log(category)
+        //console.log(category)
       return this.quote.info.build.systems[system].tiers[tier].size[category];
     }
 
