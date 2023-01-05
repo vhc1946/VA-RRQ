@@ -9,18 +9,6 @@ var floatv = require('../../repo/gui/js/modules/vg-floatviews.js');
 
 //TODO: extend FormList to utilize get/set .form (returns/accepts=[])
 
-const SwapToExample = [
-    {
-        text: "Thermostat Large",
-        value: "TH45"
-    },
-    {
-        text: "Thermostat Small",
-        value: "TH25"
-    }
-]
-
-
 class SwapTable extends FormList{
     constructor({
             cont,
@@ -72,10 +60,10 @@ class SwapTable extends FormList{
         this.refreshed=false;
         //Close button
         this.closebutton = document.createElement('div');
-        this.closebutton.id = "vg-float-frame-close";
+        this.closebutton.id = "swapform-close";
         this.closebutton.className = "vg-float-frame-close";
         this.closebutton.innerText = "X";
-        this.cont.parentElement.appendChild(this.closebutton);
+        this.cont.parentElement.prepend(this.closebutton);
         this.closebutton.addEventListener('click', (eve)=>{
             floatv.RESETframe(this.cont.parentElement.parentElement);
         })
@@ -130,7 +118,7 @@ class SwapTable extends FormList{
       },
       options:{
         row:'row-options'
-      }
+      },
     }
 
     INITcontent(){return`
@@ -189,17 +177,29 @@ class SwapTable extends FormList{
         //Create and add options
         let optionsdiv = row.getElementsByClassName(this.dom.options.row)[0];
         optionsdiv.innerText = JSON.stringify(item.options);
+        console.log(item)
+        this.GETrow(row)
         return row;
     }
 
     GETrow(row){
-
-      return {};
+      let item = {};
+      //Loop through each child
+      for (const child of row.children) {
+        if (child.className == 'row-options') {
+          item[child.className] = JSON.parse(child.innerText);
+        } else {
+          item[child.className] = child.innerText;
+        } 
+      }
+      console.log(item)
+      return item //{}
     }
 
     REFRESHswapdata(build=false,cats=false){
       if(build){this.info = build;}
       console.log('Swap ',this.info);
+      this.droplists.systems = [];
       for(let x=0;x<this.info.build.systems.length;x++){ //update systems
         this.droplists.systems.push({
           text:this.info.build.systems[x].name,
@@ -269,7 +269,7 @@ class SwapTable extends FormList{
         } else {
             let NewItem = {
                 system:SystemSelection.text,
-                tier:TierSelection.text,
+                tiers:TierSelection.text,
                 category:CategorySelection.text,
                 swap:this.GETswapitem(
                     SystemSelection.value,
