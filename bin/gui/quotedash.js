@@ -368,9 +368,9 @@ var POPpreview=(quote)=>{
 
   preview.CLEARview();
 
-  if(quote.info.pricing!=undefined&&quote.info.pricing.systems!=undefined){
-    for(let x=0;x<quote.info.pricing.systems.length;x++){
-      preview.ADDview(quote.info.pricing.systems[x].name,PREVIEWpricing(quote,x));
+  if(quote.info.build!=undefined&&quote.info.build.systems!=undefined){
+    for(let x=0;x<quote.info.build.systems.length;x++){
+      preview.ADDview(quote.info.build.systems[x].name,PREVIEWpricing(quote,x));
     }
   }else{
     let noprice = document.getElementById('preview-area-systems').getElementsByClassName(vcontrol.vcdom.port.cont)[0];
@@ -385,15 +385,16 @@ var PREVIEWpricing=(quote,sysnum)=>{
   let firstspot = document.createElement('div');
   let spot = firstspot.appendChild(document.createElement('div'));
   spot.classList.add('preview-area-system');
-  let system = quote.info.pricing.systems[sysnum];
-    for(let x=0;x<system.tiers.length;x++){
+  let systemprice = quote.info.pricing.systems[sysnum];
+  let systeminfo = quote.info.build.systems[sysnum];
+    for(let x=0;x<systeminfo.tiers.length;x++){
       let optspot = spot.appendChild(document.createElement('div'));
       optspot.classList.add('preview-area-option');
       optspot.appendChild(document.createElement('div'));
-      optspot.lastChild.innerText = quote.info.build.systems[sysnum].tiers[x].name;
-      for(let y=0;y<system.tiers[x].priceops.length;y++){
+      optspot.lastChild.innerText = systeminfo.tiers[x].name;
+      for(let y=0;y<systemprice.tiers[x].priceops.length;y++){
         optspot.appendChild(document.createElement('div'));
-        optspot.lastChild.innerText = system.tiers[x].priceops[y].payment.title + ': ' + Math.trunc(system.tiers[x].priceops[y].opts.sysprice.price);
+        optspot.lastChild.innerText = systemprice.tiers[x].priceops[y].payment.title + ': ' + Math.trunc(systemprice.tiers[x].priceops[y].opts.sysprice.price);
       }
     }
   return firstspot;
