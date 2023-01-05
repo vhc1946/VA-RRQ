@@ -106,8 +106,7 @@ class SwapTable extends FormList{
             this.form = this.info.build.swaptable;
           }catch{}//pass bad data
         }
-
-        this.REFRESHswapdata(false,true);
+        if(info){this.REFRESHswapdata(false,true);}
     };//END CONSTRUCTOR
 
     dom = {
@@ -164,7 +163,6 @@ class SwapTable extends FormList{
         let deletebutton = row.getElementsByClassName('action-button')[0]
         deletebutton.addEventListener('click', (eve)=>{
             //Delete row
-            console.log("removing")
             deletebutton.parentElement.remove();
         })
 
@@ -199,7 +197,6 @@ class SwapTable extends FormList{
 
     REFRESHswapdata(build=false,cats=false){
       if(build){this.info = build;}
-      console.log('Swap ',this.info);
       for(let x=0;x<this.info.build.systems.length;x++){ //update systems
         this.droplists.systems.push({
           text:this.info.build.systems[x].name,
@@ -218,7 +215,6 @@ class SwapTable extends FormList{
             }
           }
         }
-        console.log(this.droplists)
       }
 
       //FILL SYSTEMS

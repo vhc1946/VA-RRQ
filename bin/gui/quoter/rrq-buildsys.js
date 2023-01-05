@@ -16,7 +16,7 @@ var {SWAPdivorin}=require('../../repo/gui/js/tools/vg-displaytools.js');
 var {SwapTable}=require('../forms/SwapFormList.js');
 var ADJUSTdependents=(view)=>{
 
-  console.log('ADJUSTDING> ',view);
+  //console.log('ADJUSTDING> ',view);
   //try{
     modbuild.modviews.REMOVEview(modbuild.modviews.FINDbutton(view.title));//vcontrol.REMOVEview(vcontrol.FINDbutton(view.title,document.getElementById(modbuild.moddom.cont)),document.getElementById(modbuild.moddom.cont));
     sumbuild.sumviews.REMOVEview(sumbuild.sumviews.FINDbutton(view.title));//vcontrol.REMOVEview(vcontrol.FINDbutton(view.title,document.getElementById(sumbuild.bsdom.cont)),document.getElementById(sumbuild.bsdom.cont));
@@ -133,13 +133,15 @@ var SetupSystemCard=(card,qsys=null)=>{
 
       for(let y=0;y<tiersize.length;y++){
         if(ele.target.title===tiersize[y].title){
-          if(tiersize[y].children.length===0){console.log('div');SWAPdivorin(tiersize[y],true);}
+          if(tiersize[y].children.length===0){//console.log('div');
+            SWAPdivorin(tiersize[y],true);
+          }
           else{
             SWAPdivorin(tiersize[y],false);
             for(let z=0,l=card.parentNode.children.length;z<l;z++){//refract the system tier change
               if(card.parentNode.children[z]===card){
 
-                tquote.info.build.systems = GETsystems();
+                tquote.info.build= GETsystems();
                 tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
                 sumbuild.REFRESHsumsystem(tquote.info.build.systems[z],z);  //y=sysid x=optid
               }
@@ -242,6 +244,8 @@ var GETsystems=()=>{
       btuheating:syslist[x].getElementsByClassName(sbdom.system.info.btuheating)[0].value,
       outlocation:syslist[x].getElementsByClassName(sbdom.system.info.outlocation)[0].value,
       inlocation:syslist[x].getElementsByClassName(sbdom.system.info.inlocation)[0].value,
+      additions:[],
+      enhancments:[],
       tiers:[]
     });
     let tlist = syslist[x].getElementsByClassName(sbdom.system.tier.cont);
@@ -317,7 +321,7 @@ document.getElementById(sbdom.add.button).addEventListener('click',(eve)=>{//add
   var sysname = document.getElementById(sbdom.add.name);
   if(sysname.value!=''&&!CHECKforsystemname(sysname.value)){ //OR make a current system name
     CreateSystemCard(sysname.value);
-    tquote.info.build.systems = GETsystems();
+    tquote.info.build = GETsystems();
     tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
 
     modbuild.modviews.ADDview(sysname.value,modbuild.ADDmodsystem(sysname),false);
@@ -332,7 +336,6 @@ document.getElementsByClassName('min-page-hide-button')[0].addEventListener('cli
 });
 
 var SELECTsystemsize = (ele)=>{
-  console.log(ele);
   if(ele.target.parentNode.classList.contains(sbdom.system.tier.size.row)){
     currtier.getElementsByClassName(sbdom.system.tier.size.cont)[0].innerHTML = ele.target.parentNode.innerHTML;
 
@@ -352,10 +355,10 @@ var SELECTsystemsize = (ele)=>{
 
               modbuild.UPDATEdscntlist(sysinfo,y,x);
 
-              tquote.info.build.systems = GETsystems();
+              tquote.info.build = GETsystems();
               modbuild.GETbuildmod();
 
-              console.log('System Selection',tquote.info.build)
+              //console.log('System Selection',tquote.info.build)
 
               tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
               sumbuild.REFRESHsumsystem(tquote.info.build.systems[y],y);  //y=sysid x=optid
@@ -404,7 +407,7 @@ var UPDATEsystemtier = (syscard)=>{
           if(currtier.parentNode.children[x]==currtier){ //find the index of the tier
             modbuild.UPDATEenhlist(sysinfo,y,x);
             modbuild.UPDATEdscntlist(sysinfo,y,x);
-            tquote.info.build.systems = GETsystems();
+            tquote.info.build = GETsystems();
             tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
             modbuild.GETbuildmod();
             sumbuild.REFRESHsumsystem(tquote.info.build.systems[y],y);  //y=sysid x=optid

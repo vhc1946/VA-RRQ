@@ -78,7 +78,6 @@ var SETUPmodviewer=()=>{
       RESETmodviewer();
       let views = document.getElementsByClassName(moddom.views[n].cont);
       ele.target.classList.add(moddom.selected);
-      console.log(views);
       for(let x=0;x<views.length;x++){
 
         $(views[x]).show();
@@ -139,12 +138,10 @@ var GETbuildmod=()=>{
     //iaq
     //Discounts
     list = cont[x].getElementsByClassName(moddom.views.dscnts.list)[0].children;
-    console.log(list);
     tquote.info.build.systems[x].discounts=[];
     for(let y=0;y<list.length;y++){
       tquote.info.build.systems[x].discounts.push(GETdscntline(list[y]));
     }
-    console.log(tquote.info.build)
   }
 }
 
@@ -283,7 +280,6 @@ var CREATEtogglebox=(cont,changeeve=(ele)=>{},state=0)=>{
       let wide = togglebox.offsetWidth;
       let press = ele.clientX-togglebox.getBoundingClientRect().x;
       let parts = wide/3;
-      console.log(parts)
       if(press<parts){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-left');}
       else if(press>(wide/2-parts/2) && press < (wide/2+parts/2)){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-center');}
       else if(press>wide-parts){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-right');}
@@ -296,7 +292,7 @@ var CHANGEtoggle=(cont,state=1)=>{
   RESETtoggle(cont);
     if(state==-1){cont.classList.add(togglestates.no);}
     else if(state==0){cont.classList.add(togglestates.neutral);}
-    else if(state==1){console.log('UPDATED');cont.classList.add(togglestates.yes);}
+    else if(state==1){cont.classList.add(togglestates.yes);}
 }
 var GETtogglebox=(cont)=>{
   if(cont.classList.contains(togglestates.yes)){return 1;}
@@ -330,7 +326,6 @@ var ADDselectline=(aobj,enhance=false)=>{
   row.appendChild(document.createElement('div')); //create tiers container
   row.lastChild.classList.add(moddom.views.mods.selline.tiers);
   for(let x=1;x<qsettings.tiers.length;x++){
-    console.log(enhance);
     if(enhance){
       let good = false;
       if(aobj.tiers!=undefined){good=true;}
@@ -411,18 +406,12 @@ var SETenhlist=(cont,list,sys=undefined)=>{
     - tiernum - array index for tier
 
 */
-var UPDATEenhlist=(sysinfo,sysnum,tiernum,cont=document)=>{
-  console.log('First Update ',cont,cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[0].children);
+var UPDATEenhlist=(sysinfo,sysnum,tiernum,cont)=>{
+  console.log(sysinfo,cont)
   let enlist = cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[sysnum].children
   for(let x=1;x<enlist.length;x++){
     let val=0;
-    console.log('SysInfo',sysinfo,)
-    CHANGEtoggle(enlist[x].getElementsByClassName(moddom.views.mods.selline.tiers)[0].children[tiernum],1)
-    //let encheck = RESETtoggle();
-    //console.log(sysinfo[enlist[x].children[1].innerText]);
-    //if(sysinfo[enlist[x].children[1].innerText]!=0){encheck.classList.add(togglestates.yes);}
-    //else{console.log('en');encheck.classList.add(togglestates.neutral);}
-
+    CHANGEtoggle(enlist[x].getElementsByClassName(moddom.views.mods.selline.tiers)[0].children[tiernum],1);
   }
 }
 
@@ -513,8 +502,8 @@ var GETwpdscntinfo = (wpname)=>{
 // Discount Actions //
 document.getElementById(wpdscnts.multisys.id).addEventListener('click',(ele)=>{
   let toadd=false;
-  if(ele.target.classList.contains('vg-checkbox-checked')){console.log('delete');ele.target.classList.remove('vg-checkbox-checked');}
-  else{console.log('adding');ele.target.classList.add('vg-checkbox-checked');toadd=true;}
+  if(ele.target.classList.contains('vg-checkbox-checked')){ele.target.classList.remove('vg-checkbox-checked');}
+  else{ele.target.classList.add('vg-checkbox-checked');toadd=true;}
 
   UPDATEwpdscnts(GETwpdscntinfo('multisys'),toadd);
   document.getElementById(moddom.cont).dispatchEvent(new Event('change'));

@@ -270,7 +270,7 @@ var TOGGLEsummary=()=>{
 ///////////////////////////////////////
 var SAVEquote = ()=>{
   custbuild.GETquoteinfo();
-  tquote.info.build.systems = sysbuild.GETsystems();
+  tquote.info.build = sysbuild.GETsystems();
   modbuild.GETbuildmod();
   localStorage.setItem(quotesls.quotetoload,JSON.stringify(tquote)); //save to localStorage (quotetoload for dev)
   ipcRenderer.send(quoteroutes.savequote,{quote:tquote});//send quote to main

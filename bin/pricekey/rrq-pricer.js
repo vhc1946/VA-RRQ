@@ -159,7 +159,7 @@ var GETfincost=(price,qsets,system,tobj)=>{
       fgroup.cost = qsets.mfg[mfg].deal;
       fgroup.manrebate = 0;
     }
-    
+
   }else{
     fgroup.cost = qsets.mfg[mfg].deal;
     fgroup.manrebate = system.info.discmfg;
