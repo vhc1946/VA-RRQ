@@ -314,7 +314,7 @@ var InitSysBuild=()=>{
     for (const mutation of mutationlist) {
       if (mutation.type === 'childList') {
         console.log('A child node has been added or removed.');
-        GETsystems();
+        tquote.info.build = GETsystems();
       }
     }
   }
