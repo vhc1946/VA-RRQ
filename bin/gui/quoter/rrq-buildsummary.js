@@ -38,7 +38,6 @@ var sumviews = new vcontrol.ViewGroup({
 })
 
 
-
 var INITbuildsum=()=>{
   for(let x=0;x<tquote.info.build.systems.length;x++){
     sumviews.ADDview(tquote.info.build.systems[x].name,ADDsumsystem(x,tquote.info.build.systems[x]));
@@ -48,8 +47,6 @@ var REFRESHsumsystem=(sysinfo,sysid)=>{
   let views = sumviews.port.children;
   views[sysid].innerHTML = '';
   views[sysid].appendChild(ADDsumsystem(sysid,sysinfo).children[0]);
-  //views.removeChild(views[sysid]);
-  //views.insertBefore(ADDsumsystem(sysid,sysinfo),views[sysid]);
 }
 
 var ADDsumsystem=(sysnum=null,sysinfo=null)=>{

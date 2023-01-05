@@ -126,7 +126,7 @@ let mactions={
   pricer:{
     id:'refresh-key',
     src:'../bin/repo/assets/icons/dollar-thin.png',
-    title: 'Refresh Pricing',
+    title: 'Refresh Quote Pricing',
     ondblclick:(ele)=>{
       tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
       console.log(tquote.info.pricing);
@@ -147,7 +147,7 @@ let qactions={
   },
   swap:{
     id:'swaptable-quote',
-    src:'../bin/repo/assets/icons/swaping.png',
+    src:'../bin/repo/assets/icons/arrows-repeat.png',
     title:'Swap Table',
     onclick:(ele)=>{
       floatv.SELECTview(document.getElementById('quote-popview'),'Swap Table');
@@ -155,7 +155,7 @@ let qactions={
   }
 }
 var closeeve=()=>{   // Event that fires when trying to close
-  if(window.confirm('Please save before closing!\n\nPress "Okay" to close.\nPress "Cancel" to go back to save.')){
+  if(window.confirm('Please save before closing!\n\nPress "OK" to close.\nPress "Cancel" to go back to save.')){
     window.close();
   }else{
   }

@@ -144,3 +144,7 @@ ipcRenderer.on(settingsroutes.save,(eve,data)=>{
 });
 
 document.getElementById('titlebar-win-close').addEventListener('click', (ele)=>{window.close();})
+$(document.getElementById('titlebar-page-user-cont')).hide();
+$(document.getElementsByClassName('sidemenuview-menu-item')[0]).hide();  // Hides ADMIN menu option
+$(document.getElementsByClassName('sidemenuview-menu-item')[1]).hide();  // Hides QUOTE menu option
+$(document.getElementsByClassName('sidemenuview-menu-item')[3]).hide();  // Hides CONNECTIONS menu option

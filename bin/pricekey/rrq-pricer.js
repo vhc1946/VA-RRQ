@@ -37,12 +37,6 @@ var dbldip={
   PAYNE: false
 }
 
-/*
-  qsets {
-    fintiers:{},
-    finopts:[]
-  }
-*/
 var GETsystemprices=(qsets,qbuild)=>{
   let sparr = [];
   for(let x=0;x<qbuild.systems.length;x++){

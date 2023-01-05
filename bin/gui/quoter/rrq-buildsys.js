@@ -369,7 +369,6 @@ var SELECTsystemsize = (ele)=>{
     let sysid = gentable.GETrowTOobject(ele.target.parentNode).sysid;
     let sysname = currtier.parentNode.parentNode.title;
     let sysinfo = FINDsystem(grpname,sysid);
-    //UPDATEsystemcard(syscard,sysinfo,sysnum,systier);
     if(sysinfo){
       currtier.getElementsByClassName(sbdom.system.tier.info.system)[0].innerHTML = gentable.SETrowFROMobject(sysinfo).innerHTML;
       for(let y=0;y<syscard.parentNode.children.length;y++){
@@ -377,14 +376,9 @@ var SELECTsystemsize = (ele)=>{
           for(let x=0;x<currtier.parentNode.children.length;x++){
             if(currtier.parentNode.children[x]==currtier){ //find the index of the tier
               modbuild.UPDATEenhlist(sysinfo,y,x);
-
               modbuild.UPDATEdscntlist(sysinfo,y,x);
-
               tquote.info.build = GETsystems();
               modbuild.GETbuildmod();
-
-              //console.log('System Selection',tquote.info.build)
-
               tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
               sumbuild.REFRESHsumsystem(tquote.info.build.systems[y],y);  //y=sysid x=optid
             }
@@ -422,7 +416,6 @@ var UPDATEsystemtier = (syscard)=>{
   let grpname =  syscard.getElementsByClassName(sbdom.system.info.group)[0].value;
   let sysid = gentable.GETrowTOobject(ele.target.parentNode).sysid;
   let sysname = currtier.parentNode.parentNode.title;
-  //let sysinfo = FINDsystem(grpname,sysid);
 
   if(sysinfo){
     for(let y=0;y<syscard.parentNode.children.length;y++){
