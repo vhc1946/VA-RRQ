@@ -265,12 +265,12 @@ var TOGGLEsummary=()=>{
     lastv = qbook.GETcurrentview();
     document.getElementsByClassName(blddom.nav.right)[0].getElementsByClassName(blddom.nav.viewbuttons.summary)[0].click();
   }
-
 }
 ///////////////////////////////////////
 var SAVEquote = ()=>{
   custbuild.GETquoteinfo();
   tquote.info.build = sysbuild.GETsystems();
+
   modbuild.GETbuildmod();
   localStorage.setItem(quotesls.quotetoload,JSON.stringify(tquote)); //save to localStorage (quotetoload for dev)
   ipcRenderer.send(quoteroutes.savequote,{quote:tquote});//send quote to main
