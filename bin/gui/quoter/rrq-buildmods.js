@@ -106,7 +106,7 @@ var modviews = new vcontrol.ViewGroup({
   cont:document.getElementById(moddom.cont),
   type:'mtl'
 })
-console.log('BUILD',tquote);
+//console.log('BUILD',tquote);
 
 var INITbuildmod=()=>{
   modlist = new ObjList([...tquote.info.key.accessories]); //copy the accessories array
@@ -284,7 +284,8 @@ var CREATEtogglebox=(cont,changeeve=(ele)=>{},state=0)=>{
       else if(press>(wide/2-parts/2) && press < (wide/2+parts/2)){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-center');}
       else if(press>wide-parts){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-right');}
       changeeve(ele);
-    }else{console.log('bad click');}
+    }else{//console.log('bad click');
+    }
   });
   return togglebox;
 }
@@ -407,7 +408,7 @@ var SETenhlist=(cont,list,sys=undefined)=>{
 
 */
 var UPDATEenhlist=(sysinfo,sysnum,tiernum,cont=document)=>{
-  console.log(sysinfo,cont)
+  //console.log(sysinfo,cont)
   let enlist = cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[sysnum].children
   for(let x=1;x<enlist.length;x++){
     let val=0;

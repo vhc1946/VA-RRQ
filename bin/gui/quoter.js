@@ -51,7 +51,7 @@ var blddom={ //build dom
 
 var tquote = JSON.parse(localStorage.getItem(quotesls.quotetoload)); //get quote to load from localStorage
 
-console.log('QUOTE: ',tquote);
+//console.log('QUOTE: ',tquote);
 
 if(tquote.info.build==undefined){
   tquote.info.build={ //declaration of build object
@@ -69,7 +69,7 @@ if(tquote.info.contracts==undefined){
 //var qkey = tquote.info.key; //point key to tquote
 //var qprice = tquote.info.pricing;
 
-console.log(tquote)
+//console.log(tquote)
 
 localStorage.setItem(quotesls.lastquote,JSON.stringify({id:tquote.id,name:tquote.name}));
 

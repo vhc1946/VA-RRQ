@@ -261,7 +261,7 @@ var GETsystems=()=>{
   }
 
   let swaps = Swaptable.form;
-  console.log(swaps);
+  //console.log(swaps);
   /* Adjust Swaps
     [
       {
@@ -284,9 +284,9 @@ var GETsystems=()=>{
     let size = systems[swaps[x].options.system].tiers[swaps[x].options.tier].size;
     size[swaps[x].options.category]=swaps[x].swapto;
 
-    console.log(size.pricebase);
+    //console.log(size.pricebase);
     size.pricebase = Number(size.pricebase) - (Number(swaps[x].options.swapFROMprice)-Number(swaps[x].options.swapTOprice)); //adjust the difference in price
-    console.log(size.pricebase);
+    //console.log(size.pricebase);
   }
   //apply adjustments to system model numbers
   //adjust the base price for that swap
@@ -313,7 +313,7 @@ var InitSysBuild=()=>{
   const swapTableChanged = (mutationlist, observer) => {
     for (const mutation of mutationlist) {
       if (mutation.type === 'childList') {
-        console.log('A child node has been added or removed.');
+        //console.log('A child node has been added or removed.');
         tquote.info.build = GETsystems();
         modbuild.GETbuildmod();
         tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
