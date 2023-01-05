@@ -96,8 +96,7 @@ class SwapTable extends FormList{
           }catch{}//pass bad data
         }
         if(info){this.REFRESHswapdata(false,true);}
-
-        if (this.info.build.swaps.length > 0) {
+        if (this.info.build.swaps && this.info.build.swaps.length > 0) {
           for (let i = 0; i < this.info.build.swaps.length; i++){
             this.CREATErow(this.info.build.swaps[i]);
             console.log("made row", this.info.build.swaps[i])
