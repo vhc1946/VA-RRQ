@@ -9,17 +9,6 @@ var floatv = require('../../repo/gui/js/modules/vg-floatviews.js');
 
 //TODO: extend FormList to utilize get/set .form (returns/accepts=[])
 
-const SwapToExample = [
-    {
-        text: "Thermostat Large",
-        value: "TH45"
-    },
-    {
-        text: "Thermostat Small",
-        value: "TH25"
-    }
-]
-
 
 class SwapTable extends FormList{
     constructor({
@@ -72,10 +61,10 @@ class SwapTable extends FormList{
         this.refreshed=false;
         //Close button
         this.closebutton = document.createElement('div');
-        this.closebutton.id = "vg-float-frame-close";
+        this.closebutton.id = "swapform-close";
         this.closebutton.className = "vg-float-frame-close";
         this.closebutton.innerText = "X";
-        this.cont.parentElement.appendChild(this.closebutton);
+        this.cont.parentElement.prepend(this.closebutton);
         this.closebutton.addEventListener('click', (eve)=>{
             floatv.RESETframe(this.cont.parentElement.parentElement);
         })
@@ -96,9 +85,10 @@ class SwapTable extends FormList{
             this.refreshed=false;
         });
 
-        FILLselect(document.getElementById(this.dom.addrow.swapto),this.GETswaptoitems(document.getElementById(this.dom.addrow.category).value));
+        FILLselect(document.getElementById(this.dom.addrow.swapto),this.GETswaptoitems(document.getElementById(this.dom.addrow.category).value), true);
         document.getElementById(this.dom.addrow.category).addEventListener('change',(ele)=>{
-          FILLselect(document.getElementById(this.dom.addrow.swapto),this.GETswaptoitems(ele.target.value))
+          console.log(this.GETswaptoitems(ele.target.value))
+          FILLselect(document.getElementById(this.dom.addrow.swapto),this.GETswaptoitems(ele.target.value), true)
         });
 
         if(this.info){
@@ -201,6 +191,7 @@ class SwapTable extends FormList{
 
     REFRESHswapdata(build=false,cats=false){
       if(build){this.info = build;}
+      this.droplists.systems = [];
       for(let x=0;x<this.info.build.systems.length;x++){ //update systems
         this.droplists.systems.push({
           text:this.info.build.systems[x].name,
@@ -264,7 +255,7 @@ class SwapTable extends FormList{
         let SwapToSelection = SwapToSelectInput[SwapToSelectInput.selectedIndex];
 
         //Create row only if values aren't left empty
-        if (TierSelection.value == "" || SystemSelection.value == "" || CategorySelection.value == "" || SwapToSelectInput.value==""){
+        if (TierSelection.value == "" || SystemSelection.value == "" || CategorySelection.value == "" || SwapToSelection.value==""){
             console.log("Can't be blank!");
         } else {
             let NewItem = {
