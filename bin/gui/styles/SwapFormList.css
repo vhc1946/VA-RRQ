@@ -69,7 +69,7 @@ select:hover {
 
 .action-button {
     width: 150px;
-    background-color: var(--BEE-mblue);
+    background-color: var(--BEE-blue);
     text-align: center;
     color:var(--text-light);
     font-weight: 600;
@@ -78,7 +78,7 @@ select:hover {
 
 .action-button:hover {
     cursor: pointer;
-    background-color: var(--BEE-blue);
+    background-color: var(--BEE-mblue);
 }
 
 #delete-row {
@@ -121,9 +121,11 @@ select:hover {
     top:5px;
     line-height: 20px;
     font-size: small;
+    background-color: var(--BEE-blue);
+    color:white;
 }
 
 #swapform-close:hover{
-    filter:invert();
     cursor: pointer;
+    background-color: var(--BEE-mblue);
 }
