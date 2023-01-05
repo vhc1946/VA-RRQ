@@ -114,7 +114,7 @@ var GETdscntstotal=(tnum,dlist,price,system,manrebate)=>{
     for(let x=0;x<dlist.length;x++){
       if(Number(dlist[x].tiers[tnum])>=1){dprice+=Number(dlist[x].tiers[tnum])}
       else{
-        dprice+=(price*Number(dlist[x].tiers[tnum]));
+        dprice+=(price-dprice-100)*Number(dlist[x].tiers[tnum]);
       }
     }
   }
@@ -193,6 +193,7 @@ var GETsizeprice=(tinfo,size,system,tiernum,payment)=>{
       }
     }
   }
+  console.log(tinfo,tpobj);
   let partdisc = [];
   if(system.discounts){
     for(let x=0;x<system.discounts.length;x++){
@@ -214,7 +215,7 @@ var GETsizeprice=(tinfo,size,system,tiernum,payment)=>{
       }
     }
   }
-
+  console.log(system.discounts);
   for(let po in tpobj.opts){ //loop through to apply discounts
     tinfo.minbefore = 0;
     tpobj.opts[po].price -= GETdscntstotal(
