@@ -78,9 +78,7 @@ var sysviews = new vcontrol.ViewGroup({ //selection views
   Table is loaded first in the InitSysBuild()
 
 */
-var swaptable = new SwapTable({
-  cont:document.getElementById('quote-swaptable')
-});
+var Swaptable; //set in InitSysBuild()
 
 var CreateSystemCard=(sysname,sys=null)=>{
   let newsys = document.getElementById(sbdom.system.cont).cloneNode(true); //system tab
@@ -257,7 +255,33 @@ var GETsystems=()=>{
       });
     }
   }
-  return systems;
+
+  let swaps = Swaptable.form;
+
+  /* Adjust Swaps
+    [
+      {
+        system:'name',
+        tier:'name',
+        category:'name',
+        swap:'model',
+        swapto:'model',
+        options:{
+          system:(int)
+          tier:(int)
+          category:(prop name in system.tier.size)
+          swapFROMprice:(swap price from acc table)
+          swapTOprice:(swapto price from acc table)
+        }
+      }
+    ]
+  */
+  for(let x=0;x<swaps.length;x++){
+    console.log(swaps)
+  }
+  //apply adjustments to system model numbers
+  //adjust the base price for that swap
+  return {systems,swaps};
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -266,13 +290,9 @@ var GETsystems=()=>{
 
 var InitSysBuild=()=>{
   //setup swap table
-  swaptable.REFRESHdroplists(tquote,true);
-  swaptable.cont.addEventListener('change',(ele)=>{
-    tquote.info.build.swaps = swaptable.form;
-  })
-  document.getElementById(swaptable.dom.actions.refresh).addEventListener('click',(ele)=>{
-    //Refreshes table on click of refresh button
-    swaptable.REFRESHdroplists(tquote);
+  Swaptable = new SwapTable({
+    cont:document.getElementById('quote-swaptable'),
+    info:tquote.info
   });
   for(let x=0;x<tquote.info.build.systems.length;x++){
     CreateSystemCard(tquote.info.build.systems[x].name,tquote.info.build.systems[x]);
