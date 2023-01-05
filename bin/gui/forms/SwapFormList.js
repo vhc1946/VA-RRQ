@@ -9,7 +9,7 @@ var floatv = require('../../repo/gui/js/modules/vg-floatviews.js');
 
 //TODO: extend FormList to utilize get/set .form (returns/accepts=[])
 
-
+ 
 class SwapTable extends FormList{
     constructor({
             cont,
@@ -99,7 +99,6 @@ class SwapTable extends FormList{
         if (this.info.build.swaps && this.info.build.swaps.length > 0) {
           for (let i = 0; i < this.info.build.swaps.length; i++){
             this.CREATErow(this.info.build.swaps[i]);
-            console.log("made row", this.info.build.swaps[i])
           }
         }
     };//END CONSTRUCTOR
