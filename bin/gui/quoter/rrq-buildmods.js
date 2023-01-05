@@ -262,6 +262,56 @@ var SETaddlist=(cont,sys=undefined)=>{
   }
 }
 
+
+/////////////////////////////////////////////////////////////////////////////////
+/* Toggle Checkbox
+  The toggle box needs to be moved into the repo
+*/
+let togglestates={
+  no:'vg-togglebox-left',
+  yes:'vg-togglebox-right',
+  neutral:'vg-togglebox-center',
+}
+
+var CREATEtogglebox=(cont,changeeve=(ele)=>{},state=0)=>{
+  let togglebox = cont.lastChild.appendChild(document.createElement('div'));
+
+  CHANGEtoggle(togglebox,state);
+  togglebox.appendChild(document.createElement('div'))
+  togglebox.addEventListener('click',(ele)=>{
+    if(ele.target===togglebox || ele.target.parentNode===togglebox){
+      let wide = togglebox.offsetWidth;
+      let press = ele.clientX-togglebox.getBoundingClientRect().x;
+      let parts = wide/3;
+      console.log(parts)
+      if(press<parts){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-left');}
+      else if(press>(wide/2-parts/2) && press < (wide/2+parts/2)){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-center');}
+      else if(press>wide-parts){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-right');}
+      changeeve(ele);
+    }else{console.log('bad click');}
+  });
+  return togglebox;
+}
+var CHANGEtoggle=(cont,state=1)=>{
+  RESETtoggle(cont);
+    if(state==-1){cont.classList.add(togglestates.no);}
+    else if(state==0){cont.classList.add(togglestates.neutral);}
+    else if(state==1){console.log('UPDATED');cont.classList.add(togglestates.yes);}
+}
+var GETtogglebox=(cont)=>{
+  if(cont.classList.contains(togglestates.yes)){return 1;}
+  else if(cont.classList.contains(togglestates.no)){return -1;}
+  else{return 0;}
+}
+var RESETtoggle=(cont)=>{
+  let list = cont.classList;
+  for(let i=0;i<list.length;i++){
+    cont.classList.remove(list[i]);
+  }
+  return cont;
+}
+/////////////////////////////////////////////////////////////////////////////////
+
 /* Adds a modification to ADDs and DEDs
     PASS:
     - aobj - object to load to line
@@ -282,7 +332,11 @@ var ADDselectline=(aobj,enhance=false)=>{
   for(let x=1;x<qsettings.tiers.length;x++){
     console.log(enhance);
     if(enhance){
-      row.lastChild.appendChild(CREATEtogglebox(row,(ele)=>{document.getElementById(moddom.cont).dispatchEvent(new Event('change'));})); //to refersh the quote}));
+      let good = false;
+      if(aobj.tiers!=undefined){good=true;}
+      row.lastChild.appendChild(CREATEtogglebox(row,(ele)=>{document.getElementById(moddom.cont).dispatchEvent(new Event('change'));},
+    good?aobj.tiers[x-1]:0)); //to refersh the quote}));
+
     }else{
       row.lastChild.appendChild(document.createElement('input'));
       if(aobj.tiers!=undefined){
@@ -312,49 +366,6 @@ var ADDselectline=(aobj,enhance=false)=>{
 
   return row;
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////
-/* Toggle Checkbox
-  The toggle box needs to be moved into the repo
-*/
-let togglestates={
-  no:'vg-togglebox-left',
-  yes:'vg-togglebox-right',
-  neutral:'vg-togglebox-center'
-}
-
-var CREATEtogglebox=(cont,changeeve=(ele)=>{})=>{
-  let togglebox = cont.lastChild.appendChild(document.createElement('div'));
-    togglebox.classList.add('vg-togglebox-center');
-    togglebox.appendChild(document.createElement('div'))
-    togglebox.addEventListener('click',(ele)=>{
-      if(ele.target===togglebox || ele.target.parentNode===togglebox){
-        let wide = togglebox.offsetWidth;
-        let press = ele.clientX-togglebox.getBoundingClientRect().x;
-        let parts = wide/3;
-        console.log(parts)
-        if(press<parts){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-left');}
-        else if(press>(wide/2-parts/2) && press < (wide/2+parts/2)){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-center');}
-        else if(press>wide-parts){RESETtoggle(togglebox);togglebox.classList.add('vg-togglebox-right');}
-        changeeve(ele);
-      }else{console.log('bad click');}
-    });
-  return togglebox;
-}
-var GETtogglebox=(cont)=>{
-  if(cont.classList.contains(togglestates.yes)){return 1;}
-  else if(cont.classList.contains(togglestates.no)){return -1;}
-  else{return 0;}
-}
-var RESETtoggle=(cont)=>{
-  let list = cont.classList;
-  for(let i=0;i<list.length;i++){
-    cont.classList.remove(list[i]);
-  }
-  return cont;
-}
-/////////////////////////////////////////////////////////////////////////////////
 
 var GETselectline=(aline)=>{
   let aobj = {};
@@ -401,14 +412,17 @@ var SETenhlist=(cont,list,sys=undefined)=>{
 
 */
 var UPDATEenhlist=(sysinfo,sysnum,tiernum,cont=document)=>{
-  //console.log('First Update ',cont,cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[0].children);
-  let enlist = cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[0].children
+  console.log('First Update ',cont,cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[0].children);
+  let enlist = cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[sysnum].children
   for(let x=1;x<enlist.length;x++){
     let val=0;
-    let encheck = RESETtoggle(enlist[x].getElementsByClassName(moddom.views.mods.selline.tiers)[0].children[tiernum]);
+    console.log('SysInfo',sysinfo,)
+    CHANGEtoggle(enlist[x].getElementsByClassName(moddom.views.mods.selline.tiers)[0].children[tiernum],1)
+    //let encheck = RESETtoggle();
     //console.log(sysinfo[enlist[x].children[1].innerText]);
-    if(sysinfo[enlist[x].children[1].innerText]!=0){encheck.classList.add(togglestates.yes);}
-    else{encheck.classList.add(togglestates.neutral);}
+    //if(sysinfo[enlist[x].children[1].innerText]!=0){encheck.classList.add(togglestates.yes);}
+    //else{console.log('en');encheck.classList.add(togglestates.neutral);}
+
   }
 }
 
