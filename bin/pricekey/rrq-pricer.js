@@ -33,7 +33,7 @@
 
 var dbldip={
   CARRIER: false,
-  DAIKIN: true,
+  DAIKIN: false,
   PAYNE: false
 }
 
@@ -174,7 +174,6 @@ var GETmonthlyfin=(price,payment)=>{
 }
 
 var GETsizeprice=(tinfo,size,system,tiernum,payment)=>{
-
   //have fin cost decided
   let tpobj = {
     payment:payment,
