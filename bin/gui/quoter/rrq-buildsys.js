@@ -261,7 +261,7 @@ var GETsystems=()=>{
   }
 
   let swaps = Swaptable.form;
-
+  console.log(swaps);
   /* Adjust Swaps
     [
       {
@@ -314,7 +314,12 @@ var InitSysBuild=()=>{
     for (const mutation of mutationlist) {
       if (mutation.type === 'childList') {
         console.log('A child node has been added or removed.');
-        GETsystems();
+        tquote.info.build = GETsystems();
+        modbuild.GETbuildmod();
+        tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
+        for(let x=0;x<tquote.info.build.systems.length;x++){
+          sumbuild.REFRESHsumsystem(tquote.info.build.systems[x],x);  //y=sysid x=optid
+        }
       }
     }
   }
@@ -413,7 +418,6 @@ var FINDsystem = (grp,sysid)=>{
   return null;
 }
 
-
 var UPDATEsystemtier = (syscard)=>{
   let grpname =  syscard.getElementsByClassName(sbdom.system.info.group)[0].value;
   let sysid = gentable.GETrowTOobject(ele.target.parentNode).sysid;
@@ -438,7 +442,6 @@ var UPDATEsystemtier = (syscard)=>{
     syscard.getElementsByClassName('build-system-tiers-headers')[0].innerHTML = gentable.SETrowFROMobject(tquote.info.key.groups[grpname].optheads).innerHTML;
   }
 }
-
 
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
