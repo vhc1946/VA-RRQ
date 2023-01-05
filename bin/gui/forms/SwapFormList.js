@@ -261,7 +261,7 @@ class SwapTable extends FormList{
         if (NewItem == undefined) {
           //Create row only if values aren't left empty
           if (TierSelection.value == "" || SystemSelection.value == "" || CategorySelection.value == "" || SwapToSelection.value==""){
-              console.log("Can't be blank!");
+              DropNote('tr','No blank options','yellow')
           } else {
               NewItem = {
                 system:SystemSelection.text,
