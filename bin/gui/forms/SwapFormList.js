@@ -205,7 +205,6 @@ class SwapTable extends FormList{
       }
       if(cats){//update categories
         for(let x=0;x<this.droplists.categories.length;x++){
-          this.droplists.categories[x].list.push({text:' ',value:' '});
           for(let y=1;y<this.info.key.accessories.length;y++){
             if(this.info.key.accessories[y].cat===this.droplists.categories[x].text && this.info.key.accessories[y].model!=''){
               this.droplists.categories[x].list.push({
