@@ -116,7 +116,7 @@ class SwapTable extends FormList{
       },
       values:{
         system:'system',
-        tiers: 'tiers',
+        tier: 'tier',
         category:'category',
         swap:'swap',
         swapto:'swapto'
@@ -147,7 +147,7 @@ class SwapTable extends FormList{
 
     rowcontent=`
         <div class = "${this.dom.values.system}"></div>
-        <div class = "${this.dom.values.tiers}"></div>
+        <div class = "${this.dom.values.tier}"></div>
         <div class = "${this.dom.values.category}"></div>
         <div class = "${this.dom.values.swap}"></div>
         <div class = "${this.dom.values.swapto}"></div>
@@ -168,7 +168,7 @@ class SwapTable extends FormList{
 
         //Change ID of row to enable row check
         if (item!={}) {
-            row.id = "row-"+item[this.dom.values.system]+"-"+item[this.dom.values.tiers]+"-"+item[this.dom.values.category];
+            row.id = "row-"+item[this.dom.values.system]+"-"+item[this.dom.values.tier]+"-"+item[this.dom.values.category];
         }
         //Loop through class names in dom
         for(let v in this.dom.values){
@@ -177,7 +177,7 @@ class SwapTable extends FormList{
                 if (elem) {
                     //Check and fill item table
                     if (item != {}) {
-                          elem.innerText = item[this.dom.values[v]];
+                          elem.innerText = item[v];
                     } else {
                         elem.innerText = '';//data[0][v]
                     }
@@ -191,8 +191,12 @@ class SwapTable extends FormList{
     }
 
     GETrow(row){
-
-      return {};
+      let item = {};
+      for(let v in this.dom.values){
+        item[v]=row.getElementsByClassName(this.dom.values[v])[0].innerText;
+      }
+      item.options=JSON.parse(row.getElementsByClassName(this.dom.options.row)[0].innerText);
+      return item;
     }
 
     REFRESHswapdata(build=false,cats=false){
@@ -284,7 +288,7 @@ class SwapTable extends FormList{
             NewItem.options.swapTOprice = this.GETswapprice(NewItem.swapto);
 
             //Check for row, then add if not already added
-            let RowCheck = document.getElementById("row-"+NewItem[this.dom.values.system]+"-"+NewItem[this.dom.values.tiers]+"-"+NewItem[this.dom.values.category])
+            let RowCheck = document.getElementById("row-"+NewItem[this.dom.values.system]+"-"+NewItem[this.dom.values.tier]+"-"+NewItem[this.dom.values.category])
             if (!RowCheck) {
                 this.list.push(NewItem);
                 this.ADDitem(NewItem);

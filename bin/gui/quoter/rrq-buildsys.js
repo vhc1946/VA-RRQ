@@ -281,7 +281,12 @@ var GETsystems=()=>{
     ]
   */
   for(let x=0;x<swaps.length;x++){
-    console.log(swaps)
+    let size = systems[swaps[x].options.system].tiers[swaps[x].options.tier].size;
+    size[swaps[x].options.category]=swaps[x].swapto;
+
+    console.log(size.pricebase);
+    size.pricebase = Number(size.pricebase) - (Number(swaps[x].options.swapFROMprice)-Number(swaps[x].options.swapTOprice)); //adjust the difference in price
+    console.log(size.pricebase);
   }
   //apply adjustments to system model numbers
   //adjust the base price for that swap
