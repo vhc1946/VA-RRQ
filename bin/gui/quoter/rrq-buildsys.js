@@ -306,6 +306,21 @@ var InitSysBuild=()=>{
   for(let x=0;x<tquote.info.build.systems.length;x++){
     CreateSystemCard(tquote.info.build.systems[x].name,tquote.info.build.systems[x]);
   }
+  //Observer for change of SwapTable
+  const tableswap = Swaptable.table;
+  const config = {childList:true}
+
+  const swapTableChanged = (mutationlist, observer) => {
+    for (const mutation of mutationlist) {
+      if (mutation.type === 'childList') {
+        console.log('A child node has been added or removed.');
+        GETsystems();
+      }
+    }
+  }
+
+  const tableobserver = new MutationObserver(swapTableChanged);
+  tableobserver.observe(tableswap, config);
 }
 
 // modules
