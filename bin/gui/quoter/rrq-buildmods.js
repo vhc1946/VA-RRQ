@@ -406,7 +406,7 @@ var SETenhlist=(cont,list,sys=undefined)=>{
     - tiernum - array index for tier
 
 */
-var UPDATEenhlist=(sysinfo,sysnum,tiernum,cont)=>{
+var UPDATEenhlist=(sysinfo,sysnum,tiernum,cont=document)=>{
   console.log(sysinfo,cont)
   let enlist = cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[sysnum].children
   for(let x=1;x<enlist.length;x++){
