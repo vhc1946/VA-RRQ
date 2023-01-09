@@ -47,7 +47,7 @@ var GETsystemprices=(qsets,qbuild)=>{
     for(let y=0;y<qbuild.systems[x].tiers.length;y++){  // loop through available tiers
         let tobj = {
 
-          addbefore:GETaddprice(y,qbuild.systems[x].additions) + SWAPadjust(),
+          addbefore:GETaddprice(y,qbuild.systems[x].additions),
           minbefore:0,
           addafter:GETaddprice(y,qbuild.systems[x].additions,true),
           minafter:0,
@@ -59,8 +59,7 @@ var GETsystemprices=(qsets,qbuild)=>{
               qbuild.systems[x].tiers[y].size.pricebase,
               qsets.fintiers[ft],
               qbuild.systems[x].tiers[y],
-              tobj,
-              qsets.fintiers[ft].title
+              tobj
               );
 
               tobj.priceops.push(
@@ -78,12 +77,6 @@ var GETsystemprices=(qsets,qbuild)=>{
   }
   return sparr;
 }
-
-var SWAPadjust=()=>{
-
-  return 0;
-}
-
 var GETaddprice=(tnum,alist,iaq=false)=>{
   let addprice = 0;  // Accessory items
   let iaqprice = 0;  // IAQ items
@@ -128,7 +121,8 @@ var GETfincost=(price,qsets,system,tobj)=>{
     lender:qsets.mfg[mfg].lender,
     term:qsets.term,
     cost:0,
-    rate:qsets.mfg[mfg].rate
+    rate:qsets.mfg[mfg].rate,
+    desc:qsets.desc
   };
   //check if eligable for deal financing
   if(!dbldip[mfg]){
@@ -158,6 +152,7 @@ var GETfincost=(price,qsets,system,tobj)=>{
     fgroup.cost = qsets.mfg[mfg].deal;
     fgroup.manrebate = system.info.discmfg;
   }
+  console.log(fgroup);
   return fgroup;
 }
 var GETmonthlyfin=(price,payment)=>{
