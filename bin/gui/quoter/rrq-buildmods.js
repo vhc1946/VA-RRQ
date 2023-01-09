@@ -193,6 +193,9 @@ var SETaddblock=(block,sys=undefined)=>{
     titleele.appendChild(document.createElement('div'));
     titleele.lastChild.innerText = qsettings.tiers[x].name;
   }
+  let priceele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
+  priceele.appendChild(document.createElement('div'));
+  priceele.lastChild.innerText = "Sale Price";
   
   SETenhlist(block,modlist.TRIMlist({}),sys);
   SETaddlist(block,sys);
@@ -349,7 +352,7 @@ var ADDselectline=(aobj,enhance=false)=>{
   row.lastChild.appendChild(document.createElement('input'));
   row.lastChild.lastChild.type='number';
   row.lastChild.lastChild.value = aobj['price_sale']!=undefined && aobj['price_sale']!=''?aobj['price_sale']:0;
-  $(row.lastChild.lastChild).hide();
+  //$(row.lastChild.lastChild).hide();
 
   row.lastChild.appendChild(document.createElement('input'));
   row.lastChild.lastChild.type='number';
