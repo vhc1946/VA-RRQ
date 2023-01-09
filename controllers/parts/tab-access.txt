@@ -35,7 +35,7 @@
             </div>
             <div class="build-mod-add-controls-cont">
               <div class="build-mod-add-filter-cont">
-                <input class="build-mod-add-in" placeholder='Add Addition...'/>
+                <input class="build-mod-add-in" maxlength="75" placeholder="Add Addition..."/>
                 <span class="icon-action-button"><img class="build-mod-add-inbutton" src="../bin/repo/assets/icons/plus-icon.png"/ ></span>
                 <div class="flat-action-button modslist-show">SHOW</div>
               </div>

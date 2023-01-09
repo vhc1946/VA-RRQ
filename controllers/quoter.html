@@ -12,7 +12,6 @@
         <link rel="stylesheet" type="text/css" href="../bin/gui/styles/tab-systems.css"/>
         <link rel="stylesheet" type="text/css" href="../bin/gui/styles/tab-summary.css"/>
         <link rel="stylesheet" href="../bin/repo/gui/styles/modules/vg-floatviews.css"/>
-
         <link rel="stylesheet" href="../bin/gui/styles/SwapFormList.css"/>
     </head>
     <body>
@@ -28,8 +27,22 @@
             <div id="quote-swaptable">
             </div>
         </div>
-
-
+        <div class="vg-float-view" title="Summary Preview">
+          <div id="summary-preview">
+            <div class="preview-header">SUMMARY PREVIEW</div>
+            <div class="preview-financials">
+              <div>Total Price: </div><div id="financials-total"></div>
+              <div>Manufacture Rebate: </div><div id="financials-manrebate"></div>
+              <div>Lender & Code: </div><div id="financials-lender"></div>
+              <div id="financials-link">Lender Link </div>
+            </div>
+            <div class="preview-actions">
+              <div class="flat-action-button" id="contract-cash">CASH</div>
+              <div class="flat-action-button" id="contract-fin">FINANCE</div>
+            </div>
+          </div>
+        </div>
+        <img id="vg-float-frame-close" src="../bin/repo/assets/icons/cross.png"/>
       </div>
       <!-- QUOTE CONTAINER
           right and left will contain selectors for views.
