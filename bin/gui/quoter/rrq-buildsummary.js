@@ -155,13 +155,16 @@ var GENsumfinance=(sysinfo, sysnum, optnum)=>{
     for(let p=0;p<priceopts.length;p++){
       syscont.appendChild(document.createElement('div'));
       syscont.lastChild.innerText = priceopts[p].payment.title + ': ' + Math.trunc(priceopts[p].opts.sysprice.price);
-      syscont.lastChild.title = "Manf Reb: " + priceopts[p].payment.manrebate;
       syscont.lastChild.addEventListener('dblclick',(ele)=>{
+        POPsummary(tquote,sysnum,p,optnum,'SYS');
+        floatv.SELECTview(document.getElementById('quote-popview'),'Summary Preview');
+        /*
         if(chckcreatecontract){
           DropNote('tr','Creating Contract','green');
           ipcRenderer.send(quoteroutes.createcontract,{quote:tquote,contract:finalc.CREATEfinal(tquote,sysnum,p,optnum,'SYS')});
           chckcreatecontract=false;
         }else{DropNote('tr','...Creating Contract','yellow')}
+        */
       });
     }
 
@@ -175,13 +178,9 @@ var GENsumfinance=(sysinfo, sysnum, optnum)=>{
     for(let p=0;p<priceopts.length;p++){
       incont.appendChild(document.createElement('div'));
       incont.lastChild.innerText = priceopts[p].payment.title + ': ' + Math.trunc(priceopts[p].opts.inprice.price);
-      incont.lastChild.title = "Manf Reb: 0";
       incont.lastChild.addEventListener('dblclick',(ele)=>{
-        if(chckcreatecontract){
-          DropNote('tr','Creating Contract','green');
-          ipcRenderer.send(quoteroutes.createcontract,{quote:tquote,contract:finalc.CREATEfinal(tquote,sysnum,p,optnum,'IN')});
-          chckcreatecontract = false;
-        }
+        POPsummary(tquote,sysnum,p,optnum,'IN');
+        floatv.SELECTview(document.getElementById('quote-popview'),'Summary Preview');
       });
     }
 
@@ -192,12 +191,10 @@ var GENsumfinance=(sysinfo, sysnum, optnum)=>{
     for(let p=0;p<priceopts.length;p++){
       outcont.appendChild(document.createElement('div'));
       outcont.lastChild.innerText = priceopts[p].payment.title + ': ' + Math.trunc(priceopts[p].opts.outprice.price);
-      outcont.lastChild.title = "Manf Reb: 0";
+      outcont.lastChild.title = "Manf Reb: 0" + "\n" + priceopts[p].payment.lender;
       outcont.lastChild.addEventListener('dblclick',(ele)=>{
-        if(chckcreatecontract){
-          DropNote('tr','Creating Contract','green');
-          ipcRenderer.send(quoteroutes.createcontract,{quote:tquote,contract:finalc.CREATEfinal(tquote,sysnum,p,optnum,'OUT')});
-        }
+        POPsummary(tquote,sysnum,p,optnum,'OUT');
+        floatv.SELECTview(document.getElementById('quote-popview'),'Summary Preview');
       });
     }
   }else{
@@ -227,6 +224,25 @@ var GENsumdisc=(sysinfo,sysnum,optnum)=>{
     discont.lastChild.innerText = `Spire: ${tquote.info.build.systems[sysnum].tiers[optnum].size.rebategas!=''?tquote.info.build.systems[sysnum].tiers[optnum].size.rebategas:0}`;
   }
   return discont;
+}
+
+var POPsummary=(tquote,sysnum,popt,optnum,grp) => {
+  let priceopt = tquote.info.pricing.systems[sysnum].tiers[optnum].priceops[popt];
+  document.getElementById('financials-total').innerText = Math.trunc(priceopt.opts[grp.toLowerCase() + 'price'].price);
+  document.getElementById('financials-manrebate').innerText = priceopt.payment.manrebate;
+  document.getElementById('financials-lender').innerText = priceopt.payment.lender;
+  $(document.getElementById('contract-cash')).replaceWith(document.getElementById('contract-cash').cloneNode(true));
+  document.getElementById('contract-cash').addEventListener('click',(ele)=>{
+    PRODUCEcontract(tquote,sysnum,popt,optnum,grp)
+  });
+}
+
+var PRODUCEcontract=(tquote,sysnum,popt,optnum,grp)=>{
+  if(chckcreatecontract){
+      DropNote('tr','Creating Contract','green');
+      ipcRenderer.send(quoteroutes.createcontract,{quote:tquote,contract:finalc.CREATEfinal(tquote,sysnum,popt,optnum,grp)});
+      chckcreatecontract=false;
+    }else{DropNote('tr','...Creating Contract','yellow')}
 }
 
 module.exports={

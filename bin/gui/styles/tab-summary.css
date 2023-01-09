@@ -71,3 +71,23 @@
 .tier-cont:nth-child(4){
     background-color: var(--tier4);
 }
+
+.preview-header{
+    background-color: var(--BEE-blue);
+    color: var(--text-light);
+    width:100%;
+    text-align: center;
+}
+.preview-financials{
+    padding: 5px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+[id*='financials-']{
+    text-align: right;
+}
+.preview-actions{
+    padding: 5px;
+    display: flex;
+    justify-content: space-around;
+}
