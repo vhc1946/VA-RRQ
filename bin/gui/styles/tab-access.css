@@ -95,6 +95,10 @@
     cursor: pointer;
     /*background-color: var(--hover-highlight);*/
 }
+
+.build-mod-enh-selects .build-mod-add-line>.build-mod-add-prices{
+  display:none;
+}
 .mod-to-delete{
     background-image: linear-gradient(to right, rgba(0,0,0,0),rgba(0,0,0,0),var(--warning-highlight));
 }
