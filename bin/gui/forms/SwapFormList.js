@@ -9,7 +9,7 @@ var floatv = require('../../repo/gui/js/modules/vg-floatviews.js');
 
 //TODO: extend FormList to utilize get/set .form (returns/accepts=[])
 
- 
+
 class SwapTable extends FormList{
     constructor({
             cont,
@@ -260,7 +260,7 @@ class SwapTable extends FormList{
         //Check if given item in constructor
         if (NewItem == undefined) {
           //Create row only if values aren't left empty
-          if (TierSelection.value == "" || SystemSelection.value == "" || CategorySelection.value == "" || SwapToSelection.value==""){
+          if (TierSelection.value == "" || SystemSelection.value == "" || CategorySelection.value == ""){
               DropNote('tr','No blank options','yellow')
           } else {
               NewItem = {
