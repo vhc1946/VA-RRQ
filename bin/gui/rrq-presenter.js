@@ -1,5 +1,3 @@
-/*
-*/
 var {ipcRenderer, contextBridge}=require('electron');
 var $ = require('jquery');
 var RROOT = '../bin/repo/';
@@ -19,6 +17,7 @@ ipcRenderer.on('GET-quotesettings',(eve,data)=>{
   if(data){
     qsettings = data;
   }
+  
 });
 
 // TITLE bar //
@@ -102,6 +101,7 @@ $(document.getElementById(Titlebar.tbdom.page.settings)).hide();
 ////////////////////
 
 var tquote = JSON.parse(localStorage.getItem(quotesls.quotetopresi));
+
 var cons=auser.config;
 var asspath=null;
 var currtier=0;
@@ -109,7 +109,6 @@ var sysnum=0;
 var tiersettings =[];//holds tier info
 
 var LOADresipresi=()=>{
-
   document.getElementById(Titlebar.tbdom.title).innerText = tquote.info.build.systems[sysnum].name;
   let sysbuild = tquote.info.build.systems[sysnum];
   let diricon = path.join(asspath,apaths.assets.pvicons);
@@ -221,20 +220,30 @@ var LOADresipresi=()=>{
       document.getElementsByClassName("rrq-multi-tier-discount")[i].appendChild(disc);
 
       // Investment /////////////////////////////////////
-      document.getElementsByClassName('fin-uf-price')[i].innerText = priceformat(tquote.info.pricing.systems[sysnum].tiers[i].priceops[0].opts.sysprice.price);
-      document.getElementsByClassName('fin-promo-price')[i].innerText = priceformat(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.sysprice.price);
-      document.getElementsByClassName('fin-promo-mo')[i].innerText = priceformat(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.sysprice.monthly);
-      document.getElementsByClassName('fin-low-mo')[i].innerText = priceformat(tquote.info.pricing.systems[sysnum].tiers[i].priceops[2].opts.sysprice.monthly);
+      let pricing = tquote.info.pricing.systems[sysnum].tiers[i];
+      console.log(pricing);
+      document.getElementsByClassName('fin-label-uf')[i].innerText = pricing.priceops[0].title;
+      document.getElementsByClassName('fin-desc-uf')[i].innerText = pricing.priceops[0].payment.desc;
+      document.getElementsByClassName('fin-uf-price')[i].innerText = priceformat(pricing.priceops[0].opts.sysprice.price);
+      
+      document.getElementsByClassName('fin-label-low')[i].innerText = pricing.priceops[2].title;
+      document.getElementsByClassName('fin-desc-low')[i].innerText = pricing.priceops[2].payment.desc;
+      document.getElementsByClassName('fin-low-mo')[i].innerText = priceformat(pricing.priceops[2].opts.sysprice.monthly);
+      
+      document.getElementsByClassName('fin-promo-label')[i].innerText = pricing.priceops[1].title + " - " + pricing.priceops[1].payment.desc;
+      document.getElementsByClassName('fin-promo-price')[i].innerText = priceformat(pricing.priceops[1].opts.sysprice.price);
+      document.getElementsByClassName('fin-promo-mo')[i].innerText = priceformat(pricing.priceops[1].opts.sysprice.monthly);
+      
 
       // Partials ///////////////////////////////////////
-      document.getElementsByClassName('rrq-part-upfront')[i].childNodes[2].innerText = priceformat(tquote.info.pricing.systems[sysnum].tiers[i].priceops[0].opts.outprice.price);
-      document.getElementsByClassName('rrq-part-upfront')[i].childNodes[3].innerText = priceformat(tquote.info.pricing.systems[sysnum].tiers[i].priceops[0].opts.inprice.price);
-      document.getElementsByClassName('rrq-part-lowest')[i].childNodes[2].innerText = priceformat(tquote.info.pricing.systems[sysnum].tiers[i].priceops[2].opts.outprice.monthly);
-      document.getElementsByClassName('rrq-part-lowest')[i].childNodes[3].innerText = priceformat(tquote.info.pricing.systems[sysnum].tiers[i].priceops[2].opts.inprice.monthly);
-      document.getElementsByClassName('rrq-part-promo')[i].childNodes[2].innerText = priceformat(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.outprice.price);
-      document.getElementsByClassName('rrq-part-promo')[i].childNodes[3].innerText = priceformat(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.inprice.price);
-      document.getElementsByClassName('rrq-part-promomo')[i].childNodes[2].innerText = priceformat(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.outprice.monthly);
-      document.getElementsByClassName('rrq-part-promomo')[i].childNodes[3].innerText = priceformat(tquote.info.pricing.systems[sysnum].tiers[i].priceops[1].opts.inprice.monthly);
+      document.getElementsByClassName('rrq-part-upfront')[i].childNodes[2].innerText = priceformat(pricing.priceops[0].opts.outprice.price);
+      document.getElementsByClassName('rrq-part-upfront')[i].childNodes[3].innerText = priceformat(pricing.priceops[0].opts.inprice.price);
+      document.getElementsByClassName('rrq-part-lowest')[i].childNodes[2].innerText = priceformat(pricing.priceops[2].opts.outprice.monthly);
+      document.getElementsByClassName('rrq-part-lowest')[i].childNodes[3].innerText = priceformat(pricing.priceops[2].opts.inprice.monthly);
+      document.getElementsByClassName('rrq-part-promo')[i].childNodes[2].innerText = priceformat(pricing.priceops[1].opts.outprice.price);
+      document.getElementsByClassName('rrq-part-promo')[i].childNodes[3].innerText = priceformat(pricing.priceops[1].opts.inprice.price);
+      document.getElementsByClassName('rrq-part-promomo')[i].childNodes[2].innerText = priceformat(pricing.priceops[1].opts.outprice.monthly);
+      document.getElementsByClassName('rrq-part-promomo')[i].childNodes[3].innerText = priceformat(pricing.priceops[1].opts.inprice.monthly);
     }else{
       for(let key in presdom.sections){   // Hides sections of empty tiers
         let section = document.getElementsByClassName(`rrq-multi-cont-${key}`)[0].getElementsByClassName('rrq-multi-tier')[i];
