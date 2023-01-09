@@ -6,9 +6,6 @@
     </div>
     <div class="build-inner-cont">
       <div class="build-dscnts-cont" style="display:none">
-        <div>Multi-System Discount <div id="build-dscnts-multisys" class="vg-checkbox"></div></div>
-        <div>Friends & Family Discount <div id="build-dscnts-frndsfam" class="vg-checkbox"></div></div>
-        <div>No Remorse Discount <div id="build-dscnts-noremorse" class="vg-checkbox"></div></div>
       </div>
     </div>
     <div id="build-mod-views" class="viewcontrol-cont">

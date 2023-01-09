@@ -90,14 +90,6 @@ document.getElementById(Titlebar.tbdom.page.settings).addEventListener('dblclick
   ipcRenderer.send(navroutes.gotosettings,'Open Settings...');
 });
 
-let mactions={
-  support:{
-    id:'support-ticket',
-    src:'../bin/repo/assets/icons/info.png',
-    title:'Support',
-    ondblclick:(ele)=>{CREATEticket();}
-  }
-}
 let qactions={
   refresh:{
     id:'refresh-dash',
@@ -107,8 +99,7 @@ let qactions={
   }
 }
 
-Titlebar.SETUPtitlebar(qactions,mactions);
-
+Titlebar.SETUPtitlebar(qactions);
 /////////////////
 
 //  QUOTE TABLE //

@@ -452,24 +452,6 @@ var defdscnt = {
   discspcl:'Special Discount'
 }
 
-var wpdscnts={
-  multisys:{
-    id:'build-dscnts-multisys',
-    title:'Multi-System Discount',
-    value:.05
-  },
-  frndsfam:{
-    id:'build-dscnts-frndsfam',
-    title:'Friends & Family Discount',
-    value:.1
-  },
-  noremorse:{
-    id:'build-dscnts-noremorse',
-    title:'No Remorse Discount',
-    value:300
-  }
-}
-
 var UPDATEwpdscnts = (wpdscnt,add=true)=>{
   let syscont = document.getElementById(moddom.cont).getElementsByClassName(moddom.system.cont);
   let found = false;
@@ -485,7 +467,7 @@ var UPDATEwpdscnts = (wpdscnt,add=true)=>{
     if(!found){dblist[0].parentNode.appendChild(ADDdscntline(wpdscnt));}
   }
 }
-var GETwpdscntinfo = (wpname)=>{
+var GETwpdscntinfo = (wpname,wpdscnts)=>{
   return {
     name:wpdscnts[wpname].title,
     ref:wpname,
@@ -498,31 +480,6 @@ var GETwpdscntinfo = (wpname)=>{
     type:wpdscnts[wpname].type
   }
 }
-
-// Discount Actions //
-document.getElementById(wpdscnts.multisys.id).addEventListener('click',(ele)=>{
-  let toadd=false;
-  if(ele.target.classList.contains('vg-checkbox-checked')){ele.target.classList.remove('vg-checkbox-checked');}
-  else{ele.target.classList.add('vg-checkbox-checked');toadd=true;}
-
-  UPDATEwpdscnts(GETwpdscntinfo('multisys'),toadd);
-  document.getElementById(moddom.cont).dispatchEvent(new Event('change'));
-});
-document.getElementById(wpdscnts.frndsfam.id).addEventListener('click',(ele)=>{
-  let toadd=false;
-  if(ele.target.classList.contains('vg-checkbox-checked')){ele.target.classList.remove('vg-checkbox-checked');}
-  else{ele.target.classList.add('vg-checkbox-checked');toadd=true;}
-  UPDATEwpdscnts(GETwpdscntinfo('frndsfam'),toadd);
-  document.getElementById(moddom.cont).dispatchEvent(new Event('change'));
-});
-document.getElementById(wpdscnts.noremorse.id).addEventListener('click',(ele)=>{
-  let toadd=false;
-  if(ele.target.classList.contains('vg-checkbox-checked')){ele.target.classList.remove('vg-checkbox-checked');}
-  else{ele.target.classList.add('vg-checkbox-checked');toadd=true;}
-  UPDATEwpdscnts(GETwpdscntinfo('noremorse'),toadd);
-  document.getElementById(moddom.cont).dispatchEvent(new Event('change'));
-});
-
 
 //////////////////////////////
 
@@ -537,11 +494,28 @@ var SETdscntblock=(block,sys=undefined)=>{
     block.getElementsByClassName(moddom.views.dscnts.title.tiers)[0].appendChild(document.createElement('div'))
     block.getElementsByClassName(moddom.views.dscnts.title.tiers)[0].lastChild.innerText = qsettings.tiers[x].name;
   }
+  let wpdscnts = qsettings.discounts;
+  let disc = document.getElementsByClassName('build-dscnts-cont')[0];
+  for(let ea in wpdscnts){
+    disc.appendChild(document.createElement('div'));
+    disc.lastChild.innerText = wpdscnts[ea].title;
+    disc.lastChild.appendChild(document.createElement('div'));
+    disc.lastChild.lastChild.classList.add('vg-checkbox');
+    disc.lastChild.lastChild.id = ea;
+    disc.lastChild.lastChild.addEventListener('click', (ele)=>{
+      let toadd=false;
+      if(ele.target.classList.contains('vg-checkbox-checked')){ele.target.classList.remove('vg-checkbox-checked');}
+      else{ele.target.classList.add('vg-checkbox-checked');toadd=true;}
+      UPDATEwpdscnts(GETwpdscntinfo(ea,wpdscnts),toadd);
+      document.getElementById(moddom.cont).dispatchEvent(new Event('change'));
+    });
+
+  }
   if(sys!=undefined&&sys.discounts!=undefined){//Add discounts from quote
     for(let x=0;x<sys.discounts.length;x++){
       list.appendChild(ADDdscntline(sys.discounts[x]));
       if(wpdscnts[sys.discounts[x].ref]!=undefined){ //initialize whole project discounts
-        document.getElementById(wpdscnts[sys.discounts[x].ref].id).classList.add('vg-checkbox-checked');
+        document.getElementById(sys.discounts[x].ref).classList.add('vg-checkbox-checked');
       }
     }
   }else{//initialize new discounts
@@ -555,14 +529,8 @@ var SETdscntblock=(block,sys=undefined)=>{
       list.appendChild(ADDdscntline(defd));
     }
   }
-  SETswaptable(block);
+  
 }
-var SETswaptable=(block)=>{
-  let stable = block.getElementsByClassName(moddom.views.dscnts.stable)[0];
-  stable.appendChild(document.createElement('div'));
-
-}
-
 
 var ADDdscntline=(dobj)=>{
   let row = document.createElement('div');
