@@ -16,14 +16,12 @@ var {SWAPdivorin}=require('../../repo/gui/js/tools/vg-displaytools.js');
 var {SwapTable}=require('../forms/SwapFormList.js');
 var ADJUSTdependents=(view)=>{
 
-  //console.log('ADJUSTDING> ',view);
-  //try{
-
-    modbuild.modviews.REMOVEview(modbuild.modviews.FINDbutton(view.title));//vcontrol.REMOVEview(vcontrol.FINDbutton(view.title,document.getElementById(modbuild.moddom.cont)),document.getElementById(modbuild.moddom.cont));
-    sumbuild.sumviews.REMOVEview(sumbuild.sumviews.FINDbutton(view.title));//vcontrol.REMOVEview(vcontrol.FINDbutton(view.title,document.getElementById(sumbuild.bsdom.cont)),document.getElementById(sumbuild.bsdom.cont));
-
+  console.log('ADJUSTDING> ',view);
+  try{
+    modbuild.modviews.REMOVEview(modbuild.modviews.FINDbutton(view.title));
+    sumbuild.sumviews.REMOVEview(sumbuild.sumviews.FINDbutton(view.title));
     //pull system info and reconfig price
-  //}catch{}
+  }catch{}
 }
 
 var sbdom = {

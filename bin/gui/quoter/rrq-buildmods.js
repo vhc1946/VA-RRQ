@@ -408,11 +408,13 @@ var SETenhlist=(cont,list,sys=undefined)=>{
 */
 var UPDATEenhlist=(sysinfo,sysnum,tiernum,cont=document)=>{
   //console.log(sysinfo,cont)
+  try{
   let enlist = cont.getElementsByClassName(moddom.views.mods.enh.selects,moddom.cont)[sysnum].children
   for(let x=1;x<enlist.length;x++){
     let val=0;
     CHANGEtoggle(enlist[x].getElementsByClassName(moddom.views.mods.selline.tiers)[0].children[tiernum],1);
   }
+}catch{};
 }
 
 // Accessory Selection List ////////////////////////////////////////////////////
