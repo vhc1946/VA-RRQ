@@ -7,9 +7,9 @@ var auser = aappuser();
 
 var {CREATEcontract}=require('../../repo/apps/rrq/rrq-contractIO.js');
 
-var CREATEfinal=(quote,sysnum,pnum,optnum,newgrp)=>{
-  console.log(CREATEcontract(quote,sysnum,pnum,optnum,newgrp));
-  return CREATEcontract(quote,sysnum,pnum,optnum,newgrp);
+var CREATEfinal=(quote,sysnum,pnum,optnum,newgrp,fin)=>{
+  console.log(CREATEcontract(quote,sysnum,pnum,optnum,newgrp,fin));
+  return CREATEcontract(quote,sysnum,pnum,optnum,newgrp,fin);
 }
 
 module.exports={

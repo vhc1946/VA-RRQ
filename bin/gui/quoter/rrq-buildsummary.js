@@ -229,18 +229,22 @@ var GENsumdisc=(sysinfo,sysnum,optnum)=>{
 var POPsummary=(tquote,sysnum,popt,optnum,grp) => {
   let priceopt = tquote.info.pricing.systems[sysnum].tiers[optnum].priceops[popt];
   document.getElementById('financials-total').innerText = Math.trunc(priceopt.opts[grp.toLowerCase() + 'price'].price);
-  document.getElementById('financials-manrebate').innerText = priceopt.payment.manrebate;
+  document.getElementById('financials-manrebate').innerText = grp=='SYS'?priceopt.payment.manrebate:0;
   document.getElementById('financials-lender').innerText = priceopt.payment.lender;
-  $(document.getElementById('contract-cash')).replaceWith(document.getElementById('contract-cash').cloneNode(true));
+  $(document.getElementById('contract-cash')).replaceWith(document.getElementById('contract-cash').cloneNode(true)); // Removes all EventListeners
   document.getElementById('contract-cash').addEventListener('click',(ele)=>{
     PRODUCEcontract(tquote,sysnum,popt,optnum,grp)
   });
+  $(document.getElementById('contract-fin')).replaceWith(document.getElementById('contract-fin').cloneNode(true)); // Removes all EventListeners
+  document.getElementById('contract-fin').addEventListener('click',(ele)=>{
+    PRODUCEcontract(tquote,sysnum,popt,optnum,grp,true)
+  });
 }
 
-var PRODUCEcontract=(tquote,sysnum,popt,optnum,grp)=>{
+var PRODUCEcontract=(tquote,sysnum,popt,optnum,grp,fin=false)=>{
   if(chckcreatecontract){
       DropNote('tr','Creating Contract','green');
-      ipcRenderer.send(quoteroutes.createcontract,{quote:tquote,contract:finalc.CREATEfinal(tquote,sysnum,popt,optnum,grp)});
+      ipcRenderer.send(quoteroutes.createcontract,{quote:tquote,contract:finalc.CREATEfinal(tquote,sysnum,popt,optnum,grp,fin)});
       chckcreatecontract=false;
     }else{DropNote('tr','...Creating Contract','yellow')}
 }

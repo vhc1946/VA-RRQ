@@ -204,7 +204,6 @@ var GETsizeprice=(tinfo,size,system,tiernum,payment)=>{
       }
     }
   }
-  console.log(system.discounts);
   for(let po in tpobj.opts){ //loop through to apply discounts
     tinfo.minbefore = 0;
     tpobj.opts[po].price -= GETdscntstotal(
