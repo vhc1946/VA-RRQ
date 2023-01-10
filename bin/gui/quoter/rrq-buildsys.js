@@ -18,8 +18,11 @@ var ADJUSTdependents=(view)=>{
 
   //console.log('ADJUSTDING> ',view);
   //try{
+
     modbuild.modviews.REMOVEview(modbuild.modviews.FINDbutton(view.title));//vcontrol.REMOVEview(vcontrol.FINDbutton(view.title,document.getElementById(modbuild.moddom.cont)),document.getElementById(modbuild.moddom.cont));
     sumbuild.sumviews.REMOVEview(sumbuild.sumviews.FINDbutton(view.title));//vcontrol.REMOVEview(vcontrol.FINDbutton(view.title,document.getElementById(sumbuild.bsdom.cont)),document.getElementById(sumbuild.bsdom.cont));
+
+    //pull system info and reconfig price
   //}catch{}
 }
 
@@ -141,8 +144,10 @@ var SetupSystemCard=(card,qsys=null)=>{
             for(let z=0,l=card.parentNode.children.length;z<l;z++){//refract the system tier change
               if(card.parentNode.children[z]===card){
 
-                tquote.info.build= GETsystems();
+                tquote.info.build = GETsystems();
+                modbuild.GETbuildmod();
                 tquote.info.pricing.systems = pricer.GETsystemprices(qsettings,tquote.info.build);
+                console.log(tquote.info);
                 sumbuild.REFRESHsumsystem(tquote.info.build.systems[z],z);  //y=sysid x=optid
               }
             }

@@ -48,7 +48,7 @@ var GETsystemprices=(qsets,qbuild)=>{
         let tobj = {
 
           addbefore:GETaddprice(y,qbuild.systems[x].additions),
-          minbefore:0,
+          minbefore:GETenhprice(y,qbuild.systems[x].enhancments),
           addafter:GETaddprice(y,qbuild.systems[x].additions,true),
           minafter:0,
           priceops:[]
@@ -93,7 +93,17 @@ var GETaddprice=(tnum,alist,iaq=false)=>{
   }
   return iaq==false?addprice:iaqprice;
 }
-
+var GETenhprice=(tnum,elist)=>{
+  let enhprice = 0;
+  if(elist!=undefined){
+    for(let x=0;x<elist.length;x++){
+      if(elist[x].tiers[tnum]<0){
+        enhprice = elist[x].price_sale;
+      }
+    }
+  }
+  return enhprice;
+}
 var GETdscntstotal=(tnum,dlist,price,system,manrebate)=>{
   let dprice = 0;
   manrebate = Number(manrebate);
