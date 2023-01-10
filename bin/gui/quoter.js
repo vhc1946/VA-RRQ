@@ -51,7 +51,7 @@ var blddom={ //build dom
 
 var tquote = JSON.parse(localStorage.getItem(quotesls.quotetoload)); //get quote to load from localStorage
 
-//console.log('QUOTE: ',tquote);
+console.log('QUOTE: ',tquote);
 
 if(tquote.info.build==undefined){
   tquote.info.build={ //declaration of build object

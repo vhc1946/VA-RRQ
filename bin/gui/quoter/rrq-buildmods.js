@@ -196,7 +196,7 @@ var SETaddblock=(block,sys=undefined)=>{
   let priceele = block.getElementsByClassName(moddom.views.mods.seltitle.prices)[0];
   priceele.appendChild(document.createElement('div'));
   priceele.lastChild.innerText = "Sale Price";
-  
+
   SETenhlist(block,modlist.TRIMlist({}),sys);
   SETaddlist(block,sys);
 
@@ -488,6 +488,7 @@ var GETwpdscntinfo = (wpname,wpdscnts)=>{
     - block: system discount container
     - dscnts: list of system discounts
 */
+var dscntBlockSet = false;
 var SETdscntblock=(block,sys=undefined)=>{
   let list = block.getElementsByClassName(moddom.views.dscnts.list)[0];
   for(let x=1;x<qsettings.tiers.length;x++){ //Setup title
@@ -496,20 +497,22 @@ var SETdscntblock=(block,sys=undefined)=>{
   }
   let wpdscnts = qsettings.discounts;
   let disc = document.getElementsByClassName('build-dscnts-cont')[0];
-  for(let ea in wpdscnts){
-    disc.appendChild(document.createElement('div'));
-    disc.lastChild.innerText = wpdscnts[ea].title;
-    disc.lastChild.appendChild(document.createElement('div'));
-    disc.lastChild.lastChild.classList.add('vg-checkbox');
-    disc.lastChild.lastChild.id = ea;
-    disc.lastChild.lastChild.addEventListener('click', (ele)=>{
-      let toadd=false;
-      if(ele.target.classList.contains('vg-checkbox-checked')){ele.target.classList.remove('vg-checkbox-checked');}
-      else{ele.target.classList.add('vg-checkbox-checked');toadd=true;}
-      UPDATEwpdscnts(GETwpdscntinfo(ea,wpdscnts),toadd);
-      document.getElementById(moddom.cont).dispatchEvent(new Event('change'));
-    });
-
+  if(!dscntBlockSet){ //only set project wide discounts once
+    for(let ea in wpdscnts){
+      disc.appendChild(document.createElement('div'));
+      disc.lastChild.innerText = wpdscnts[ea].title;
+      disc.lastChild.appendChild(document.createElement('div'));
+      disc.lastChild.lastChild.classList.add('vg-checkbox');
+      disc.lastChild.lastChild.id = ea;
+      disc.lastChild.lastChild.addEventListener('click', (ele)=>{
+        let toadd=false;
+        if(ele.target.classList.contains('vg-checkbox-checked')){ele.target.classList.remove('vg-checkbox-checked');}
+        else{ele.target.classList.add('vg-checkbox-checked');toadd=true;}
+        UPDATEwpdscnts(GETwpdscntinfo(ea,wpdscnts),toadd);
+        document.getElementById(moddom.cont).dispatchEvent(new Event('change'));
+      });
+    }
+    dscntBlockSet = true;
   }
   if(sys!=undefined&&sys.discounts!=undefined){//Add discounts from quote
     for(let x=0;x<sys.discounts.length;x++){
@@ -529,7 +532,7 @@ var SETdscntblock=(block,sys=undefined)=>{
       list.appendChild(ADDdscntline(defd));
     }
   }
-  
+
 }
 
 var ADDdscntline=(dobj)=>{
