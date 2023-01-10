@@ -59,7 +59,9 @@ class SwapTable extends FormList{
           ]
         }
         this.refreshed=false;
+       
         //Close button
+        /*
         this.closebutton = document.createElement('div');
         this.closebutton.id = "swapform-close";
         this.closebutton.className = "vg-float-frame-close";
@@ -68,6 +70,7 @@ class SwapTable extends FormList{
         this.closebutton.addEventListener('click', (eve)=>{
             floatv.RESETframe(this.cont.parentElement.parentElement);
         })
+        */
 
         //Load already created data
         this.form = this.list;
