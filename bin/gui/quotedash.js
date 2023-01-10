@@ -359,7 +359,7 @@ var POPpreview=(quote)=>{
 
   preview.CLEARview();
 
-  if(quote.info.build!=undefined&&quote.info.build.systems!=undefined){
+  if(quote.info.build!=undefined&&quote.info.build.systems!=undefined&&quote.info.pricing.length>0){
     for(let x=0;x<quote.info.build.systems.length;x++){
       preview.ADDview(quote.info.build.systems[x].name,PREVIEWpricing(quote,x));
     }
@@ -376,6 +376,7 @@ var PREVIEWpricing=(quote,sysnum)=>{
   let firstspot = document.createElement('div');
   let spot = firstspot.appendChild(document.createElement('div'));
   spot.classList.add('preview-area-system');
+  console.log(quote.info.pricing.systems[sysnum]);
   let systemprice = quote.info.pricing.systems[sysnum];
   let systeminfo = quote.info.build.systems[sysnum];
     for(let x=0;x<systeminfo.tiers.length;x++){

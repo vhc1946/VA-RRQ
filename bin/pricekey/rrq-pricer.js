@@ -162,7 +162,6 @@ var GETfincost=(price,qsets,system,tobj)=>{
     fgroup.cost = qsets.mfg[mfg].deal;
     fgroup.manrebate = system.info.discmfg;
   }
-  console.log(fgroup);
   return fgroup;
 }
 var GETmonthlyfin=(price,payment)=>{
@@ -192,7 +191,6 @@ var GETsizeprice=(tinfo,size,system,tiernum,payment)=>{
       }
     }
   }
-  console.log(tinfo,tpobj);
   let partdisc = [];
   if(system.discounts){
     for(let x=0;x<system.discounts.length;x++){

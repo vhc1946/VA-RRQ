@@ -1,6 +1,5 @@
 <div class="summary-action-center">
     <div id="rrq-create-presentation" class="full-action-button">Create Presentation</div>
-    <div>Double Click on a price to create a Final Contract.</div>
 </div>
 
 <div id="summary-system-cont" class="viewcontrol-cont">

@@ -226,106 +226,49 @@
                 }
             }
         ],
-        "dbldip": {
-            "CARRIER": false,
-            "DAIKIN": false,
-            "PAYNE": false
+       "discounts":{
+            "multisys":{
+              "title":"Multi-System Discount",
+              "value":0.05
+            },
+            "frndsfam":{
+              "title":"Friends & Family Discount",
+              "value":0.1
+            },
+            "noremorse":{
+              "title":"No Remorse Discount",
+              "value":250
+            },
+            "referral":{
+                "title":"Referral Discount",
+                "value":100
+            }
         },
         "fintiers":{
-            "upfront":{"title":"Up Front","term":12,"desc":"",
+            "upfront":{"title":"Up Front","term":12,"desc":"12 Mo. SaC",
               "mfg":{
-                "DAIKIN":{"lender":"WELLS-1019","std":0.0475,"deal":0.4,"rate":12},
-                "CARRIER":{"lender":"WELLS-1019","std":0.0475,"deal":0.4,"rate":12},
-                "PAYNE":{"lender":"WELLS-1019","std":0.0475,"deal":0.4,"rate":12},
-                "DEFAULT":{"lender":"WELLS-1019","std":0.0475,"deal":0.4,"rate":12}
+                "DAIKIN":{"lender":"WELLS-1019","std":0.0554,"deal":0.4,"rate":12},
+                "CARRIER":{"lender":"ENER-4329","std":0.0445,"deal":0.4,"rate":12},
+                "PAYNE":{"lender":"ENER-4329","std":0.0445,"deal":0.4,"rate":12},
+                "DEFAULT":{"lender":"ENER-4329","std":0.0445,"deal":0.4,"rate":12}
                 }
             },
-            "promo":{"title":"Promo","term":36,"desc":"",
+            "promo":{"title":"Promo","term":36,"desc":"36 Mo. @ 0%",
               "mfg":{
-                "DAIKIN":{"lender":"WELLS-4091","std":0.1354,"deal":0.0554,"rate":36},
-                "CARRIER":{"lender":"WELLS-4091","std":0.1347,"deal":0.0847,"rate":36},
-                "PAYNE":{"lender":"WELLS-4091","std":0.1347,"deal":0.0847,"rate":36},
-                "DEFAULT":{"lender":"WELLS-4091","std":0.1347,"deal":0.0847,"rate":36}
+                "DAIKIN":{"lender":"WELLS-4091","std":0.1504,"deal":0.0704,"rate":36},
+                "CARRIER":{"lender":"WELLS-4091","std":0.1054,"deal":0.1054,"rate":36},
+                "PAYNE":{"lender":"WELLS-4091","std":0.1054,"deal":0.1054,"rate":36},
+                "DEFAULT":{"lender":"WELLS-4091","std":0.1054,"deal":0.1054,"rate":36}
                 }
             },
-            "flex":{"title":"Lowest Payment","term":120,"desc":"",
+            "flex":{"title":"Lowest Payment","term":120,"desc":"120 Mo.",
               "mfg":{
-                "DAIKIN":{"lender":"WELLS-3671","std":0.0475,"deal":0.4,"rate":0.0151},
-                "CARRIER":{"lender":"WELLS-3671","std":0.0475,"deal":0.4,"rate":0.0151},
-                "PAYNE":{"lender":"WELLS-3671","std":0.0475,"deal":0.40,"rate":0.0151},
-                "DEFAULT":{"lender":"WELLS-3671","std":0.0475,"deal":0.40, "rate":0.0151}
+                "DAIKIN":{"lender":"ENER-4321","std":0.0554,"deal":0.4,"rate":0.0132},
+                "CARRIER":{"lender":"ENER-4321","std":0.0445,"deal":0.4,"rate":0.0132},
+                "PAYNE":{"lender":"ENER-4321","std":0.0445,"deal":0.4,"rate":0.0132},
+                "DEFAULT":{"lender":"ENER-4321","std":0.0445,"deal":0.4, "rate":0.0132}
                 }
               }
-          },
-        "roadmap": [
-            {
-                "order": "Order",
-                "question": "Question",
-                "type": "Type",
-                "links": "Links"
-            },
-            {
-                "order": "Order",
-                "question": "Question",
-                "type": "",
-                "links": ""
-            },
-            {
-                "order": "Order",
-                "question": "Question",
-                "type": "",
-                "links": ""
-            },
-            {
-                "order": "Order",
-                "question": "Question",
-                "type": "",
-                "links": ""
-            }
-        ],
-        "discounts": [
-            {
-                "name": "Name",
-                "active": "Active",
-                "amount": "Amount",
-                "for": "For",
-                "desc": "Description"
-            },
-            {
-                "name": "Friends & Family",
-                "active": true,
-                "amount": "",
-                "for": "",
-                "desc": "J"
-            },
-            {
-                "name": "Flex",
-                "active": true,
-                "amount": "",
-                "for": "P",
-                "desc": ""
-            },
-            {
-                "name": "Multi System",
-                "active": true,
-                "amount": "",
-                "for": "J",
-                "desc": ""
-            },
-            {
-                "name": "No Remorse Discount",
-                "active": true,
-                "amount": "",
-                "for": "J",
-                "desc": ""
-            }
-        ],
-        "promotions": [
-            {
-                "finid": "Finance Id",
-                "syscodes": "System Codes",
-                "cost": "Cost"
-            }
-        ]
+          }
     }
 }
